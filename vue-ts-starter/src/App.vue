@@ -2,7 +2,7 @@
 <template>
   <div id="app">
 
-    <myHeader msg="Welcome"></myHeader>
+    <myHeader slogan='testtfreerfgest 123'></myHeader>
     <!--input v-model="msg">
     <p>prop: {{ AppPropVersion }}</p>
     <p>msg: {{ msg }}</p>
@@ -26,9 +26,8 @@
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import 'vue-material/dist/theme/black-green-dark.css' // This line here
-  import './styles/style.scss'
-
   Vue.use(VueMaterial)
+  import './styles/style.scss'
 
   /**
    *  We declare the props separately
