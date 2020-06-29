@@ -22,7 +22,7 @@
     // @Prop() msg: string
 
     helloTimes: number = 0
-    test: string = 'Nikola test'
+    test1: string = 'Nikola test'
     sayHello () {
       this.helloTimes++
     }

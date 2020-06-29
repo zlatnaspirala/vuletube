@@ -2,14 +2,15 @@
 <template>
   <div id="app">
 
-    <input v-model="msg">
+    <myHeader msg="Welcome"></myHeader>
+    <!--input v-model="msg">
     <p>prop: {{ AppPropVersion }}</p>
     <p>msg: {{ msg }}</p>
     <p>helloMsg: {{ helloMsg }}</p>
     <p>computed msg: {{ computedMsg }}</p>
     <HelloWorld ref="HelloWorld" msg="Vue TypeScript App" />
     <p> <button @click="greet">Greet</button> </p>
-    <p> Clicked: {{ count }} times <button @click="increment">+</button> </p>
+    <p> Clicked: {{ count }} times <button @click="increment">+</button> </p-->
 
   </div>
 </template>
@@ -18,12 +19,15 @@
 
   import Vue from 'vue'
   import { Component } from 'vue-property-decorator';
-  import HelloWorld from './components/HelloWorld.vue';
+  // import HelloWorld from './components/HelloWorld.vue';
+  import myHeader from './components/myHeader.vue';
   import { mapState, mapMutations } from 'vuex';
 
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import 'vue-material/dist/theme/black-green-dark.css' // This line here
+  import './styles/style.scss'
+
   Vue.use(VueMaterial)
 
   /**
@@ -39,7 +43,7 @@
   // Register for components
   @Component({
     components: {
-      HelloWorld,
+      myHeader
     },
     // Vuex's component binding helper can use here
     computed: mapState([
@@ -53,7 +57,7 @@
   export default class App extends AppProps {
 
     // annotate refs type
-    $refs!: { HelloWorld: HelloWorld }
+    $refs!: { myHeader: myHeader }
 
     // additional declaration is needed
     // when you declare some properties in `Component` decorator
@@ -69,7 +73,7 @@
     // method
     greet (): void {
       console.log('Greeting: ' + this.msg)
-      this.$refs.HelloWorld.sayHello()
+      // this.$refs.myHeader.sayHello()
     }
 
     // computed
