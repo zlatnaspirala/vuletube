@@ -2,7 +2,8 @@
 
 ### Private links: ###
 
- https://console.developers.google.com/apis/credentials?folder=&organizationId=&project=vue-project-generator
+  https://console.developers.google.com/apis/credentials?folder=&organizationId=&project=vue-project-generator
+  https://console.developers.google.com/apis/library?filter=category:maps&project=vue-project-generator
 
 ### Help links/public ###
 
