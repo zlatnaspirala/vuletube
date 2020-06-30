@@ -3,6 +3,7 @@
   <div id="app">
 
     <myHeader slogan='testtfreerfgest 123'></myHeader>
+    <GoogleAccountLogin></GoogleAccountLogin>
     <!--input v-model="msg">
     <p>prop: {{ AppPropVersion }}</p>
     <p>msg: {{ msg }}</p>
@@ -18,12 +19,14 @@
 <script lang="ts">
 
   import Vue from 'vue'
-  import { Component } from 'vue-property-decorator';
-  import myHeader from './components/myHeader.vue';
-  import { mapState, mapMutations } from 'vuex';
+  import { Component } from 'vue-property-decorator'
+  import myHeader from './components/myHeader.vue'
+  import GoogleAccountLogin from './components/GoogleAccountLogin.vue'
+
+  import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
-  import 'vue-material/dist/theme/black-green-dark.css' // This line here
+  import 'vue-material/dist/theme/black-green-dark.css'
 
   Vue.use(VueMaterial)
 
@@ -42,7 +45,8 @@
   // Register for components
   @Component({
     components: {
-      myHeader
+      myHeader,
+      GoogleAccountLogin
     },
     // Vuex's component binding helper can use here
     computed: mapState([
