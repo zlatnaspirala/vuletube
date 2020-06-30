@@ -1,6 +1,10 @@
 # vue-ts-starter
 
-### Help links ###
+### Private links: ###
+
+ https://console.developers.google.com/apis/credentials?folder=&organizationId=&project=vue-project-generator
+
+### Help links/public ###
 
   https://vuematerial.io/themes/configuration
   https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md#LoadinganAPIandMakingaRequest

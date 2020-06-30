@@ -99,8 +99,8 @@
 
     console.log("start")
     gapi.load("client:auth2", function() {
-      gapi.auth2.init({client_id: "AIzaSyD0VfsO5ed64NM4kZ2ot834m6Xmjbt_wBQ"});
-    });
+      gapi.auth2.init({client_id: "AIzaSyD0VfsO5ed64NM4kZ2ot834m6Xmjbt_wBQ"})
+    })
 
   }
 
