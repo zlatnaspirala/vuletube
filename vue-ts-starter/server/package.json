@@ -13,7 +13,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "gcp-metadata": "^4.1.0",
-    "google-auth-library": "^6.0.1"
+    "google-auth-library": "^6.0.1",
+    "googleapis": "^52.1.0"
   },
   "devDependencies": {
     "mocha": "^8.0.0",
