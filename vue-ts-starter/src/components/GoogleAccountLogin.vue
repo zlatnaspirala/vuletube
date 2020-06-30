@@ -42,21 +42,16 @@
 
     mounted (): void {
 
-
-
+      var root = this;
       let g = document.createElement('script')
       // "https://apis.google.com/js/api.js
       g.setAttribute('src', 'https://apis.google.com/js/api.js')
       document.head.appendChild(g)
       console.log('Access')
-
       if (typeof gapi === 'undefined') {
-        console.log('BAD ...')
-        // setTimeout( root.start , 1100)
-        return;
+        console.log('BAD')
+        setTimeout( () => { root.start(window.gapi) } , 2000)
       }
-      console.log('gapi loaded ...')
-
 
     }
 
