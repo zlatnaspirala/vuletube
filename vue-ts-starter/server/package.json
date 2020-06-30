@@ -1,0 +1,38 @@
+{
+  "name": "server-side-vue-project-generator",
+  "version": "1.0.0",
+  "description": "Google API integration etc...",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "gcp-metadata": "^4.1.0",
+    "google-auth-library": "^6.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.0",
+    "supertest": "^4.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlatnaspirala/vue-typescript-starter.git"
+  },
+  "keywords": [
+    "vue",
+    "modular",
+    "app/game",
+    "engine"
+  ],
+  "author": "Nikola Lukic zlatnaspirala@gmail.com",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/zlatnaspirala/vue-typescript-starter/issues"
+  },
+  "homepage": "https://github.com/zlatnaspirala/vue-typescript-starter#readme"
+}

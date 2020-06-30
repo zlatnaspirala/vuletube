@@ -19,14 +19,14 @@
 
   import Vue from 'vue'
   import { Component } from 'vue-property-decorator';
-  // import HelloWorld from './components/HelloWorld.vue';
   import myHeader from './components/myHeader.vue';
   import { mapState, mapMutations } from 'vuex';
-
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import 'vue-material/dist/theme/black-green-dark.css' // This line here
+
   Vue.use(VueMaterial)
+
   import './styles/style.scss'
 
   /**
