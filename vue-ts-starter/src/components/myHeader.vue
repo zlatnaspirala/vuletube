@@ -41,15 +41,15 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu, mdButton , mdIcon } from 'vue-material'
-  import { Prop } from 'vue-property-decorator';
+  // import { Prop } from 'vue-property-decorator';
 
-/*
+
   const CompProps = Vue.extend({
     props: {
       slogan: String
     }
   });
-*/
+
   // Register for components
   @Component({
     components: {
@@ -60,9 +60,9 @@
   })
 
   @Component
-  export default class myHeader extends Vue {
+  export default class myHeader extends CompProps {
 
-    @Prop() slogan: string
+    // @Prop() slogan: string
 
     constructor() {
       super()

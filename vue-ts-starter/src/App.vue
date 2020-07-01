@@ -28,7 +28,7 @@
   import 'vue-material/dist/vue-material.min.css'
   import 'vue-material/dist/theme/black-green-dark.css'
 
-  Vue.use(VueMaterial)
+  Vue.use(VueMaterial as any)
 
   import './styles/style.scss'
 

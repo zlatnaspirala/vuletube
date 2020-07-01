@@ -15,7 +15,10 @@
 </style>
 
 <script lang="ts">
-  /* global gapi */
+
+  /*eslint no-unused-vars: 1*/
+  declare var gapi: any;
+
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu, mdButton , mdIcon } from 'vue-material'
@@ -44,13 +47,12 @@
 
       var root = this;
       let g = document.createElement('script')
-      // "https://apis.google.com/js/api.js
       g.setAttribute('src', 'https://apis.google.com/js/api.js')
       document.head.appendChild(g)
       console.log('Access')
       if (typeof gapi === 'undefined') {
         console.log('BAD')
-        setTimeout( () => { root.start(window.gapi) } , 2000)
+        setTimeout( () => { root.start(gapi) } , 2000)
       }
 
     }
@@ -81,7 +83,7 @@
 
   // Make sure the client is loaded and sign-in is complete before calling this method.
   execute() {
-    return gapi.client.youtube.search.list({
+    return (gapi as any).client.youtube.search.list({
       "part": [
         "snippet"
       ],
@@ -92,10 +94,10 @@
         // Handle the results here (response.result has the parsed body).
         console.log("Response", response);
       },
-      function(err) { console.error("Execute error", err); });
+      function(err: any) { console.error("Execute error", err); });
   }
 
-  start(gapi) {
+  start(gapi: any) {
 
     console.log("start")
     gapi.load("client:auth2", function() {
