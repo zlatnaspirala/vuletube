@@ -9,6 +9,7 @@ var fs = require("fs");
 // var https = require('https');
 var bodyParser = require("body-parser");
 var app = express();
+var compression = require("compression");
 
 // express.compress()
 app.use(compression({
