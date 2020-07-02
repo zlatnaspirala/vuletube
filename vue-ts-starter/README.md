@@ -1,4 +1,20 @@
-# vue-ts-starter
+# vue-ts-starter #
+
+
+  
+
+  Production use `serve` node application.
+  Other good solution is node `express`.
+
+  Install:
+  ```bash
+    npm install -g serve
+  ```
+
+  Run:
+  ```bash
+    serve -s dist
+  ```
 
 ### Private links: ###
 
