@@ -69,4 +69,4 @@ var options = {
 
     }).resume();
 
-  }).listen(serverConfig.getRtcServerPort);
+  }).listen(3000);
