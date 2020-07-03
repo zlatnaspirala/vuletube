@@ -19,20 +19,8 @@ app.use(compression({
 }));
 
 // Server configuration
-app.use(express.static(__dirname + "../dist-test")); // Set the static files location
-app.use(
-  bodyParser.urlencoded({
-    extended: "true"
-  })
-); // Parse application/x-www-form-urlencoded
-app.use(bodyParser.json()); // Parse application/json
-app.use(
-  bodyParser.json({
-    type: "application/vnd.api+json"
-  })
-); // Parse application/vnd.api+json as json
-
-app.use(cors());
+// app.use(express.static(__dirname + "../dist-test")); // Set the static files location
+// app.use(cors());
 
 app.get("*", (req, res) => {
 
@@ -76,7 +64,7 @@ var options = {
     request.addListener('end', function() {
 
       if (request.url.search(/.png|.gif|.js|.css/g) == -1) {
-        file.serveFile(serverConfig.specialRoute.default, 402, {}, request, response);
+        file.serveFile(file, 402, {}, request, response);
       } else { file.serve(request, response); }
 
     }).resume();
