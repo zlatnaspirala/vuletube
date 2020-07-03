@@ -3,7 +3,7 @@
   <div id="app">
 
     <myHeader slogan='testtfreerfgest 123'></myHeader>
-    <!--GoogleAccountLogin></GoogleAccountLogin-->
+    <GoogleAccountLogin></GoogleAccountLogin>
     <!--input v-model="msg">
     <p>prop: {{ AppPropVersion }}</p>
     <p>msg: {{ msg }}</p>
