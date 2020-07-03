@@ -11,9 +11,9 @@ var bodyParser = require("body-parser");
 var app = express();
 var compression = require("compression");
 const static = require('node-static');
-var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist-test/');
+var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/');
 
-var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist-test/';
+var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/';
 // express.compress()
 app.use(compression({
   filter: function () { return true; }
