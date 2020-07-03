@@ -13,6 +13,7 @@ var compression = require("compression");
 const static = require('node-static');
 var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist-test/');
 
+var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist-test/';
 // express.compress()
 app.use(compression({
   filter: function () { return true; }
@@ -63,7 +64,7 @@ var options = {
     request.addListener('end', function() {
 
       if (request.url.search(/.png|.gif|.js|.css/g) == -1) {
-        file.serveFile(file.path, 402, {}, request, response);
+        file.serveFile(basePath, 402, {}, request, response);
       } else { file.serve(request, response); }
 
     }).resume();
