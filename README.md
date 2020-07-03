@@ -5,14 +5,15 @@
 ### Code formater vsPrettier ###
 
 ## Project objective ##
+
  To create perfect modular fit for any type project.
   I will integrate next features:
   - Google account login based on node.js server.
   - Youtube API
-  - Google map API
   - Kure Video Chat (kurento)
   - Visual ts game engine
-
+  - Google map API - Not free (maybe for 3d gameing)
+     7$ min cost
 
 <pre>
  See setup-from-zero-point.md to make clear who this project is created.

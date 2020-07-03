@@ -4,9 +4,11 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-new Vue({
+var Application = new Vue({
   store,
   render: h => h(App, {
-     props: { AppPropVersion: '0.0.1' }
+    props: {
+      AppPropVersion: '0.0.1'
+    }
   }),
 }).$mount('#app')

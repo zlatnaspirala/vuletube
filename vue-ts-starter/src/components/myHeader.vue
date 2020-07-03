@@ -3,11 +3,9 @@
 
   <div class="myHeader">
     <md-menu>
-      <md-button md-menu-trigger>Games</md-button>
-
+      <md-button md-menu-trigger>Exec</md-button>
       <md-menu-content>
-        <md-menu-item>Example 1</md-menu-item>
-        <md-menu-item>My Item 2</md-menu-item>
+        <md-menu-item>Run in 3d</md-menu-item>
       </md-menu-content>
     </md-menu>
 
@@ -15,8 +13,8 @@
       <md-button md-menu-trigger>Login with</md-button>
       <md-menu-content>
         <md-menu-item>
-          <md-button class="md-icon-button">
-            <md-icon>home</md-icon>
+          <md-button @click="googleApiLogin" class="md-icon-button">
+            <md-icon>Login</md-icon>
           </md-button>
         </md-menu-item>
       </md-menu-content>
@@ -41,8 +39,6 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu, mdButton , mdIcon } from 'vue-material'
-  // import { Prop } from 'vue-property-decorator';
-
 
   const CompProps = Vue.extend({
     props: {
@@ -69,12 +65,12 @@
     }
 
     helloTimes: number = 0
-
     test1: string = 'Nikola test'
 
-    sayHello () {
-      this.helloTimes++
+    googleApiLogin() {
+       this.$root.$emit('googleApiLoginEvent', { start: 'start googleApiLoginEvent' })
     }
+
 
     mounted (): void {
      console.log('Access props vars: ' + this.$props.slogan)

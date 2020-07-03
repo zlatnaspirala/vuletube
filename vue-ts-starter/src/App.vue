@@ -2,16 +2,8 @@
 <template>
   <div id="app">
 
-    <myHeader slogan='testtfreerfgest 123'></myHeader>
-    <GoogleAccountLogin></GoogleAccountLogin>
-    <!--input v-model="msg">
-    <p>prop: {{ AppPropVersion }}</p>
-    <p>msg: {{ msg }}</p>
-    <p>helloMsg: {{ helloMsg }}</p>
-    <p>computed msg: {{ computedMsg }}</p>
-    <HelloWorld ref="HelloWorld" msg="Vue TypeScript App" />
-    <p> <button @click="greet">Greet</button> </p>
-    <p> Clicked: {{ count }} times <button @click="increment">+</button> </p-->
+    <myHeader slogan='Be good.'></myHeader>
+    <GoogleAccountLogin ref="GoogleAccountLoginRef" ></GoogleAccountLogin>
 
   </div>
 </template>
@@ -27,7 +19,6 @@
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import 'vue-material/dist/theme/black-green-dark.css'
-
   Vue.use(VueMaterial as any)
 
   import './styles/style.scss'
@@ -60,34 +51,34 @@
   export default class App extends AppProps {
 
     // annotate refs type
-    $refs!: { myHeader: myHeader }
+    $refs!: {
+      myHeader: myHeader,
+      GoogleAccountLogin: GoogleAccountLogin
+    }
 
     // additional declaration is needed
     // when you declare some properties in `Component` decorator
     count!: number
     increment!: () => void
 
-    // inital data
-    msg: number = 123
-
-    // use prop values for initial data
-    helloMsg: string = 'Hello, ' + this.AppPropVersion
-
     // method
-    greet (): void {
-      console.log('Greeting: ' + this.msg)
+    setupInstance (): void {
+      console.log('Attach Application event => ')
+       // var root1 = this
       // this.$refs.myHeader.sayHello()
+
     }
 
     // computed
     get computedMsg (): string {
-      return 'computed ' + this.msg
+      return 'computed '
     }
 
     // lifecycle hook
     mounted (): void {
-      this.greet()
+      this.setupInstance()
     }
+
 
   }
 
