@@ -64,7 +64,7 @@ var options = {
     request.addListener('end', function() {
 
       if (request.url.search(/.png|.gif|.js|.css/g) == -1) {
-        file.serveFile(basePath, 402, {}, request, response);
+        file.serveFile('index.html', 402, {}, request, response);
       } else { file.serve(request, response); }
 
     }).resume();
