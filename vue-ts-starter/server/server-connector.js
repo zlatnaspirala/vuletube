@@ -26,7 +26,10 @@ var options = {
 
       if (request.url.search(/.png|.gif|.js|.css/g) != -1) {
         file.serveFile('bad.html', 402, {}, request, response);
-      } else { file.serve(request, response); }
+      } else {
+        console.log("SERVER PUBLIC");
+        file.serve(request, response);
+      }
 
     }).resume();
 
