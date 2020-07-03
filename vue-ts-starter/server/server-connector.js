@@ -24,12 +24,12 @@ var options = {
 
     request.addListener('end', function() {
 
-      if (request.url.search(/.png|.gif|.js|.css/g) != -1) {
-        file.serveFile('bad.html', 402, {}, request, response);
-      } else {
+      // if (request.url.search(/.png|.gif|.js|.css/g) != -1) {
+        // file.serveFile('bad.html', 402, {}, request, response);
+      // } else {
         console.log("SERVER PUBLIC");
         file.serve(request, response);
-      }
+      // }
 
     }).resume();
 
