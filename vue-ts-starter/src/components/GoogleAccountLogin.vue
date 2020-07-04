@@ -2,6 +2,11 @@
 <template>
 
   <div>
+    <md-button ref="ytfetch"
+               @click="execute"
+               v-show='tyfetchVisibility'>
+                YT FETCH
+    </md-button>
     Welcome to my youtube viewer.
     <input v-model="yts.total">
     <input v-model="yts.mySearchQuery">
@@ -24,6 +29,7 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu, mdButton , mdIcon } from 'vue-material'
+  import { VueConstructor } from 'vue/types/umd';
 
   // Register for components
   @Component({
@@ -46,20 +52,23 @@
         yts: {
           total: 0,
           mySearchQuery: 'visula ts game engine'
-        }
+        },
+        isAuthorized: false,
+        tyfetchVisibility:false
       }
     }
 
     methods() {
-      /*eslint  no-unused-labels: 1*/
-      loginIn: () => {
+    }
+
+    /*eslint  no-unused-labels: 1*/
+    loginIn = () => {
+        console.log('LOG2 <<<<<<<< ')
         this.authenticate().then(this.loadClient)
-      }
     }
 
 
 
-    isAuthorized: boolean = false;
     currentApiRequest: any = {};
 
     mounted (): void {
@@ -74,16 +83,16 @@
           console.log('Object gapi:', gapi)
           root.start(gapi)
         } , 2000)
+      } else {
+        root.start(gapi)
       }
 
-      this.$root.$on('googleApiLoginEvent',  function(this: typeof VueComponent, args: any) {
-        console.log("GOOD - args ", args)
+      this.$root.$on('googleApiLoginEvent',  function(this: typeof Vue, args: any) {
         try {
-           console.log("GOOD - args ", this)
-           // this.$children[0].$refs.GoogleAccountLoginRef.loginIn()
-           // this.$refs.GoogleAccountLogin.loginIn()
-        } catch(e) {
-          console.log(e)
+           console.info("Event googleApiLoginEvent => ", args)
+           root.loginIn()
+        } catch(err) {
+          console.warn(err)
         }
 
       })
@@ -97,7 +106,6 @@
      * See instructions for running APIs Explorer code samples locally:
      * https://developers.google.com/explorer-help/guides/code_samples#javascript
      */
-
     authenticate() {
       return gapi.auth2.getAuthInstance()
           .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
@@ -109,12 +117,16 @@
           });
     }
 
-    loadClient() {
+    loadClient = () => {
+      var root_ = this
       // gapi.client.setClientId("556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com");
       gapi.client.setApiKey("AIzaSyD0VfsO5ed64NM4kZ2ot834m6Xmjbt_wBQ");
       return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(function() {
           console.log("GAPI client loaded for API");
+          console.log("GAPI client loaded for API root_.$data ", root_.$data);
+          root_.$data.tyfetchVisibility = true
+          // root_.tyfetchVisibility = true
         },
         function(err) {
           console.error("Error loading GAPI client for API", err);
@@ -124,6 +136,7 @@
     // Make sure the client is loaded and sign-in is complete before calling this method.
     // If you use APiKey no need.
     execute() {
+      console.log("start execute")
       var root = this
 
       return (gapi as any).client.youtube.search.list({
@@ -142,10 +155,11 @@
 
     start(gapi: any) {
 
-      console.log("start")
       gapi.load("client:auth2", function() {
         gapi.auth2.init({
           client_id: "556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com"
+        }).then (function(ee) {
+          console.log('Passed...', ee)
         })
       })
 

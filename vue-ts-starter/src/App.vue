@@ -1,10 +1,9 @@
 
 <template>
   <div id="app">
-
     <myHeader slogan='Be good.'></myHeader>
-    <GoogleAccountLogin ref="GoogleAccountLoginRef" ></GoogleAccountLogin>
-
+    <GoogleAccountLogin ref="GoogleAccountLogin" ></GoogleAccountLogin>
+    <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
 </template>
 
@@ -13,6 +12,8 @@
   import Vue from 'vue'
   import { Component } from 'vue-property-decorator'
   import myHeader from './components/myHeader.vue'
+  import myFooter from './components/myFooter.vue'
+
   import GoogleAccountLogin from './components/GoogleAccountLogin.vue'
 
   import { mapState, mapMutations } from 'vuex'
@@ -37,6 +38,7 @@
   @Component({
     components: {
       myHeader,
+      myFooter,
       GoogleAccountLogin
     },
     // Vuex's component binding helper can use here
@@ -90,6 +92,5 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    margin-top: 60px;
   }
 </style>

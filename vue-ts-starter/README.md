@@ -1,10 +1,7 @@
 # vue-ts-starter #
 
-
-  
-
-  Production use `serve` node application.
-  Other good solution is node `express`.
+  Production use `https` node application for web server.
+  Other good solution is node `serve` for instant start.
 
   Install:
   ```bash
@@ -15,6 +12,9 @@
   ```bash
     serve -s dist
   ```
+
+### Apache centos 7.5 setup renew ssl letsencrypt ###
+sudo /usr/bin/letsencrypt --apache -d maximumroulette.com -d apps.maximumroulette.com -d kure.maximumroulette.com -d roulette.maximumroulette.com -d artificialintelligence.maximumroulette.com
 
 ### Private links: ###
 

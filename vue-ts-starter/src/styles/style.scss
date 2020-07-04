@@ -4,6 +4,8 @@
 @include md-register-theme("default", (
   primary: md-get-palette-color(orange, A200), // The primary color of your application
   accent: md-get-palette-color(orange, 500), // The accent or secondary color
+  whiteText: #786,
+  secondary: #982828,
   theme: dark
 ));
 
