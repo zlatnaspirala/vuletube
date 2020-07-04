@@ -62,14 +62,16 @@
     }
 
     /*eslint  no-unused-labels: 1*/
-    loginIn = () => {
-        console.log('LOG2 <<<<<<<< ')
+    loginIn() {
         this.authenticate().then(this.loadClient)
     }
 
-
-
     currentApiRequest: any = {};
+
+    private setNewResponse(r: any) {
+      this.currentApiRequest = r
+      console.log('What is response -> ', r)
+    }
 
     mounted (): void {
 
@@ -99,8 +101,6 @@
 
     }
 
-
-
     /**
      * Sample JavaScript code for youtube.search.list
      * See instructions for running APIs Explorer code samples locally:
@@ -109,8 +109,12 @@
     authenticate() {
       return gapi.auth2.getAuthInstance()
           .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
-          .then(function() {
+          .then(() => {
+
             console.log("Sign-in successful");
+            this.$data.tyfetchVisibility = true
+            this.$data.isAuthorized = true
+
           },
           function(err) {
             console.error("Error signing in", err);
@@ -118,15 +122,10 @@
     }
 
     loadClient = () => {
-      var root_ = this
-      // gapi.client.setClientId("556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com");
       gapi.client.setApiKey("AIzaSyD0VfsO5ed64NM4kZ2ot834m6Xmjbt_wBQ");
       return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() {
-          console.log("GAPI client loaded for API");
-          console.log("GAPI client loaded for API root_.$data ", root_.$data);
-          root_.$data.tyfetchVisibility = true
-          // root_.tyfetchVisibility = true
+        .then(() => {
+          console.info('setApiKey gapi loaded.')
         },
         function(err) {
           console.error("Error loading GAPI client for API", err);
@@ -146,14 +145,16 @@
         "maxResults": 25,
         "q": root.$data.yts.mySearchQuery
       })
-        .then(function(response) {
+        .then((response) => {
           // Handle the results here (response.result has the parsed body).
-          console.log("Response", response);
+          console.log("Response", response)
+          this.setNewResponse(response)
+
         },
         function(err: any) { console.error("Execute error", err); });
     }
 
-    start(gapi: any) {
+    private start(gapi: any) {
 
       gapi.load("client:auth2", function() {
         gapi.auth2.init({
