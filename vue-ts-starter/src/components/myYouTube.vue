@@ -31,6 +31,39 @@
   import { mdMenu, mdButton , mdIcon } from 'vue-material'
   import { VueConstructor } from 'vue/types/umd';
 
+/**
+ * Best way is to create interface for
+ * youtube api call details.
+ */
+
+  interface YTResult {
+    etag: string
+    items: any[]
+    kind:  string // "youtube#searchListResponse"  create enum in future
+    nextPageToken: string // "CBkQAA"  create enum in future
+    pageInfo: {
+      totalResults: number
+      resultsPerPage: number
+    }
+    regionCode: string // "RS"  create enum in future
+  }
+
+  interface TYResponse {
+    body: any
+    headers: any
+    result: YTResult
+    status: number // 200 create enum in future
+    statusText: any // null
+  }
+
+   /**
+    * body: "{↵  "kind": "youtube#searchListResponse",↵  "etag""
+    * headers: {cache-control: "private", content-encoding: "gzip", content-length: "5512", content-type: "application/json; charset=UTF-8", date: "Sun, 05 Jul 2020 20:47:06 GMT", …}
+    * result: {kind: "youtube#searchListResponse", etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38", nextPageToken: "CBkQAA", regionCode: "RS", pageInfo: {…}, …}
+    * status: 200
+    * statusText: null
+    */
+
   // Register for components
   @Component({
     components: {
@@ -41,11 +74,25 @@
   })
 
   @Component
-  export default class GoogleAccountLogin extends Vue {
+  export default class myYouTube extends Vue {
 
     constructor() {
       super()
     }
+
+    /**
+     * etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38"
+     * items:
+     *
+     *    etag: "mlweRndBtBgAcVC-11ZrL0oI7ok"
+     *    id: {kind: "youtube#video", videoId: "YPhJOC9-M_M"}
+     *    kind: "youtube#searchResult"
+     *    snippet: {publis
+     *    kind: "youtube#searchListResponse"
+     *    nextPageToken: "CBkQAA"
+     *    pageInfo: {totalResults: 400229, resultsPerPage: 25}
+     *    regionCode: "RS"
+     */
 
     data() {
       return {
@@ -71,6 +118,7 @@
     private setNewResponse(r: any) {
       this.currentApiRequest = r
       console.log('What is response -> ', r)
+
     }
 
     mounted (): void {

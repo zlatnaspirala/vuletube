@@ -2,7 +2,7 @@
 <template>
   <div id="app">
     <myHeader slogan='Be good.'></myHeader>
-    <GoogleAccountLogin ref="GoogleAccountLogin" ></GoogleAccountLogin>
+    <myYouTube ref="myYouTube" ></myYouTube>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
 </template>
@@ -14,7 +14,7 @@
   import myHeader from './components/myHeader.vue'
   import myFooter from './components/myFooter.vue'
 
-  import GoogleAccountLogin from './components/GoogleAccountLogin.vue'
+  import myYouTube from './components/myYouTube.vue'
 
   import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
@@ -39,7 +39,7 @@
     components: {
       myHeader,
       myFooter,
-      GoogleAccountLogin
+      myYouTube
     },
     // Vuex's component binding helper can use here
     computed: mapState([
@@ -55,7 +55,7 @@
     // annotate refs type
     $refs!: {
       myHeader: myHeader,
-      GoogleAccountLogin: GoogleAccountLogin
+      myYouTube: myYouTube
     }
 
     // additional declaration is needed
