@@ -13,12 +13,14 @@ module.exports = {
       title: 'Error page',
       chunks: ['chunk-vendors', 'chunk-common', 'index']
     },
+    /* Disabled - Only one time
     'googleVerify': {
       entry: './src/error-instance.ts',
-      template: 'public/google1813c8928f8cf22f.html',
+      template: 'public/somelink.html',
       title: 'Error page',
       chunks: ['chunk-vendors', 'chunk-common', 'index']
     },
+    */
 
   }
 }

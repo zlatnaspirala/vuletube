@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <myHeader slogan='Be good.'></myHeader>
+    <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
     <myYouTube ref="myYouTube" ></myYouTube>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
@@ -13,16 +13,16 @@
   import { Component } from 'vue-property-decorator'
   import myHeader from './components/myHeader.vue'
   import myFooter from './components/myFooter.vue'
-
-  import myYouTube from './components/myYouTube.vue'
-
   import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import 'vue-material/dist/theme/black-green-dark.css'
-  Vue.use(VueMaterial as any)
-
   import './styles/style.scss'
+
+  // Current component dev => myYouTube
+  import myYouTube from './components/myYouTube.vue'
+
+  Vue.use(VueMaterial as any)
 
   /**
    *  We declare the props separately

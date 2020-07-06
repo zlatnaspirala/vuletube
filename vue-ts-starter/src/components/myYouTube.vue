@@ -7,8 +7,13 @@
                v-show='tyfetchVisibility'>
                 YT FETCH
     </md-button>
+    <md-button ref="testBtn"
+               @click="readTYItems"
+               v-show='tyfetchVisibility'>
+                YT LOG
+    </md-button>
+
     Welcome to my youtube viewer.
-    <input v-model="yts.total">
     <input v-model="yts.mySearchQuery">
   </div>
 
@@ -29,13 +34,12 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu, mdButton , mdIcon } from 'vue-material'
-  import { VueConstructor } from 'vue/types/umd';
+  // import { VueConstructor } from 'vue/types/umd';
 
-/**
- * Best way is to create interface for
- * youtube api call details.
- */
-
+  /**
+   * Best way is to create interface for
+   * youtube api call details.
+   */
   interface YTResult {
     etag: string
     items: any[]
@@ -97,7 +101,7 @@
     data() {
       return {
         yts: {
-          total: 0,
+          ytResponse: {},
           mySearchQuery: 'visula ts game engine'
         },
         isAuthorized: false,
@@ -105,19 +109,25 @@
       }
     }
 
-    methods() {
+    methods = {
+      readTYItems: function() {
+        console.log('test methods yts => ', this.yts.ytResponse.result)
+      }
     }
 
     /*eslint  no-unused-labels: 1*/
-    loginIn() {
+    private loginIn() {
         this.authenticate().then(this.loadClient)
     }
 
     currentApiRequest: any = {};
 
     private setNewResponse(r: any) {
+
       this.currentApiRequest = r
-      console.log('What is response -> ', r)
+      this.$data.yts.ytResponse = r
+      console.log('What is better we will se -> ', this.currentApiRequest)
+      console.log('What is better we will se -> ', this.$data.yts.ytResponse)
 
     }
 
@@ -154,7 +164,7 @@
      * See instructions for running APIs Explorer code samples locally:
      * https://developers.google.com/explorer-help/guides/code_samples#javascript
      */
-    authenticate() {
+    private authenticate() {
       return gapi.auth2.getAuthInstance()
           .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
           .then(() => {
@@ -169,7 +179,7 @@
           });
     }
 
-    loadClient = () => {
+    private loadClient = () => {
       gapi.client.setApiKey("AIzaSyD0VfsO5ed64NM4kZ2ot834m6Xmjbt_wBQ");
       return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(() => {
@@ -182,7 +192,7 @@
 
     // Make sure the client is loaded and sign-in is complete before calling this method.
     // If you use APiKey no need.
-    execute() {
+    private execute() {
       console.log("start execute")
       var root = this
 
