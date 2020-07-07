@@ -7,16 +7,6 @@
                v-show='tyfetchVisibility'>
                 YT FETCH
     </md-button>
-    <md-button ref="testBtn"
-               v-on:click="readTYItems"
-               v-show='tyfetchVisibility'>
-                YT LOG
-    </md-button>
-    <md-button ref="testBtn"
-               @click="testMyItems"
-               v-show='tyfetchVisibility'>
-                YT LOG TEST METHODS
-    </md-button>
 
     length1 ..... {{ currentApiRequest.result.items.length }}
     length2 ..... {{ yts.ytResponse.result.items.length }}
@@ -26,33 +16,10 @@
 
           {{ value }}
 
-      <video autoplay>
-         <source src="{{ value }}" type="video/mp4">
-      </video>
-
     </div>
-
-
-<div :key="item.id.videoId"
-      v-for="(item) in MYITEMS2"
-      :item="item">
-
-      <input v-model="item.id.videoId" >
-
-        {{ item.id.videoId }}
-        {{ item.id.kind }}
-      <video autoplay>
-         <source src="{{ item.id.videoId }}" type="video/mp4">
-      </video>
-
-    </div>
-
 
     Welcome to my youtube viewer.
     <input v-model="yts.mySearchQuery">
-
-    TEST MODEL
-    <input v-model="yts.ytResponse.result.items[2]">
 
   </div>
 
@@ -129,8 +96,6 @@
 
     constructor() {
       super()
-
-
     }
 
     /**
@@ -172,26 +137,6 @@
       }
     }
 
-    private readTYItems () {
-      console.log('test methods yts => ', this.$data.yts.ytResponse.result.items)
-      const items = this.$data.yts.ytResponse.result.items
-      for (let x= 0;x < items.length;x++) {
-        const i = (items[x] as TYItem)
-
-        console.log(" <----Item " + (x+1) + "-----> ")
-
-        console.log("Item :  -> " + i)
-        console.log("Item : -> " + i.id)
-        console.log("Item :  -> " + i.kind)
-
-        console.log(" <---------> ")
-
-      }
-      // id: Object
-      // kind: "youtube#video"
-      // videoId: "YPhJOC9-M_M"
-    }
-
     /*eslint  no-unused-labels: 1*/
     private loginIn() {
         this.authenticate().then(this.loadClient)
@@ -210,10 +155,6 @@
       }
     }
 
-    testMyItems () {
-      this.justItems["FGFFFFFF"] = "FGFFFFFF"
-    }
-
     justItems: {} = {
       qmTTTTTTT: "qmTTTTTTT"
     }
@@ -222,39 +163,19 @@
       // a computed getter
     }
 
-    get MYITEMS(): any {
-        // Computed Property returns a string
-        return this.currentApiRequest.result.items
-    }
-
-    get MYITEMS2(): any {
-        // Computed Property returns a string
-        return this.$data.yts.ytResponse.result.items
-    }
-
     private setNewResponse(r: any) {
-
       // this.currentApiRequest = r
       this.$data.yts.ytResponse = r
-      // var items = this.$data.yts.ytResponse.result.items
       var items = r.result.items
 
       for ( var x = 0; x < items.length; x++) {
-
-        // test
-        //
-
         this.currentApiRequest.result.items.push(items[x])
         this.$set(this.currentApiRequest.result.items[x], "id", items[x].id.videoId)
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
-
         this.$set(this.justItems, items[x].id.videoId, items[x].id.videoId)
-        console.log('What is better we will se ')
-
       }
 
-      console.log('What is better we will se -> ', this.currentApiRequest)
-      // console.log('What is better we will se -> ', this.$data.yts.ytResponse)
+      // console.log('What is better we will se -> ', this.currentApiRequest)
 
     }
 
