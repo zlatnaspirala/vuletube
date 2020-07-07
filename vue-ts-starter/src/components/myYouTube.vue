@@ -8,7 +8,6 @@
                 YT FETCH
     </md-button>
 
-    length1 ..... {{ currentApiRequest.result.items.length }}
     length2 ..... {{ yts.ytResponse.result.items.length }}
 
     <div :key="value"
@@ -120,14 +119,7 @@
         yts: {
           ytResponse: {
             result: {
-              items: [
-                {
-                  id: {
-                    kind: "blabal",
-                    videoId: "qm55ljwNCAo"
-                  }
-                }
-              ],
+              items: [],
             }
           },
           mySearchQuery: 'visula ts game engine'
@@ -140,19 +132,6 @@
     /*eslint  no-unused-labels: 1*/
     private loginIn() {
         this.authenticate().then(this.loadClient)
-    }
-
-    currentApiRequest: any =  {
-      result: {
-        items: [
-          {
-            id: {
-              kind: "blabal",
-              videoId: "qm55ljwNCAo"
-            }
-          }
-        ],
-      }
     }
 
     justItems: {} = {
@@ -169,8 +148,8 @@
       var items = r.result.items
 
       for ( var x = 0; x < items.length; x++) {
-        this.currentApiRequest.result.items.push(items[x])
-        this.$set(this.currentApiRequest.result.items[x], "id", items[x].id.videoId)
+        // this.currentApiRequest.result.items.push(items[x])
+        // this.$set(this.currentApiRequest.result.items[x], "id", items[x].id.videoId)
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
         this.$set(this.justItems, items[x].id.videoId, items[x].id.videoId)
       }
