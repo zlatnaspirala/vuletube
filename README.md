@@ -25,13 +25,48 @@
 
 </pre>
 
+### About methods ###
+
+For now we need trust:
+[Source](https://blog.logrocket.com/how-to-write-a-vue-js-app-completely-in-typescript)
+
+```javascript
+// Methods in TypeScript, like normal class methods, have an optional access modifier.
+
+export default class HelloWorld extends Vue {
+  public clickMe(): void {
+    console.log('clicked')
+    console.log(this.addNum(4, 2))
+  }
+  public addNum(num1: number, num2: number): number {
+    return num1 + num2
+  }
+}
+
+// The JavaScript-equivalent code is as follows.
+
+export default {
+  methods: {
+    clickMe() {
+      console.log('clicked')
+      console.log(this.addNum(4, 2))
+    }
+    addNum(num1, num2) {
+      return num1 + num2
+    }
+  }
+}
+```
+
 ### Features ###
 
-[image](https://v1.vuejs.org/images/lifecycle.png)
+  - YouTube component. Log in , fetch data from youtube APi v3.
 
 ### Formating ###
 
-### Lints and fixes files
+ESLINT is present also.
+
+#### Lints and fixes files ####
 ```
 npm run lint
 ```
