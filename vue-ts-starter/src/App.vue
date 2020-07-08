@@ -16,7 +16,7 @@
   import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
-  import 'vue-material/dist/theme/black-green-dark.css'
+  // import 'vue-material/dist/theme/black-green-dark.css'
   import './styles/style.scss'
 
   // Current component dev => myYouTube

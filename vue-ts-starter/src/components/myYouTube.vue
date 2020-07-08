@@ -1,27 +1,39 @@
 
 <template>
-
   <div>
+
+    Search:
+    <input v-model="yts.mySearchQuery">
+
     <md-button ref="ytfetch"
                @click="execute"
                v-show='tyfetchVisibility'>
-                YT FETCH
+                RUN FETCH
     </md-button>
 
-    length2 ..... {{ yts.ytResponse.result.items.length }}
-
-    <div :key="value"
-         v-for="value in justItems">
-
-          {{ value }}
-
-    </div>
-
-    Welcome to my youtube viewer.
-    <input v-model="yts.mySearchQuery">
-
+    <md-table v-model="people" md-card @md-selected="onSelect" v-show='tyfetchVisibility'>
+      <md-table-toolbar>
+        <md-chip> {{ yts.ytResponse.status }}</md-chip>
+        <h1 class="md-title">YouTube results:</h1>
+      </md-table-toolbar>
+      <md-table-row :key="value" md-selectable="single"
+          v-for="value in yts.ytResponse.result.items">
+        <md-table-cell md-label="Kind" md-sort-by="kind" >
+          {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
+          data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
+        </md-table-cell>
+        <md-table-cell md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
+        <md-table-cell md-label="VideoId" md-sort-by="videoId" >{{ value.id.videoId }}</md-table-cell>
+        <md-table-cell md-label="Thumbnails" md-sort-by="thumbnails" >
+            <md-card>
+              <md-card-media>
+                <img :src="value.snippet.thumbnails.medium.url" alt="medium size">
+              </md-card-media>
+            </md-card>
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -31,13 +43,12 @@
 </style>
 
 <script lang="ts">
-
   /*eslint no-unused-vars: 1*/
   declare var gapi: any;
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { mdMenu, mdButton , mdIcon } from 'vue-material'
+  import { mdMenu, mdButton , mdIcon, mdCard } from 'vue-material'
 
   /**
    * Best way is to create interface for
@@ -73,20 +84,13 @@
     statusText: any // null
   }
 
-   /**
-    * body: "{↵  "kind": "youtube#searchListResponse",↵  "etag""
-    * headers: {cache-control: "private", content-encoding: "gzip", content-length: "5512", content-type: "application/json; charset=UTF-8", date: "Sun, 05 Jul 2020 20:47:06 GMT", …}
-    * result: {kind: "youtube#searchListResponse", etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38", nextPageToken: "CBkQAA", regionCode: "RS", pageInfo: {…}, …}
-    * status: 200
-    * statusText: null
-    */
-
   // Register for components
   @Component({
     components: {
       mdButton,
       mdMenu,
-      mdIcon
+      mdIcon,
+      mdCard
     }
   })
 
@@ -120,7 +124,8 @@
           ytResponse: {
             result: {
               items: [],
-            }
+            },
+            status: 0
           },
           mySearchQuery: 'visula ts game engine'
         },
@@ -134,9 +139,7 @@
         this.authenticate().then(this.loadClient)
     }
 
-    justItems: {} = {
-      qmTTTTTTT: "qmTTTTTTT"
-    }
+    justItems: {} = {}
 
     public computed = {
       // a computed getter
@@ -148,14 +151,11 @@
       var items = r.result.items
 
       for ( var x = 0; x < items.length; x++) {
-        // this.currentApiRequest.result.items.push(items[x])
-        // this.$set(this.currentApiRequest.result.items[x], "id", items[x].id.videoId)
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
         this.$set(this.justItems, items[x].id.videoId, items[x].id.videoId)
       }
 
       // console.log('What is better we will se -> ', this.currentApiRequest)
-
     }
 
     mounted (): void {
@@ -186,20 +186,13 @@
 
     }
 
-    /**
-     * Sample JavaScript code for youtube.search.list
-     * See instructions for running APIs Explorer code samples locally:
-     * https://developers.google.com/explorer-help/guides/code_samples#javascript
-     */
     private authenticate() {
       return gapi.auth2.getAuthInstance()
           .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
           .then(() => {
-
-            console.log("Sign-in successful");
             this.$data.tyfetchVisibility = true
             this.$data.isAuthorized = true
-
+            console.info("Sign-in successful");
           },
           function(err) {
             console.error("Error signing in", err);
@@ -220,9 +213,8 @@
     // Make sure the client is loaded and sign-in is complete before calling this method.
     // If you use APiKey no need.
     private execute() {
-      console.log("start execute")
-      var root = this
 
+      var root = this
       return (gapi as any).client.youtube.search.list({
         "part": [
           "snippet"
@@ -231,12 +223,12 @@
         "q": root.$data.yts.mySearchQuery
       })
         .then((response) => {
-          // Handle the results here (response.result has the parsed body).
           console.log("Response", response)
           this.setNewResponse(response)
-
         },
-        function(err: any) { console.error("Execute error", err); });
+        function(err: any) {
+          console.error("Execute error", err);
+        });
     }
 
     private start(gapi: any) {

@@ -29,7 +29,7 @@ Run:
 
  - myYouTube.vue
 
-Response for youtube api v3 call.
+#### Response for youtube api v3 call. ####
 
 ```
   body: "{↵  "kind": "youtube#searchListResponse",↵  "etag""
@@ -37,6 +37,40 @@ Response for youtube api v3 call.
   result: {kind: "youtube#searchListResponse", etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38", nextPageToken: "CBkQAA", regionCode: "RS", pageInfo: {…}, …}
   status: 200
   statusText: null
+```
+
+#### Result property: ####
+
+```javascript
+{
+"kind": "youtube#searchResult",
+"etag": "mlweRndBtBgAcVC-11ZrL0oI7ok",
+"id": {
+  "kind": "youtube#video",
+  "videoId": "YPhJOC9-M_M"
+},
+"snippet": {
+  "publishedAt": "2019-07-14T19:27:31Z",
+  "channelId": "UCc1NtMtvoVzKnOtnai9LGsA",
+  "title": "Create game engine - Visual typescript game engine",
+  "description": "Clone or download from : https://github.com/zlatnaspirala/visual-ts-game-engine Next video - \
+    developing in live - adding multiplayer feature. Project : Visual ts ...",
+  "thumbnails": {
+    "default": {
+      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/default.jpg", "width": 120, "height": 90
+    },
+    "medium": {
+      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg", "width": 320, "height": 180
+    },
+    "high": {
+      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/hqdefault.jpg", "width": 480, "height": 360
+    }
+  },
+  "channelTitle": "javascript fanatic",
+  "liveBroadcastContent": "none",
+  "publishTime": "2019-07-14T19:27:31Z"
+  }
+}
 ```
 
 ### Apache centos 7.5 setup renew ssl letsencrypt ###
