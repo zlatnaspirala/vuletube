@@ -2,7 +2,10 @@
 <template>
   <div id="app">
     <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
-    <myYouTube ref="myYouTube" ></myYouTube>
+    <Box v-bind:style="styleObject">
+      <myYouTube ref="myYouTube" ></myYouTube>
+      <myYouTube ref="myYouTube" ></myYouTube>
+    </Box>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
 </template>
@@ -15,12 +18,12 @@
   import myFooter from './components/myFooter.vue'
   import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
+  import { mdBox } from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
-  // import 'vue-material/dist/theme/black-green-dark.css'
   import './styles/style.scss'
 
   // Current component dev => myYouTube
-  import myYouTube from './components/myYouTube.vue'
+  import myYouTube from './components/youtube-3d/myYouTube.vue'
 
   Vue.use(VueMaterial as any)
 
@@ -39,7 +42,8 @@
     components: {
       myHeader,
       myFooter,
-      myYouTube
+      myYouTube,
+      mdBox
     },
     // Vuex's component binding helper can use here
     computed: mapState([
@@ -52,28 +56,42 @@
 
   export default class App extends AppProps {
 
-    // annotate refs type
+    // Annotate refs type
     $refs!: {
       myHeader: myHeader,
       myYouTube: myYouTube
     }
 
-    // additional declaration is needed
-    // when you declare some properties in `Component` decorator
+    // Additional declaration is needed.
+    // When you declare some properties in `Component` decorator.
     count!: number
     increment!: () => void
 
-    // method
-    setupInstance (): void {
-      console.log('Attach Application event => ')
-       // var root1 = this
-      // this.$refs.myHeader.sayHello()
+    private styleObject;
 
+    constructor() {
+      super()
+
+      this.styleObject = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        itemsAlign: 'center',
+        height: '100%',
+        width: '100%',
+        border: 'solid red 1px'
+      }
+
+    }
+
+    setupInstance = () => {
+      console.log('Attach Application event => ')
     }
 
     // computed
     get computedMsg (): string {
-      return 'computed '
+      return 'computed'
     }
 
     // lifecycle hook
@@ -87,6 +105,11 @@
 </script>
 
 <style>
+
+  body {
+     overflow: hidden;
+  }
+
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

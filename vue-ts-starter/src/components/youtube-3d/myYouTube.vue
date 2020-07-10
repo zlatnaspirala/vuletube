@@ -1,17 +1,23 @@
 
 <template>
-  <div>
+  <div v-bind:style="styleObject">
 
     Search:
-    <input v-model="yts.mySearchQuery">
+    <md-input color="md-primary"
+              v-model="yts.mySearchQuery"
+              class="md-primary md-raised"
+              placeholder="Search youtube:"
+              maxlength="1200">
+              </md-input>
 
-    <md-button ref="ytfetch"
+    <md-button class="md-primary md-raised"
+               ref="ytfetch"
                @click="execute"
                v-show='tyfetchVisibility'>
-                RUN FETCH
+                 RUN FETCH
     </md-button>
 
-    <md-table v-model="people" md-card @md-selected="onSelect" v-show='tyfetchVisibility'>
+    <md-table md-card v-show='tyfetchVisibility'>
       <md-table-toolbar>
         <md-chip> {{ yts.ytResponse.status }}</md-chip>
         <h1 class="md-title">YouTube results:</h1>
@@ -48,7 +54,12 @@
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { mdMenu, mdButton , mdIcon, mdCard } from 'vue-material'
+  import { mdMenu,
+         mdButton,
+           mdIcon,
+           mdCard,
+          mdInput
+  } from 'vue-material'
 
   /**
    * Best way is to create interface for
@@ -90,15 +101,29 @@
       mdButton,
       mdMenu,
       mdIcon,
-      mdCard
+      mdCard,
+      mdInput
     }
   })
 
   @Component
   export default class myYouTube extends Vue {
 
+    private styleObject;
+
     constructor() {
       super()
+
+      this.styleObject = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        itemsAlign: 'center',
+        height: '100%',
+        width: '100%',
+        border: 'solid blue 1px'
+      }
     }
 
     /**

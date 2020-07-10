@@ -1,14 +1,16 @@
 
 <template>
   <div class="myHeader">
-    <!--md-menu>
-      <md-button md-menu-trigger>Exec</md-button>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <md-menu>
+      <md-button md-menu-trigger>3D</md-button>
       <md-menu-content>
         <md-menu-item>Run in 3d</md-menu-item>
       </md-menu-content>
-    </md-menu-->
+    </md-menu>
+
     <md-menu md-size="medium" md-align-trigger>
-      <md-button md-menu-trigger>Login with</md-button>
+      <md-button md-menu-trigger>Start here</md-button>
       <md-menu-content>
         <md-menu-item>
           <md-progress-spinner v-show='tyfetchVisibility'
@@ -16,10 +18,18 @@
             :md-stroke="4"
              md-mode="indeterminate">
           </md-progress-spinner>
-          <md-button v-show='loginBtnVisibility' @click="googleApiLogin" class="md-icon-button">
-            <md-icon>Login</md-icon>
+          <md-button class="md-primary md-raised" v-show='loginBtnVisibility' @click="googleApiLogin">
+            <md-icon class="fa fa-shield"></md-icon>
+            Login with Google
           </md-button>
         </md-menu-item>
+        <md-menu-item>
+          <md-button class="md-primary md-raised" ref="switchThemeBtn" @click="switchTheme">
+            <md-icon>T</md-icon>
+            Theme {{ switchThemeBtnLabel }}
+          </md-button>
+
+      </md-menu-item>
       </md-menu-content>
     </md-menu>
   </div>
@@ -33,7 +43,6 @@
   .myHeader {
     width:100%;
     height: 41px;
-    border: solid rgb(13, 111, 136) 1px;
   }
 </style>
 
@@ -64,15 +73,38 @@
 
     constructor() {
       super()
-
     }
 
     data() {
       return {
         myData: "test",
         tyfetchVisibility: true,
-        loginBtnVisibility: false
+        loginBtnVisibility: false,
+        switchThemeBtnLabel: 'myDark'
       }
+    }
+
+    switchTheme() {
+      try {
+        if ((this.$root as any).$material.theming.theme == 'myDark') {
+          (this.$root as any).$material.theming.theme='myLight'
+          this.changeTheme('myLight')
+        } else if ((this.$root as any).$material.theming.theme == 'myLight') {
+          (this.$root as any).$material.theming.theme='myOrange'
+          this.changeTheme('myOrange')
+        } else if ((this.$root as any).$material.theming.theme == 'myOrange') {
+          (this.$root as any).$material.theming.theme='myDark'
+          this.changeTheme('myDark')
+        } else {
+          console.log('(this.$root as any).$material.theming.theme=myDark' , (this.$root as any).$material.theming.theme='myDark')
+        }
+      }catch(err) {
+        console.warn('Error =>', err)
+      }
+    }
+
+    changeTheme (themeEnu: string) {
+      this.$set(this, 'switchThemeBtnLabel', themeEnu)
     }
 
     googleApiLogin(): void {
@@ -80,11 +112,11 @@
     }
 
     mounted (): void {
-      setTimeout(() => {
-        this.$set(this, 'tyfetchVisibility', false)
-        this.$set(this, 'loginBtnVisibility', true)
-      }, 3000)
-     console.log('Access props vars: ' + this.$props.slogan)
+      (this.$root as any).$material.theming.theme='myDark'
+      this.$set(this, 'tyfetchVisibility', false)
+      this.$set(this, 'loginBtnVisibility', true)
+      this.$set(this, 'switchThemeBtnLabel', 'myDark')
+      console.log('Load theme Slogan is -> ' + this.$props.slogan)
     }
 
   }
