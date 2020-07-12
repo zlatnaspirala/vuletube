@@ -2,13 +2,16 @@
 <template>
   <div v-bind:style="styleObject">
 
-    Search:
-    <md-input color="md-primary"
+    <md-field>
+      <label>Search youtube bar:</label>
+
+      <md-input color="md-primary"
               v-model="yts.mySearchQuery"
               class="md-primary md-raised"
               placeholder="Search youtube:"
               maxlength="1200">
               </md-input>
+    </md-field>
 
     <md-button class="md-primary md-raised"
                ref="ytfetch"
@@ -55,6 +58,7 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu,
+          mdField,
          mdButton,
            mdIcon,
            mdCard,
@@ -102,7 +106,8 @@
       mdMenu,
       mdIcon,
       mdCard,
-      mdInput
+      mdInput,
+      mdField
     }
   })
 

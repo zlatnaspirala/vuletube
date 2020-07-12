@@ -2,10 +2,10 @@
 <template>
   <div id="app">
     <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
-    <Box v-bind:style="styleObject">
+    <div v-bind:style="styleObject">
       <myYouTube ref="myYouTube" ></myYouTube>
-      <myYouTube ref="myYouTube" ></myYouTube>
-    </Box>
+      <myYouTubeThreejs ref="myYouTubeThreejs" ></myYouTubeThreejs>
+    </div>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
 </template>
@@ -18,12 +18,12 @@
   import myFooter from './components/myFooter.vue'
   import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
-  import { mdBox } from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import './styles/style.scss'
 
   // Current component dev => myYouTube
   import myYouTube from './components/youtube-3d/myYouTube.vue'
+  import myYouTubeThreejs from './components/youtube-3d/webgl-player.vue'
 
   Vue.use(VueMaterial as any)
 
@@ -43,7 +43,7 @@
       myHeader,
       myFooter,
       myYouTube,
-      mdBox
+      myYouTubeThreejs
     },
     // Vuex's component binding helper can use here
     computed: mapState([

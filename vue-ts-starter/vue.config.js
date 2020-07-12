@@ -22,5 +22,18 @@ module.exports = {
     },
     */
 
-  }
+  },
+  'devServer': {
+    'port': 3000
+  },
+  css: {
+    sourceMap: true
+  },
+  pwa: {
+    name: 'My App',
+    themeColor: '#000000',
+    msTileColor: '#ffffff',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+  },
 }

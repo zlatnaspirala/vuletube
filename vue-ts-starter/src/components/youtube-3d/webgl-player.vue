@@ -2,16 +2,16 @@
   <div v-bind:style="styleObject" >
 
     <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Preferences</md-dialog-title>
+      <md-dialog-title>opengles 2.0 3.0</md-dialog-title>
 
       <md-tabs md-dynamic-height>
-        <md-tab md-label="Privacy Policy">
+        <md-tab md-label="Three.js">
           <md-content class="md-scrollbar">
             - webGL test 1
           </md-content>
         </md-tab>
 
-        <md-tab md-label="Security Of Data" >
+        <md-tab md-label="webGl2" >
           <md-content class="md-scrollbar">
             webGL test 2
           </md-content>
@@ -33,6 +33,7 @@
 <script lang="ts">
   import Vue from 'vue'
   import Component from 'vue-class-component'
+  import * as THREE from 'three/build/three.module';
   import {
     mdTabs,
     mdTab,
@@ -76,7 +77,7 @@
   }
 
   .md-content {
-    max-width: 1000px;
+    max-width: 100%;
     max-height: 520px;
     overflow: auto;
   }
