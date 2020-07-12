@@ -23,15 +23,17 @@
  See setup-from-zero-point.md to make clear who this project is created.
 
  Help links:
- https://developers.google.com/youtube/v3/getting-started
- https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md
+ [developers.google.com/youtube/v3](https://developers.google.com/youtube/v3/getting-started)
+
+ [github.com/google/google-api-javascript-client](https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md)
 
 
 ## About programming paradigma methods ##
 
 ####  About vue methods in ts variant ####
 
-For now we need trust:
+For now we need trust this:
+
 [Source](https://blog.logrocket.com/how-to-write-a-vue-js-app-completely-in-typescript)
 
 ```javascript
@@ -65,6 +67,7 @@ export default {
 
 I will not use ts variant for three.js.
 Reasons on page:
+
 https://threejs.org/docs/#manual/en/introduction/Typescript-setup
 
 I will use javascript classic variant but script type module with `import`.
@@ -87,3 +90,9 @@ npm i three ->
 ```bash
   npm run lint
 ```
+
+## Direct link for dev server ##
+
+### VueTube web service 2020 ###
+https://maximumroulette.com:3000
+
