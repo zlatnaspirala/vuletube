@@ -1,5 +1,6 @@
 
 module.exports = {
+
   pages: {
     'index': {
       entry: './src/main.ts',
@@ -12,19 +13,11 @@ module.exports = {
       template: 'public/bad.html',
       title: 'Error page',
       chunks: ['chunk-vendors', 'chunk-common', 'index']
-    },
-    /* Disabled - Only one time
-    'googleVerify': {
-      entry: './src/error-instance.ts',
-      template: 'public/somelink.html',
-      title: 'Error page',
-      chunks: ['chunk-vendors', 'chunk-common', 'index']
-    },
-    */
+    }
 
   },
-  'devServer': {
-    'port': 3000
+  devServer: {
+    port: 3000
   },
   css: {
     sourceMap: true

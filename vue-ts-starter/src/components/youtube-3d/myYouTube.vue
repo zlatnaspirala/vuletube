@@ -122,9 +122,9 @@
       this.styleObject = {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         textAlign: 'center',
-        itemsAlign: 'center',
+        // itemsAlign: 'center',
         height: '100%',
         width: '100%',
         border: 'solid blue 1px'

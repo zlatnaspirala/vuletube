@@ -4,7 +4,7 @@
     <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
     <div v-bind:style="styleObject">
       <myYouTube ref="myYouTube" ></myYouTube>
-      <myYouTubeThreejs ref="myYouTubeThreejs" ></myYouTubeThreejs>
+      <threejsYoutubePlayer ref="myYouTubeThreejs" ></threejsYoutubePlayer>
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
@@ -23,7 +23,7 @@
 
   // Current component dev => myYouTube
   import myYouTube from './components/youtube-3d/myYouTube.vue'
-  import myYouTubeThreejs from './components/youtube-3d/webgl-player.vue'
+  import threejsYoutubePlayer from './components/youtube-3d/webgl-player.vue'
 
   Vue.use(VueMaterial as any)
 
@@ -43,7 +43,7 @@
       myHeader,
       myFooter,
       myYouTube,
-      myYouTubeThreejs
+      threejsYoutubePlayer
     },
     // Vuex's component binding helper can use here
     computed: mapState([
@@ -74,7 +74,7 @@
 
       this.styleObject = {
         display: 'flex',
-        alignItems: 'center',
+        //alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
         itemsAlign: 'center',
