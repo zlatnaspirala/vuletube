@@ -73,6 +73,11 @@ Run:
 }
 ```
 
+#### YT Download module ####
+ Download from :
+ https://www.npmjs.com/package/youtube-dl
+
+
 ### Apache centos 7.5 setup renew ssl letsencrypt ###
 
 ```bash

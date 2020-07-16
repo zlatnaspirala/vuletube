@@ -31,6 +31,11 @@
         <md-table-cell @click="prepareThisVideo" md-label="VideoId" md-sort-by="VideoId" >
           {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
           data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
+              <md-button class="md-primary md-raised"
+               @click="prepareThisVideo"
+               v-show='tyfetchVisibility'>
+                 prepareThisVideo
+    </md-button>
         </md-table-cell>
         <md-table-cell md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
         <md-table-cell md-label="VideoId" md-sort-by="videoId" >{{ value.id.videoId }}</md-table-cell>

@@ -25,7 +25,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
     request.addListener('end', function() {
 
-      if (request.url.search(/.slusajsadadzonimenesad|.dzoni/g) != -1) {
+      if (request.url.search(/.nidza|.dzoni/g) != -1) {
         // file.serveFile('bad.html', 402, {}, request, response);
         console.log("OK DZONI");
 
@@ -44,11 +44,13 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
       video.pipe(fs.createWriteStream('myvideo.mp4'))
 
-      }
-      //  else {
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.end('Not bad \n Man');
+
+      } else {
         console.log("Client looks at request.url ",  request.url);
         file.serve(request, response);
-      // }
+      }
 
     }).resume();
 
