@@ -28,7 +28,7 @@
       <md-table-row :key="value" md-selectable="single"
           slot="md-table-row" :slot-scope="yts.ytResponse.result"
           v-for="value in yts.ytResponse.result.items">
-        <md-table-cell md-label="VideoId" md-sort-by="VideoId" >
+        <md-table-cell @click="prepareThisVideo" md-label="VideoId" md-sort-by="VideoId" >
           {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
           data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
         </md-table-cell>
@@ -162,7 +162,31 @@
 
     justItems: {} = {}
 
-    public computed = {
+    private prepareThisVideo() {
+
+      fetch('/dzoni')
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
+          }
+
+          console.log("I am look")
+          // Examine the text in the response
+          response.json().then(function(data) {
+            console.log(data);
+          });
+
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
+    }
+
+    private computed = {
       // a computed getter
     }
 
