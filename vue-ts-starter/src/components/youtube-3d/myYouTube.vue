@@ -178,11 +178,12 @@
             return;
           }
 
-          console.log("I am look")
+          console.log("I am look response", response)
+
           // Examine the text in the response
-          response.json().then(function(data) {
-            console.log(data);
-          });
+          // response.json().then(function(data) {
+            // console.log(data);
+          // });
 
         }
       )
