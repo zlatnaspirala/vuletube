@@ -58,9 +58,9 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
       } else if (request.url.search(/.videos/g) != -1) {
         console.log("Special call => ",  request.url);
-        var h = request.url.replace("/videos", "");
+        var h = request.url.replace("/?videos", "");
         console.log("Special mod on server only => ",  request.url);
-        videoAccess.serve(request, response);
+        videoAccess.serve(h, response);
       } else {
         console.log("Client looks at request.url ",  request.url);
         file.serve(request, response);

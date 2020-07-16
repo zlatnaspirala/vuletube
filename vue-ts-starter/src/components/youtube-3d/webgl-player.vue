@@ -111,7 +111,7 @@
       // Trust lint
       try {
 
-        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/videos/vule" + args.videoId + ".mp4"
+        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/?videos=/vule" + args.videoId + ".mp4"
         this.$refs.texvideo["style"].display = "block"
 
       }catch(err) {
