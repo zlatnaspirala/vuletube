@@ -28,10 +28,10 @@ var httpRtc = require('https').createServer(options, function(request, response)
       if (request.url.search(/.nidza|.dzoni/g) != -1) {
         // file.serveFile('bad.html', 402, {}, request, response);
         console.log("Vule bule request.url., ", request.url);
-        const localVid = request.url.split("?vid=")
+        const localVid = request.url.split("?vid=");
         console.log("videoID => ", localVid[1]);
-
-        const video = youtubedl('http://www.youtube.com/watch?v=90AiXO1pAiA',
+        const addressLink = 'http://www.youtube.com/watch?v=' + localVid;
+        const video = youtubedl(addressLink,
         // Optional arguments passed to youtube-dl.
         ['--format=18'],
         // Additional options can be given for calling `child_process.execFile()`.
@@ -44,7 +44,8 @@ var httpRtc = require('https').createServer(options, function(request, response)
           console.log('size: ' + info.size)
         })
 
-      video.pipe(fs.createWriteStream('myvideo.mp4'))
+        const videoName = 'videos/vule' + localVid + '.mp4';
+        video.pipe(fs.createWriteStream(videoName))
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end('Not bad \n Man');
