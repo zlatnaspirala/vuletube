@@ -45,7 +45,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
           console.log('size: ' + info.size)
         })
 
-        const videoName = 'videos/vule' + localVid[1] + '.mp4';
+        const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
         video.pipe(fs.createWriteStream(videoName))
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -56,11 +56,6 @@ var httpRtc = require('https').createServer(options, function(request, response)
                       Voli
                       svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
 
-      } else if (request.url.search(/.videos/g) != -1) {
-        console.log("Special call => ",  request.url);
-        var h = request.url.replace("/?videos", "");
-        console.log("Special mod on server only => ",  request.url);
-        videoAccess.serve(h, response);
       } else {
         console.log("Client looks at request.url ",  request.url);
         file.serve(request, response);
