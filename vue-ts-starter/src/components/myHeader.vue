@@ -5,7 +5,7 @@
     <md-menu>
       <md-button md-menu-trigger>3D</md-button>
       <md-menu-content>
-        <md-menu-item>Run in 3d</md-menu-item>
+        <md-menu-item>About VuleService</md-menu-item>
       </md-menu-content>
     </md-menu>
 

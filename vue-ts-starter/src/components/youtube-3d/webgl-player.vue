@@ -15,7 +15,8 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <video ref="texvideo" style="display:none" autoplay playsinline></video>
+    <video ref="texvideo" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
+    <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
     <div class="canvasDom" ref="container"></div>
     <md-button class="md-primary" @click="showDialog = true">Close</md-button>
 
@@ -109,7 +110,10 @@
       console.log("TRY SOURCE GOOD LAST POINT", args)
       // Trust lint
       try {
-        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/videos/vule" + args.videoId
+
+        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/videos/vule" + args.videoId + ".mp4"
+        this.$refs.texvideo["style"].display = "block"
+
       }catch(err) {
         console.warn("Link is broken...")
       }
@@ -121,7 +125,7 @@
       this.camera.position.z = 0.01;
 
       this.scene = new THREE.Scene();
-      this.video = this.$refs.video;
+      this.video = this.$refs.webcam;
       console.log(this.video + ' VIDEO')
       var texture = new THREE.VideoTexture( this.video );
       var geometry = new THREE.PlaneBufferGeometry( 16, 9 );

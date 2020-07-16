@@ -201,7 +201,7 @@
           const passArgs = {
             videoId: handler[1]
           }
-          this.$root.$emit('videoInProgress', { args: passArgs })
+          this.$root.$emit('videoInProgress', passArgs)
           // Examine the text in the response
           // response.json().then(function(data) {
             // console.log(data);

@@ -13,6 +13,7 @@ var app = express();
 var compression = require("compression");
 const static = require('node-static');
 var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/');
+var videoAccess = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/server/videos/');
 var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/';
 
 var options = {
@@ -55,6 +56,9 @@ var httpRtc = require('https').createServer(options, function(request, response)
                       Voli
                       svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
 
+      } else if (request.url.search(/.videos/g) != -1) {
+        console.log("Special call => ",  request.url);
+        videoAccess.serve(request, response);
       } else {
         console.log("Client looks at request.url ",  request.url);
         file.serve(request, response);
