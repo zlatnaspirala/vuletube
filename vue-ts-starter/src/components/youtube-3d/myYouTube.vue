@@ -174,34 +174,29 @@
 
     private prepareThisVideo(e) {
 
-      // console.log("TEST ", e.target.parentElement.parentElement.getAttribute("data-videoid"))
       var passVideoId = e.target.parentElement.parentElement.getAttribute("data-videoid")
       fetch('/dzoni?vid=' + passVideoId)
       .then(
-        function(response) {
+        (response) => {
+
           if (response.status !== 200) {
             console.log('Looks like there was a problem. Status Code: ' +
               response.status);
             return;
           }
 
-          console.log("I am look response", response)
-
+          console.log("I am look at response", response)
+          this.$root.$emit('videoInProgress', { start: 'test' })
           // Examine the text in the response
           // response.json().then(function(data) {
             // console.log(data);
           // });
-
         }
       )
       .catch(function(err) {
         console.log('Fetch Error :-S', err);
       });
     }
-
-    // private computed = {
-      // a computed getter
-    // }
 
     private setNewResponse(r: any) {
       // this.currentApiRequest = r
@@ -324,8 +319,6 @@
         });
     }
 
-    // Make sure the client is loaded and sign-in is complete before calling this method.
-    // If you use APiKey no need.
     private execute() {
 
       var root = this

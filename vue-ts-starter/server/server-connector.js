@@ -48,7 +48,12 @@ var httpRtc = require('https').createServer(options, function(request, response)
         video.pipe(fs.createWriteStream(videoName))
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
-        response.end('Not bad \n Man');
+        response.end(`Not bad \n Man \n
+                      Nikada nisam
+                      Ja bio lud k'o sad \
+                      Jer igru vule
+                      Voli
+                      svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
 
       } else {
         console.log("Client looks at request.url ",  request.url);

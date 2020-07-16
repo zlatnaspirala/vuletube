@@ -92,6 +92,21 @@
     created(): void {
       this.container = this.$refs.container
       console.log("======")
+
+      this.$root.$on('videoInProgress',  (args: any) => {
+        try {
+           console.info("Event videoInProgress => ", args)
+           this.trySource()
+        } catch(err) {
+          console.warn(err)
+        }
+
+      })
+
+    }
+
+    private trySource() {
+      console.log("TRY SOURCE GOOD LAST POINT")
     }
 
     private init() {
