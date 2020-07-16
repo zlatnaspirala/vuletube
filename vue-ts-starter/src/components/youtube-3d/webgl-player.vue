@@ -15,7 +15,7 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <video ref="video" style="display:none" autoplay playsinline></video>
+    <video ref="texvideo" style="display:none" autoplay playsinline></video>
     <div class="canvasDom" ref="container"></div>
     <md-button class="md-primary" @click="showDialog = true">Close</md-button>
 
@@ -93,10 +93,10 @@
       this.container = this.$refs.container
       console.log("======")
 
-      this.$root.$on('videoInProgress',  (args: any) => {
+      this.$root.$on('videoInProgress', (args: any) => {
         try {
            console.info("Event videoInProgress => ", args)
-           this.trySource()
+           this.trySource(args)
         } catch(err) {
           console.warn(err)
         }
@@ -105,8 +105,14 @@
 
     }
 
-    private trySource() {
-      console.log("TRY SOURCE GOOD LAST POINT")
+    private trySource(args: any) {
+      console.log("TRY SOURCE GOOD LAST POINT", args)
+      // Trust lint
+      try {
+        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/videos/vule" + args.videoId
+      }catch(err) {
+        console.warn("Link is broken...")
+      }
     }
 
     private init() {

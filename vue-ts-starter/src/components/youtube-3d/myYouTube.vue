@@ -186,7 +186,22 @@
           }
 
           console.log("I am look at response", response)
-          this.$root.$emit('videoInProgress', { start: 'test' })
+          /**
+           * body: ReadableStream
+           * bodyUsed: false
+           * headers: Headers {}
+           * ok: true
+           * redirected: false
+           * status: 200
+           * statusText: "OK"
+           * type: "basic"
+           * url: "https://maximumroulette.com:3000/dzoni?vid=YPhJOC9-M_M"
+           */
+          var handler = response.url.split("?vid=")
+          const passArgs = {
+            videoId: handler[1]
+          }
+          this.$root.$emit('videoInProgress', { args: passArgs })
           // Examine the text in the response
           // response.json().then(function(data) {
             // console.log(data);
