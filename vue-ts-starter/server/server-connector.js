@@ -27,7 +27,9 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
       if (request.url.search(/.nidza|.dzoni/g) != -1) {
         // file.serveFile('bad.html', 402, {}, request, response);
-        console.log("OK DZONI");
+        console.log("Vule bule request.url., ", request.url);
+        const localVid = request.url.split("?vid=")
+        console.log("videoID => ", localVid[1]);
 
         const video = youtubedl('http://www.youtube.com/watch?v=90AiXO1pAiA',
         // Optional arguments passed to youtube-dl.

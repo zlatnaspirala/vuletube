@@ -15,8 +15,6 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <div id="player" style="position:absolute;width:320px;right:0;" ></div>
-
     <video ref="video" style="display:none" autoplay playsinline></video>
     <div class="canvasDom" ref="container"></div>
     <md-button class="md-primary" @click="showDialog = true">Close</md-button>
@@ -87,45 +85,6 @@
 
     // lifecycle hook
     mounted (): void {
-
-      var YT;
-      var tag = document.createElement('script')
-      tag.src = "https://www.youtube.com/iframe_api"
-      document.head.appendChild(tag)
-
-      var player;
-      /* eslint no-unused-vars: 1 */
-      (window as any).onYouTubeIframeAPIReady = function() {
-
-        // console.log('GOOD onYouTubeIframeAPIReady', (window as any).onYouTubeIframeAPIReady)
-        console.log('GOOD onPlayerReady  ->>>>  ', onPlayerReady)
-        player = new (window as any).YT.Player('player', {
-          height: '195',
-          width: '320',
-          videoId: 'M7lc1UVf-VE', // TOdo7dhvSwg Mr k
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
-
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      }
-
-      function stopVideo() {
-        player.stopVideo();
-      }
-
       this.init()
       this.animate()
     }

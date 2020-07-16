@@ -2,6 +2,8 @@
 <template>
   <div v-bind:style="styleObject">
 
+    <div id="player" style="position:absolute;width:320px;right:0;" ></div>
+
     <md-field>
       <label>Search youtube bar:</label>
 
@@ -31,14 +33,17 @@
         <md-table-cell @click="prepareThisVideo" md-label="VideoId" md-sort-by="VideoId" >
           {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
           data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
-              <md-button class="md-primary md-raised"
-               @click="prepareThisVideo"
-               v-show='tyfetchVisibility'>
-                 prepareThisVideo
-    </md-button>
         </md-table-cell>
         <md-table-cell md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
-        <md-table-cell md-label="VideoId" md-sort-by="videoId" >{{ value.id.videoId }}</md-table-cell>
+        <md-table-cell md-label="VideoId" md-sort-by="videoId" >
+          {{ value.id.videoId }} <br>
+          <md-button class="md-primary md-raised"
+               @click="prepareThisVideo"
+               v-show='tyfetchVisibility'
+               :data-videoid="value.id.videoId">
+                 PLAY VIDEO
+              </md-button>
+          </md-table-cell>
         <md-table-cell md-label="Thumbnails" md-sort-by="thumbnails" >
             <md-card>
               <md-card-media>
@@ -167,9 +172,11 @@
 
     justItems: {} = {}
 
-    private prepareThisVideo() {
+    private prepareThisVideo(e) {
 
-      fetch('/dzoni')
+      // console.log("TEST ", e.target.parentElement.parentElement.getAttribute("data-videoid"))
+      var passVideoId = e.target.parentElement.parentElement.getAttribute("data-videoid")
+      fetch('/dzoni?vid=' + passVideoId)
       .then(
         function(response) {
           if (response.status !== 200) {
@@ -192,9 +199,9 @@
       });
     }
 
-    private computed = {
+    // private computed = {
       // a computed getter
-    }
+    // }
 
     private setNewResponse(r: any) {
       // this.currentApiRequest = r
@@ -246,10 +253,51 @@
       })
 
       window.addEventListener('resize', () => {
-        console.log("test resize window.innerHeight ", window.innerHeight)
+        // console.log("test resize window.innerHeight ", window.innerHeight)
         this.$set(this, "spaceHForYTComponet", window.innerHeight)
       })
 
+      this.loadStartUpVideo()
+
+    }
+
+    private loadStartUpVideo() {
+      var YT;
+      var tag = document.createElement('script')
+      tag.src = "https://www.youtube.com/iframe_api"
+      document.head.appendChild(tag)
+
+      var player;
+      /* eslint no-unused-vars: 1 */
+      (window as any).onYouTubeIframeAPIReady = function() {
+
+        console.log('onPlayerReady  -> ', onPlayerReady)
+        player = new (window as any).YT.Player('player', {
+          height: '195',
+          width: '320',
+          videoId: 'M7lc1UVf-VE', // TOdo7dhvSwg Mr k
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+
+      function stopVideo() {
+        player.stopVideo();
+      }
     }
 
     private authenticate() {
