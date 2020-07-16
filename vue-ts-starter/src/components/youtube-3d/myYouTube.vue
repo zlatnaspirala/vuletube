@@ -20,14 +20,15 @@
                  RUN FETCH
     </md-button>
 
-    <md-table md-card v-show='tyfetchVisibility'>
+    <md-table md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
         <md-chip> {{ yts.ytResponse.status }}</md-chip>
         <h1 class="md-title">YouTube results:</h1>
       </md-table-toolbar>
       <md-table-row :key="value" md-selectable="single"
+          slot="md-table-row" :slot-scope="yts.ytResponse.result"
           v-for="value in yts.ytResponse.result.items">
-        <md-table-cell md-label="Kind" md-sort-by="kind" >
+        <md-table-cell md-label="VideoId" md-sort-by="VideoId" >
           {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
           data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
         </md-table-cell>
@@ -114,21 +115,10 @@
   @Component
   export default class myYouTube extends Vue {
 
-    private styleObject;
+    private styleObject = {};
 
     constructor() {
       super()
-
-      this.styleObject = {
-        display: 'flex',
-        alignItems: 'center',
-        // justifyContent: 'center',
-        textAlign: 'center',
-        // itemsAlign: 'center',
-        height: '100%',
-        width: '100%',
-        border: 'solid blue 1px'
-      }
     }
 
     /**
@@ -160,7 +150,8 @@
           mySearchQuery: 'visula ts game engine'
         },
         isAuthorized: false,
-        tyfetchVisibility:false
+        tyfetchVisibility:false,
+        spaceHForYTComponet: window.innerHeight * 0.9 + 'px'
       }
     }
 
@@ -188,7 +179,17 @@
       // console.log('What is better we will se -> ', this.currentApiRequest)
     }
 
-    mounted (): void {
+    private mounted (): void {
+
+     this.styleObject = {
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        flexDirection: 'column',
+        height: this.$data.spaceHForYTComponet,
+        width: '100%',
+        border: 'solid blue 1px'
+      }
 
       var root = this;
       let g = document.createElement('script')
@@ -212,6 +213,11 @@
           console.warn(err)
         }
 
+      })
+
+      window.addEventListener('resize', () => {
+        console.log("test resize window.innerHeight ", window.innerHeight)
+        this.$set(this, "spaceHForYTComponet", window.innerHeight)
       })
 
     }

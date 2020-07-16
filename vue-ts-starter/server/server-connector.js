@@ -6,6 +6,7 @@ const port = 3000;
 var cors = require("cors");
 var express = require("express");
 var fs = require("fs");
+const youtubedl = require('youtube-dl');
 var https = require('https');
 var bodyParser = require("body-parser");
 var app = express();
@@ -20,14 +21,14 @@ var options = {
   ca: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette_com.crt")
 };
 
-  httpRtc = require('https').createServer(options, function(request, response) {
+var httpRtc = require('https').createServer(options, function(request, response) {
 
     request.addListener('end', function() {
 
       // if (request.url.search(/.png|.gif|.js|.css/g) != -1) {
         // file.serveFile('bad.html', 402, {}, request, response);
       // } else {
-        console.log("SERVER PUBLIC");
+        console.log("Client looks at request.url ",  request.url);
         file.serve(request, response);
       // }
 

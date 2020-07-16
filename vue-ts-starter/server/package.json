@@ -21,7 +21,8 @@
     "googleapis": "^52.1.0",
     "node-static": "^0.7.11",
     "path": "^0.12.7",
-    "spdy": "^4.0.2"
+    "spdy": "^4.0.2",
+    "youtube-dl": "^3.0.2"
   },
   "devDependencies": {
     "mocha": "^8.0.0",
