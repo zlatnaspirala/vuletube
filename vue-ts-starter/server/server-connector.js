@@ -30,7 +30,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
         console.log("Vule bule request.url., ", request.url);
         const localVid = request.url.split("?vid=");
         console.log("videoID => ", localVid[1]);
-        const addressLink = 'http://www.youtube.com/watch?v=' + localVid;
+        const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
         const video = youtubedl(addressLink,
         // Optional arguments passed to youtube-dl.
         ['--format=18'],
@@ -44,7 +44,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
           console.log('size: ' + info.size)
         })
 
-        const videoName = 'videos/vule' + localVid + '.mp4';
+        const videoName = 'videos/vule' + localVid[1] + '.mp4';
         video.pipe(fs.createWriteStream(videoName))
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
