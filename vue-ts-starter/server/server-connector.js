@@ -33,6 +33,25 @@ var httpRtc = require('https').createServer(options, function(request, response)
         console.log("videoID => ", localVid[1]);
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
 
+        const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4';
+
+        try {
+          if (fs.existsSync(checkvideo)) {
+            // file exists
+            console.log("FILE EXIST SKIP...")
+            response.writeHead(200, {'Content-Type': 'text/plain'});
+            response.end(`Not bad \n Man \n
+                      Nikada nisam
+                      Ja bio lud k'o sad \
+                      Jer igru vule
+                      Voli
+                      svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
+             return;
+          }
+        } catch(err) {
+          console.error(err)
+        }
+
           const myPromise = new Promise((resolve, reject) =>{
 
             var test = youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
@@ -49,7 +68,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
             const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
             video.pipe(fs.createWriteStream(videoName,  {
-              flag: "a"
+              flag: "w+"
            }));
 
           }
