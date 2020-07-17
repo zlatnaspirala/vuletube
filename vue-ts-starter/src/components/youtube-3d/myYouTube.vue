@@ -66,7 +66,6 @@
   /*eslint no-unused-vars: 0*/
   declare var gapi: any;
   /*eslint no-unused-vars: 0*/
-  // declare var window: Window;
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
@@ -77,6 +76,16 @@
            mdCard,
           mdInput
   } from 'vue-material'
+
+  /**
+   * Enumerators
+   *
+   * YTSEARCHRESULTS for TYItem
+   */
+  enum YTITEM {
+    KIND = "youtube#searchResult",
+    ID_KIND = "youtube#video"
+  }
 
   /**
    * Best way is to create interface for
@@ -96,7 +105,7 @@
     etag: string
     items: any[]
     kind:  string // "youtube#searchListResponse"  create enum in future
-    nextPageToken: string // "CBkQAA"  create enum in future
+    nextPageToken: string
     pageInfo: {
       totalResults: number
       resultsPerPage: number
