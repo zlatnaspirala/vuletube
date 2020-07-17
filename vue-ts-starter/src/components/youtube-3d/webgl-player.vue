@@ -6,6 +6,7 @@
       <md-tabs md-dynamic-height>
         <md-tab md-label="Three.js options">
           <md-content class="md-scrollbar">
+
             <md-input color="md-primary"
               v-bind:value="this.camera.position.z"
               v-on:input="testThisFunc"
@@ -13,6 +14,13 @@
               placeholder="Camera position Z:"
               maxlength="10000">
             </md-input>
+
+            <div>
+              <input v-bind:value="this.camera.position.z"
+                     v-on:input="testThisFunc"
+                     type="range" > {{ this.camera.position.z }} .
+            </div>
+
           </md-content>
         </md-tab>
       </md-tabs>
@@ -43,7 +51,6 @@
 <style scoped>
    .canvasDom {
      width:100%;
-     border: solid lime 1px;
    }
 </style>
 
@@ -58,7 +65,8 @@
     mdTab,
     mdButton,
     mdDialogActions,
-    mdContent
+    mdContent,
+    mdProgress
    }  from 'vue-material'
 
   const CompProps = Vue.extend({
@@ -74,7 +82,8 @@
       mdTabs,
       mdTab,
       mdDialogActions,
-      mdContent
+      mdContent,
+      mdProgress
     }
   })
 
@@ -126,10 +135,9 @@
 
     }
 
-    public testThisFunc (event) {
-      console.log("TEST $event.target.value ", event.target.value)
-      // console.log("TEST this.camera.position.z ", this.camera.position.z )
-      // this.camera.position.z = event.target.value
+    public testThisFunc (event: any): void {
+      console.log("TEST this.camera.position.z ", this.camera.position.z )
+      this.camera.position.z = event.target.value
     }
 
     private trySource(args: any) {
@@ -176,11 +184,10 @@
       var mesh = new THREE.Mesh(geometry, material);
       mesh.position.z = -9
       mesh.position.x = -7
-      mesh.position.y = 5.5
-      mesh.lookAt(this.camera.position);
+      mesh.position.y = 3.5
+      // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ));
       geometry.scale(0.3, 0.3, 0.3);
       this.scene.add(mesh);
-
 
       this.renderer = new THREE.WebGLRenderer({ antialias: true });
       this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -215,17 +222,16 @@
 
       if(visualShape === "plane") {
 
-        // console.log("Prepare V tex => ")
-        this.texvideo = this.$refs.texvideo;
-        var texture = new THREE.VideoTexture( this.texvideo);
-        var geometry = new THREE.PlaneBufferGeometry(16, 9);
-        geometry.scale(1.4, 1.1, 1.1);
+        this.texvideo = this.$refs.texvideo
+        var texture = new THREE.VideoTexture( this.texvideo)
+        var geometry = new THREE.PlaneBufferGeometry(16, 9)
+        geometry.scale(1.4, 1, 1)
 
-        var material = new THREE.MeshBasicMaterial( { map: texture } );
-        var mesh = new THREE.Mesh( geometry, material );
+        var material = new THREE.MeshBasicMaterial({ map: texture })
+        var mesh = new THREE.Mesh(geometry, material)
         mesh.position.z = -10
-        mesh.lookAt(this.camera.position);
-        this.scene.add( mesh );
+        mesh.lookAt(this.camera.position)
+        this.scene.add( mesh )
 
         // Recall
         this.texvideo.play()
@@ -237,7 +243,7 @@
     private onWindowResize() {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize( window.innerWidth, window.innerHeight );
+      this.renderer.setSize( window.innerWidth / 2, window.innerHeight * 0.9 );
     }
 
     private animate() {

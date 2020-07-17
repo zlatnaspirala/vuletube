@@ -245,16 +245,16 @@
         border: 'solid blue 1px'
       }
 
-      var root = this;
+      var root = this
       let g = document.createElement('script')
       g.setAttribute('src', 'https://apis.google.com/js/api.js')
       document.head.appendChild(g)
-      console.log('Access')
+
       if (typeof gapi === 'undefined') {
         setTimeout( () => {
           console.log('Object gapi:', gapi)
           root.start(gapi)
-        } , 2000)
+        } , 2500)
       } else {
         root.start(gapi)
       }
@@ -270,11 +270,12 @@
       })
 
       window.addEventListener('resize', () => {
+        // Bug
         // console.log("test resize window.innerHeight ", window.innerHeight)
         this.$set(this, "spaceHForYTComponet", window.innerHeight)
       })
 
-      this.loadStartUpVideo()
+      // this.loadStartUpVideo()
 
     }
 

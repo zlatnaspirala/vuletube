@@ -85,7 +85,7 @@
 
     setupInstance = () => {
 
-      this.count++
+      this.increment()
       console.log('Attach Application event this.count => ', this.count)
 
     }

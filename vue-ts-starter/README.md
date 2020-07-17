@@ -33,9 +33,15 @@ Run:
    Getting response for youtube search.
    Call server part for saving videos
 
-#### Response for youtube api v3 call. ####
+ - webgl-player.vue
+   Open opengles port view, look for
+   video source saved to the maximumroulette:3000
+   I use quick solution from npm:
+   https://www.npmjs.com/package/youtube-dl
 
-```
+#### Response for youtube api v3 call `search`. ####
+
+```js
   body: "{↵  "kind": "youtube#searchListResponse",↵  "etag""
   headers: {cache-control: "private", content-encoding: "gzip", content-length: "5512", content-type: "application/json; charset=UTF-8", date: "Sun, 05 Jul 2020 20:47:06 GMT", …}
   result: {kind: "youtube#searchListResponse", etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38", nextPageToken: "CBkQAA", regionCode: "RS", pageInfo: {…}, …}
@@ -45,7 +51,7 @@ Run:
 
 #### Result property: ####
 
-```javascript
+```json
 {
 "kind": "youtube#searchResult",
 "etag": "mlweRndBtBgAcVC-11ZrL0oI7ok",
@@ -78,15 +84,10 @@ Run:
 ```
 
 #### YT Download module ####
+
  Download from :
  https://www.npmjs.com/package/youtube-dl
 
-
-### Apache centos 7.5 setup renew ssl letsencrypt ###
-
-```bash
-sudo /usr/bin/letsencrypt --apache -d maximumroulette.com -d apps.maximumroulette.com -d kure.maximumroulette.com -d roulette.maximumroulette.com -d artificialintelligence.maximumroulette.com
-```
 
 ### Private links: ###
 
@@ -98,4 +99,3 @@ sudo /usr/bin/letsencrypt --apache -d maximumroulette.com -d apps.maximumroulett
   https://vuematerial.io/themes/configuration
   https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md#LoadinganAPIandMakingaRequest
   https://developers.google.com/youtube/v3/docs/search/list?apix=true
-

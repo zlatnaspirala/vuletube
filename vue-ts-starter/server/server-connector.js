@@ -48,7 +48,9 @@ var httpRtc = require('https').createServer(options, function(request, response)
             })
 
             const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-            video.pipe(fs.createWriteStream(videoName))
+            video.pipe(fs.createWriteStream(videoName,  {
+              flag: "a"
+           }));
 
           }
         ).catch(function(err){

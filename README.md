@@ -12,11 +12,11 @@
   I will integrate next features:
 
   - Google client login based on  ApiKey. [DONE]
-  - Test yt video play with YT Player embeded iframe
-    also with customhtml5 video tag.
+  - Test yt video play with YT Player embeded iframe[DONE]
+    also with customhtml5 video tag.[DONE]
   - Google account login based on node.js server.
   - Calling Youtube API v3. and preview in classic html tags. [DONE]
-  - Implementing three.js video preview sub component
+  - Implementing three.js video preview sub component[DONE]
   - Implementing custom webGL2 (glmatrix) video preview sub component.
   - Kure Video Chat (kurento) Mixing yt video with camera stream.
   - Visual ts game engine
