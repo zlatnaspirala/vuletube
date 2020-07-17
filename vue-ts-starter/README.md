@@ -19,8 +19,10 @@ Install:
 ```
 
 Run:
-```bash
+```node
   serve -s dist
+  // or
+  npm run serve
 ```
 
 ## Project details ##
@@ -28,6 +30,8 @@ Run:
 ### Components : ###
 
  - myYouTube.vue
+   Getting response for youtube search.
+   Call server part for saving videos
 
 #### Response for youtube api v3 call. ####
 

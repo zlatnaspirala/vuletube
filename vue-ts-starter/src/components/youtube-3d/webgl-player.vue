@@ -2,11 +2,16 @@
   <div v-bind:style="styleObject" >
 
     <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>opengles 2.0/3.0</md-dialog-title>
+      <md-dialog-title>3D VIEW OPTIONS</md-dialog-title>
       <md-tabs md-dynamic-height>
         <md-tab md-label="Three.js options">
           <md-content class="md-scrollbar">
-            - Options test
+            <md-input color="md-primary"
+              v-model="this.camera"
+              class="md-primary md-raised"
+              placeholder="Camera position Z:"
+              maxlength="10000">
+            </md-input>
           </md-content>
         </md-tab>
       </md-tabs>
@@ -15,7 +20,10 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <video ref="texvideo" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
+    <video ref="texvideo"
+           v-bind:style="{ display: 'none' }"
+           autoplay
+           playsinline ></video>
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
     <div class="canvasDom" ref="container"></div>
     <md-button class="md-primary" @click="showDialog = true">Close</md-button>
@@ -66,11 +74,12 @@
 
     declare YT;
 
-    private camera
-    private scene
+    private camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 )
+    private scene = new THREE.Scene()
     private renderer
     private video
     private container
+    private texvideo
 
     showDialog = false
 
@@ -79,9 +88,7 @@
     }
 
     constructor() {
-
       super()
-
     }
 
     // lifecycle hook
@@ -91,13 +98,17 @@
     }
 
     created(): void {
+
       this.container = this.$refs.container
-      console.log("======")
 
       this.$root.$on('videoInProgress', (args: any) => {
+
         try {
            console.info("Event videoInProgress => ", args)
-           this.trySource(args)
+           setTimeout(() => {
+             this.trySource(args)
+           }, 5000)
+
         } catch(err) {
           console.warn(err)
         }
@@ -107,24 +118,28 @@
     }
 
     private trySource(args: any) {
-      console.log("TRY SOURCE GOOD LAST POINT", args)
-      // Trust lint
-      try {
 
-        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/?videos=/vule" + args.videoId + ".mp4"
+      console.log("Try source", args)
+      try {
+        (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/videos/vule" + args.videoId + ".mp4"
         this.$refs.texvideo["style"].display = "block"
 
+        setTimeout(() => {
+          this.prepareVideoTexture('plane')
+        }, 2000)
+
       }catch(err) {
-        console.warn("Link is broken...")
+        console.warn("Link is broken...", err)
       }
     }
 
     private init() {
 
-      this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
+      // this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
       this.camera.position.z = 0.01;
 
-      this.scene = new THREE.Scene();
+      // this.scene = new THREE.Scene();
+
       this.video = this.$refs.webcam;
       console.log(this.video + ' VIDEO')
       var texture = new THREE.VideoTexture( this.video );
@@ -172,6 +187,30 @@
 
       } else {
         console.error( 'MediaDevices interface not available.' );
+      }
+
+    }
+
+    private prepareVideoTexture = (visualShape: string) => {
+
+      if(visualShape === "plane") {
+
+        console.log("Prepare V tex => ")
+        var radius = 32;
+        var phi = Math.acos( - 1 + ( 2 * 1 ) );
+        var theta = Math.sqrt( 1 * Math.PI ) * phi;
+        this.texvideo = this.$refs.texvideo;
+
+        var texture = new THREE.VideoTexture( this.texvideo );
+        var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
+        geometry.scale( 0.5, 0.5, 0.5 );
+        var material = new THREE.MeshBasicMaterial( { map: texture } );
+
+        var mesh = new THREE.Mesh( geometry, material );
+        mesh.position.setFromSphericalCoords( radius, phi, theta );
+        mesh.lookAt( this.camera.position );
+        this.scene.add( mesh );
+
       }
 
     }

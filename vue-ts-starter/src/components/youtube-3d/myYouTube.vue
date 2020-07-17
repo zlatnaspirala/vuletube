@@ -51,7 +51,7 @@
               </md-card-media>
             </md-card>
         </md-table-cell>
-      </md-table-row>
+      </md-table-row >
     </md-table>
   </div>
 </template>
@@ -63,8 +63,10 @@
 </style>
 
 <script lang="ts">
-  /*eslint no-unused-vars: 1*/
+  /*eslint no-unused-vars: 0*/
   declare var gapi: any;
+  /*eslint no-unused-vars: 0*/
+  // declare var window: Window;
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
@@ -110,6 +112,7 @@
     statusText: any // null
   }
 
+  // window:Window
   // Register for components
   @Component({
     components: {
@@ -125,7 +128,7 @@
   @Component
   export default class myYouTube extends Vue {
 
-    private styleObject = {};
+    private styleObject = {}
 
     constructor() {
       super()
@@ -157,7 +160,7 @@
             },
             status: 0
           },
-          mySearchQuery: 'visula ts game engine'
+          mySearchQuery: 'visual ts game engine'
         },
         isAuthorized: false,
         tyfetchVisibility:false,
@@ -167,10 +170,14 @@
 
     /*eslint  no-unused-labels: 1*/
     private loginIn() {
-        this.authenticate().then(this.loadClient)
+      this.authenticate().then(this.loadClient)
     }
 
-    justItems: {} = {}
+    public computed = {
+      // test
+    }
+
+    private justItems: {} = {}
 
     private prepareThisVideo(e) {
 
@@ -180,7 +187,7 @@
         (response) => {
 
           if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
+            console.log('Looks like there was a problem. Status Code:' +
               response.status);
             return;
           }
@@ -272,42 +279,42 @@
     }
 
     private loadStartUpVideo() {
-      var YT;
+      /* eslint no-unused-vars: 0 */
+      // var YT;
       var tag = document.createElement('script')
       tag.src = "https://www.youtube.com/iframe_api"
       document.head.appendChild(tag)
 
       var player;
+      (window as any).player = player = {};
+
+
       /* eslint no-unused-vars: 1 */
       (window as any).onYouTubeIframeAPIReady = function() {
 
-        console.log('onPlayerReady  -> ', onPlayerReady)
-        player = new (window as any).YT.Player('player', {
+      var done = false;
+
+        console.log('onPlayerReady')
+          player = new (window as any).YT.Player('player', {
           height: '195',
           width: '320',
           videoId: 'M7lc1UVf-VE', // TOdo7dhvSwg Mr k
           events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+            'onReady': (event) => {
+             event.target.playVideo();
+            },
+            'onStateChange': (event) => {
+            if (event.data == (window as any).YT.PlayerState.PLAYING && !done) {
+              setTimeout(() => {
+                player.stopVideo();
+              }, 6000);
+              done = true;
+            }
+      }
           }
         });
       }
 
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      }
-
-      function stopVideo() {
-        player.stopVideo();
-      }
     }
 
     private authenticate() {

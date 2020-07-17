@@ -32,21 +32,25 @@ var httpRtc = require('https').createServer(options, function(request, response)
         const localVid = request.url.split("?vid=");
         console.log("videoID => ", localVid[1]);
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
+
         const video = youtubedl(addressLink,
         // Optional arguments passed to youtube-dl.
         ['--format=18'],
         // Additional options can be given for calling `child_process.execFile()`.
-        { cwd: __dirname })
+        { cwd: __dirname }).then((what) => {
 
-        // Will be called when the download starts.
-        video.on('info', function(info) {
-          console.log('Download started')
-          console.log('filename: ' + info._filename)
-          console.log('size: ' + info.size)
+          // Will be called when the download starts.
+          video.on('info', function(info) {
+            console.log('Download started')
+            console.log('filename: ' + info._filename)
+            console.log('size: ' + info.size)
+          })
+
+          const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
+          video.pipe(fs.createWriteStream(videoName))
+
         })
 
-        const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-        video.pipe(fs.createWriteStream(videoName))
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end(`Not bad \n Man \n

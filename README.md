@@ -1,9 +1,12 @@
 # Project name: vue-ts-starter #
- Creator: Nikola Lukic 2020
- Visual Code editor used
- Code formater vsPrettier
 
-### Project objective ###
+ ### Creator: Nikola Lukic 2020 ###
+ ### Visual Code editor used ###
+ ### Code formater vsPrettier ###
+ ### Version "Ecstacy of gold" ###
+
+
+## Project objective ##
 
  To create perfect modular fit for any type project.
   I will integrate next features:
@@ -20,9 +23,13 @@
   - Google map API - Not free (maybe for 3d vs maps)
     7$ min cost
 
+ ## Go to project folder ##
+ ### [Starter readme](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter) ###
+
  See setup-from-zero-point.md to make clear who this project is created.
 
  Help links:
+
  [developers.google.com/youtube/v3](https://developers.google.com/youtube/v3/getting-started)
 
  [github.com/google/google-api-javascript-client](https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md)

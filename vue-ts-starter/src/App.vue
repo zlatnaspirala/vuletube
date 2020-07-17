@@ -86,7 +86,10 @@
     }
 
     setupInstance = () => {
+
+      this.count++
       console.log('Attach Application event => ')
+
     }
 
     // computed

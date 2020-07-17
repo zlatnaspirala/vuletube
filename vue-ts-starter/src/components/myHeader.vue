@@ -16,7 +16,7 @@
           <md-progress-spinner v-show='tyfetchVisibility'
             :md-diameter="22"
             :md-stroke="4"
-             md-mode="indeterminate">
+            md-mode="indeterminate">
           </md-progress-spinner>
           <md-button class="md-primary md-raised" v-show='loginBtnVisibility' @click="googleApiLogin">
             <md-icon class="fa fa-shield"></md-icon>
@@ -28,8 +28,7 @@
             <md-icon>T</md-icon>
             Theme {{ switchThemeBtnLabel }}
           </md-button>
-
-      </md-menu-item>
+        </md-menu-item>
       </md-menu-content>
     </md-menu>
   </div>
