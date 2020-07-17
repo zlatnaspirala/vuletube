@@ -37,7 +37,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
           const video = youtubedl(addressLink, ['--format=18'], { cwd: __dirname });
 
           video.then(
-            () => {
+             function() {
               console.log("passed")
 
               video.on('info', function(info) {
@@ -50,7 +50,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
               video.pipe(fs.createWriteStream(videoName))
 
             },
-            (rejected) => {
+            function(rejected) {
               console.log("rejected", rejected)
             }
           )
