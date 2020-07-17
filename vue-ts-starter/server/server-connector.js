@@ -34,7 +34,9 @@ var httpRtc = require('https').createServer(options, function(request, response)
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
 
         try {
-          const video = youtubedl(addressLink, ['--format=18'], { cwd: __dirname });
+          const video = (new Promise(
+            youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
+          ));
 
           video.then(
              function() {
