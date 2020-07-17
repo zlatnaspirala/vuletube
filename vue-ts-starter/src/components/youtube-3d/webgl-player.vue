@@ -7,7 +7,7 @@
         <md-tab md-label="Three.js options">
           <md-content class="md-scrollbar">
             <md-input color="md-primary"
-              v-model="this.camera"
+              v-model="this.camera.position.z"
               class="md-primary md-raised"
               placeholder="Camera position Z:"
               maxlength="10000">
@@ -20,13 +20,21 @@
       </md-dialog-actions>
     </md-dialog>
 
+    <!-- Texture video tag -->
     <video ref="texvideo"
-           v-bind:style="{ display: 'none' }"
+           v-bind:style="{ display: 'none',
+                          position: 'absolute',
+                          top: '-1000px' }"
            autoplay
            playsinline ></video>
+
+    <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
+
+    <!-- threejs canvas tag -->
     <div class="canvasDom" ref="container"></div>
-    <md-button class="md-primary" @click="showDialog = true">Close</md-button>
+
+    <md-button class="md-primary" @click="showDialog = true">SETTINGS</md-button>
 
   </div>
 </template>
@@ -126,7 +134,9 @@
 
         setTimeout(() => {
           this.prepareVideoTexture('plane')
-        }, 2000)
+        }, 6000)
+
+        alert("Please wait 5 sec...")
 
       }catch(err) {
         console.warn("Link is broken...", err)
@@ -135,19 +145,15 @@
 
     private init() {
 
-      // this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
       this.camera.position.z = 0.01;
-
-      // this.scene = new THREE.Scene();
-
       this.video = this.$refs.webcam;
-      console.log(this.video + ' VIDEO')
+
       var texture = new THREE.VideoTexture( this.video );
       var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
       geometry.scale( 0.5, 0.5, 0.5 );
       var material = new THREE.MeshBasicMaterial( { map: texture } );
 
-      var count = 128;
+      var count = 10;
       var radius = 32;
 
       for ( var i = 1, l = count; i <= l; i ++ ) {
@@ -196,18 +202,17 @@
       if(visualShape === "plane") {
 
         console.log("Prepare V tex => ")
-        var radius = 32;
-        var phi = Math.acos( - 1 + ( 2 * 1 ) );
-        var theta = Math.sqrt( 1 * Math.PI ) * phi;
+        // var phi = Math.acos( - 1 + ( 2 * 1 ) );
+
         this.texvideo = this.$refs.texvideo;
 
         var texture = new THREE.VideoTexture( this.texvideo );
         var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
-        geometry.scale( 0.5, 0.5, 0.5 );
-        var material = new THREE.MeshBasicMaterial( { map: texture } );
+        geometry.scale( 1.5, 1.5, 1.5 );
 
+        var material = new THREE.MeshBasicMaterial( { map: texture } );
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.setFromSphericalCoords( radius, phi, theta );
+        mesh.position.x = 2
         mesh.lookAt( this.camera.position );
         this.scene.add( mesh );
 

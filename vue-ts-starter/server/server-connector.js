@@ -34,22 +34,28 @@ var httpRtc = require('https').createServer(options, function(request, response)
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
 
         try {
-          const video = youtubedl(addressLink,
-          // Optional arguments passed to youtube-dl.
-          ['--format=18'],
-          // Additional options can be given for calling `child_process.execFile()`.
-          { cwd: __dirname })
+          const video = youtubedl(addressLink, ['--format=18'], { cwd: __dirname });
 
+          video.then(
+            () => {
+              console.log("passed")
 
+              video.on('info', function(info) {
+                console.log('Download started')
+                console.log('filename: ' + info._filename)
+                console.log('size: ' + info.size)
+              })
+
+              const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
+              video.pipe(fs.createWriteStream(videoName))
+
+            },
+            (rejected) => {
+              console.log("rejected", rejected)
+            }
+          )
           // Will be called when the download starts.
-          video.on('info', function(info) {
-            console.log('Download started')
-            console.log('filename: ' + info._filename)
-            console.log('size: ' + info.size)
-          })
 
-          const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-          video.pipe(fs.createWriteStream(videoName))
         } catch(err) {
           console.log("Error in yut staff", err)
          }
