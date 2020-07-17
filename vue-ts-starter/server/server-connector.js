@@ -35,22 +35,22 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
           const myPromise = new Promise((resolve, reject) =>{
 
-            youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
-            resolve()
+            var test = youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
+            resolve(test)
 
           }).then(
-             () => {
+             (video) => {
               //console.log("passed video", video)
               console.log("passed this.on", this.on)
 
-              this.on('info', function(info) {
+              video.on('info', function(info) {
                 console.log('Download started')
                 console.log('filename: ' + info._filename)
                 console.log('size: ' + info.size)
               })
 
               const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-              this.pipe(fs.createWriteStream(videoName))
+              video.pipe(fs.createWriteStream(videoName))
 
             }
           ).catch(function(err){
