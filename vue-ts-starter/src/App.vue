@@ -74,13 +74,11 @@
 
       this.styleObject = {
         display: 'flex',
-        //alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
         itemsAlign: 'center',
         height: '100%',
-        width: '100%',
-        border: 'solid red 1px'
+        width: '100%'
       }
 
     }
@@ -88,7 +86,7 @@
     setupInstance = () => {
 
       this.count++
-      console.log('Attach Application event => ')
+      console.log('Attach Application event this.count => ', this.count)
 
     }
 
