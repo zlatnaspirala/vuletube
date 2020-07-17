@@ -33,11 +33,13 @@ var httpRtc = require('https').createServer(options, function(request, response)
         console.log("videoID => ", localVid[1]);
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
 
-        const video = youtubedl(addressLink,
-        // Optional arguments passed to youtube-dl.
-        ['--format=18'],
-        // Additional options can be given for calling `child_process.execFile()`.
-        { cwd: __dirname }).then((what) => {
+        try {
+          const video = youtubedl(addressLink,
+          // Optional arguments passed to youtube-dl.
+          ['--format=18'],
+          // Additional options can be given for calling `child_process.execFile()`.
+          { cwd: __dirname })
+
 
           // Will be called when the download starts.
           video.on('info', function(info) {
@@ -48,10 +50,9 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
           const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
           video.pipe(fs.createWriteStream(videoName))
-
-        })
-
-
+        } catch(err) {
+          console.log("Error in yut staff", err)
+         }
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end(`Not bad \n Man \n
                       Nikada nisam
