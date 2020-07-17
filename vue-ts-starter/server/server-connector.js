@@ -58,7 +58,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
           });
           // Will be called when the download starts.
 
-        }
+
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end(`Not bad \n Man \n
                       Nikada nisam
