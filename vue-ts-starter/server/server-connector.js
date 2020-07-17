@@ -35,13 +35,14 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
         try {
           const video = new Promise((resolve, reject) =>{
-            youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
 
+            youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
             resolve()
 
           }).then(
-             function() {
-              console.log("passed")
+             () => {
+              console.log("passed video", video)
+              console.log("passed this", this)
 
               video.on('info', function(info) {
                 console.log('Download started')
@@ -53,8 +54,8 @@ var httpRtc = require('https').createServer(options, function(request, response)
               video.pipe(fs.createWriteStream(videoName))
 
             }
-          ).catch(function(){
-            console.log("error in promise")
+          ).catch(function(err){
+            console.log("error in promise", err)
           });
           // Will be called when the download starts.
 
