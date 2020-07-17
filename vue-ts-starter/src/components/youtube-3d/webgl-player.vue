@@ -212,7 +212,7 @@
 
         var material = new THREE.MeshBasicMaterial( { map: texture } );
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.x = 2
+        mesh.position.z = -5
         mesh.lookAt( this.camera.position );
         this.scene.add( mesh );
 

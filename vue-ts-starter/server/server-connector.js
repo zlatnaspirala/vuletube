@@ -39,25 +39,21 @@ var httpRtc = require('https').createServer(options, function(request, response)
             resolve(test)
 
           }).then(
-             (video) => {
-              //console.log("passed video", video)
-              console.log("passed this.on", this.on)
+            (video) => {
 
-              video.on('info', function(info) {
-                console.log('Download started')
-                console.log('filename: ' + info._filename)
-                console.log('size: ' + info.size)
-              })
+            video.on('info', function(info) {
+              console.log('Download started')
+              console.log('filename: ' + info._filename)
+              console.log('size: ' + info.size)
+            })
 
-              const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-              video.pipe(fs.createWriteStream(videoName))
+            const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
+            video.pipe(fs.createWriteStream(videoName))
 
-            }
-          ).catch(function(err){
-            console.log("error in promise", err)
-          });
-          // Will be called when the download starts.
-
+          }
+        ).catch(function(err){
+          console.log("Error in promise", err)
+        });
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end(`Not bad \n Man \n
