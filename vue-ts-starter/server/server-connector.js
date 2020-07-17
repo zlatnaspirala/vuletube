@@ -33,8 +33,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
         console.log("videoID => ", localVid[1]);
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
 
-        try {
-          const video = new Promise((resolve, reject) =>{
+          const myPromise = new Promise((resolve, reject) =>{
 
             youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
             resolve()
@@ -44,7 +43,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
               console.log("passed video", video)
               console.log("passed this", this)
 
-              video.on('info', function(info) {
+              this.on('info', function(info) {
                 console.log('Download started')
                 console.log('filename: ' + info._filename)
                 console.log('size: ' + info.size)
@@ -59,9 +58,7 @@ var httpRtc = require('https').createServer(options, function(request, response)
           });
           // Will be called when the download starts.
 
-        } catch(err) {
-          console.log("Error in yut staff", err)
-         }
+        }
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.end(`Not bad \n Man \n
                       Nikada nisam
