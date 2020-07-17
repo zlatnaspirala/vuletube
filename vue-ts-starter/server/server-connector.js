@@ -49,11 +49,10 @@ var httpRtc = require('https').createServer(options, function(request, response)
               const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
               video.pipe(fs.createWriteStream(videoName))
 
-            },
-            function(rejected) {
-              console.log("rejected", rejected)
             }
-          )
+          ).catch(function(){
+            console.log("error in promise")
+          });
           // Will be called when the download starts.
 
         } catch(err) {
