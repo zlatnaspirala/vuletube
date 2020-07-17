@@ -40,8 +40,8 @@ var httpRtc = require('https').createServer(options, function(request, response)
 
           }).then(
              () => {
-              console.log("passed video", video)
-              console.log("passed this", this)
+              //console.log("passed video", video)
+              console.log("passed this.on", this.on)
 
               this.on('info', function(info) {
                 console.log('Download started')
