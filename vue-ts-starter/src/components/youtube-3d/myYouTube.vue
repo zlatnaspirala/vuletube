@@ -235,10 +235,6 @@
       this.authenticate().then(this.loadClient)
     }
 
-    // public computed = {
-      // test
-    // }
-
     private justItems: {} = {}
 
     private prepareThisVideo(e) {
