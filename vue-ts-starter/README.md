@@ -2,7 +2,6 @@
 
   Production use `https` node application for web server.
 
-
 ```bash
   git clone https://github.com/zlatnaspirala/vue-typescript-starter
 ```
@@ -81,11 +80,43 @@ Run:
   "publishTime": "2019-07-14T19:27:31Z"
   }
 }
+
+{
+  etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38"
+  items:
+      etag: "mlweRndBtBgAcVC-11ZrL0oI7ok"
+      id: {kind: "youtube#video", videoId: "YPhJOC9-M_M"}
+      kind: "youtube#searchResult"
+      snippet: {publis
+      kind: "youtube#searchListResponse"
+      nextPageToken: "CBkQAA"
+      pageInfo: {totalResults: 400229, resultsPerPage: 25}
+      regionCode: "RS"
+      }
+}
+
+```
+
+### Spiral position ###
+
+Not in use at the moment.
+
+```js
+  var count = 10;
+  var radius = 32;
+  for ( var i = 1, l = count; i <= l; i ++ ) {
+    var phi = Math.acos( - 1 + ( 2 * i ) / l );
+    var theta = Math.sqrt( l * Math.PI ) * phi;
+    var mesh = new THREE.Mesh( geometry, material );
+    mesh.position.setFromSphericalCoords( radius, phi, theta );
+    mesh.lookAt( this.camera.position );
+    this.scene.add( mesh );
+  }
 ```
 
 #### YT Download module ####
 
- Download from :
+ Download from:
  https://www.npmjs.com/package/youtube-dl
 
 
@@ -99,3 +130,8 @@ Run:
   https://vuematerial.io/themes/configuration
   https://github.com/google/google-api-javascript-client/blob/master/docs/samples.md#LoadinganAPIandMakingaRequest
   https://developers.google.com/youtube/v3/docs/search/list?apix=true
+
+## Direct link for dev server ##
+
+### VueTube web service 2020 ###
+https://maximumroulette.com:3000

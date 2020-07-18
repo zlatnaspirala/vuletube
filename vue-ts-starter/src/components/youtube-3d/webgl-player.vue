@@ -1,25 +1,47 @@
-<template>
-  <div v-bind:style="styleObject" >
 
-    <md-dialog :md-active.sync="showDialog">
+<template>
+
+  <div v-bind:style="styleObject" >
+    <md-dialog v-bind:style="dialogStyle" :md-active.sync="showDialog">
       <md-dialog-title>3D VIEW OPTIONS</md-dialog-title>
       <md-tabs md-dynamic-height>
-        <md-tab md-label="Three.js options">
+        <md-tab md-label="3D VIEW OPTIONS">
           <md-content class="md-scrollbar">
 
-            <md-input color="md-primary"
-              v-bind:value="this.camera.position.z"
-              v-on:input="testThisFunc"
-              class="md-primary md-raised"
-              placeholder="Camera position Z:"
-              maxlength="10000">
-            </md-input>
+            <md-box>
+             <md-field>
+              <label>Camera deep: {{ this.camera.position.z }}</label>
+                <md-input v-bind:value="this.camera.position.z"
+                      v-on:input="testThisFunc"
+                      type="range">
+                </md-input>
+              </md-field>
+             </md-box>
 
-            <div>
-              <input v-bind:value="this.camera.position.z"
-                     v-on:input="testThisFunc"
-                     type="range" > {{ this.camera.position.z }} .
-            </div>
+             <md-box>
+               <h3>Background:</h3>
+
+              <md-field>
+              <label>Red component: </label>
+                <md-input min="0" max="255" ref="redcomponent" value="0"
+                  v-on:input="set3dBackground" type="range">
+                </md-input>
+              </md-field>
+
+              <md-field>
+              <label>Green component: </label>
+                <md-input min="0" max="255" ref="greencomponent" value="0"
+                          v-on:input="set3dBackground" type="range">
+                </md-input>
+              </md-field>
+
+              <md-field>
+              <label>Blue component: </label>
+                <md-input min="0" max="255" ref="bluecomponent" value="0"
+                       v-on:input="set3dBackground" type="range">
+                </md-input>
+              </md-field>
+             </md-box>
 
           </md-content>
         </md-tab>
@@ -49,12 +71,13 @@
 </template>
 
 <style scoped>
-   .canvasDom {
-     width:100%;
-   }
+  .canvasDom {
+    width:100%;
+  }
 </style>
 
 <script lang="ts">
+
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import * as THREE from 'three/build/three.module'
@@ -63,11 +86,13 @@
   import {
     mdTabs,
     mdTab,
+    mdInput,
     mdButton,
+    mdDialog,
     mdDialogActions,
     mdContent,
-    mdProgress
-   }  from 'vue-material'
+    mdField
+  }  from 'vue-material'
 
   const CompProps = Vue.extend({
     props: {
@@ -78,12 +103,14 @@
   // Register for components
   @Component({
     components: {
-      mdButton,
       mdTabs,
       mdTab,
+      mdInput,
+      mdButton,
+      mdDialog,
       mdDialogActions,
       mdContent,
-      mdProgress
+      mdField
     }
   })
 
@@ -98,11 +125,16 @@
     private video
     private container
     private texvideo
+    private webcamMesh
 
     showDialog = false
 
     styleObject = {
       width: '100%'
+    }
+
+    dialogStyle = {
+
     }
 
     constructor() {
@@ -135,9 +167,8 @@
 
     }
 
-    public testThisFunc (event: any): void {
-      console.log("TEST this.camera.position.z ", this.camera.position.z )
-      this.camera.position.z = event.target.value
+    private testThisFunc (currValue: any): void {
+      this.camera.position.z = currValue
     }
 
     private trySource(args: any) {
@@ -160,34 +191,21 @@
 
     private init() {
 
-      this.camera.position.z = 0.01;
       this.video = this.$refs.webcam;
+      this.camera.position.z = 0.01;
 
       var texture = new THREE.VideoTexture( this.video );
       var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
       geometry.scale( 0.5, 0.5, 0.5 );
       var material = new THREE.MeshBasicMaterial( { map: texture } );
 
-      /*
-      var count = 10;
-      var radius = 32;
-      for ( var i = 1, l = count; i <= l; i ++ ) {
-        var phi = Math.acos( - 1 + ( 2 * i ) / l );
-        var theta = Math.sqrt( l * Math.PI ) * phi;
-        var mesh = new THREE.Mesh( geometry, material );
-        mesh.position.setFromSphericalCoords( radius, phi, theta );
-        mesh.lookAt( this.camera.position );
-        this.scene.add( mesh );
-      }
-      **/
-
-      var mesh = new THREE.Mesh(geometry, material);
-      mesh.position.z = -9
-      mesh.position.x = -7
-      mesh.position.y = 3.5
+      this.webcamMesh = new THREE.Mesh(geometry, material);
+      this.webcamMesh.position.z = -9
+      this.webcamMesh.position.x = -7
+      this.webcamMesh.position.y = 3.5
       // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ));
       geometry.scale(0.3, 0.3, 0.3);
-      this.scene.add(mesh);
+      this.scene.add(this.webcamMesh);
 
       this.renderer = new THREE.WebGLRenderer({ antialias: true });
       this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -249,6 +267,17 @@
     private animate() {
       requestAnimationFrame( this.animate );
       this.renderer.render( this.scene, this.camera );
+    }
+
+    private setupWebcamMesh () {
+      // test
+    }
+
+    private set3dBackground(): void {
+      this.renderer.setClearColor ("rgb(" +
+       (this.$refs.redcomponent as any).localValue + "," +
+       (this.$refs.greencomponent as any).localValue + "," +
+       (this.$refs.bluecomponent as any).localValue + ")", 1);
     }
 
   }

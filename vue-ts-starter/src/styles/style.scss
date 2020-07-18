@@ -3,7 +3,7 @@
 
 @include md-register-theme("myDark", (
   primary: md-get-palette-color(gray, A200), // The primary color of your application
-  accent: md-get-palette-color(gray, 100), // The accent or secondary color
+  accent: md-get-palette-color(gray, 500), // The accent or secondary color
   whiteText: #987123,
   secondary: #982828,
   positive: #99ff88,

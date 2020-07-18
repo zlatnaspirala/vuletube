@@ -4,7 +4,7 @@
     <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
     <div v-bind:style="styleObject">
       <myYouTube ref="myYouTube" ></myYouTube>
-      <threejsYoutubePlayer ref="myYouTubeThreejs" ></threejsYoutubePlayer>
+      <threejsYoutubePlayer ref="myYouTubeThreejs" args={{}} ></threejsYoutubePlayer>
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>

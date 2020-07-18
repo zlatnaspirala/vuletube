@@ -1,18 +1,20 @@
 
 <template>
+
   <div v-bind:style="styleObject">
-
-    <div id="player" style="position:absolute;width:320px;right:0;" ></div>
-
+    <div id="player" style="position:absolute;width:320px;right:0;"></div>
     <md-field>
       <label>Search youtube bar:</label>
-
-      <md-input color="md-primary"
+      <md-input
               v-model="yts.mySearchQuery"
               class="md-primary md-raised"
               placeholder="Search youtube:"
               maxlength="1200">
-              </md-input>
+      </md-input>
+    </md-field>
+
+    <md-field>
+      <md-button class="md-primary md-raised" @click="showDialog = true">SEARCH LIST OPTIONS</md-button>
     </md-field>
 
     <md-button class="md-primary md-raised"
@@ -21,30 +23,27 @@
                v-show='tyfetchVisibility'>
                  RUN FETCH
     </md-button>
-
     <md-table md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
-        <md-chip> {{ yts.ytResponse.status }}</md-chip>
-        <h1 class="md-title">YouTube results:</h1>
+        <h2 class="md-title">YouTube results:</h2>
       </md-table-toolbar>
       <md-table-row :key="value" md-selectable="single"
           slot="md-table-row" :slot-scope="yts.ytResponse.result"
           v-for="value in yts.ytResponse.result.items">
-        <md-table-cell @click="prepareThisVideo" md-label="VideoId" md-sort-by="VideoId" >
+        <md-table-cell v-show="ytListVisibilityRowChannelTitle" @click="prepareThisVideo" md-label="VideoId" md-sort-by="VideoId" >
           {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
           data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
         </md-table-cell>
-        <md-table-cell md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
+        <md-table-cell v-show="ytListVisibilityRowTitle" md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
         <md-table-cell md-label="VideoId" md-sort-by="videoId" >
           {{ value.id.videoId }} <br>
-          <md-button class="md-primary md-raised"
+          <md-button v-show="ytListVisibilityRowVideoID" class="md-primary md-raised"
                @click="prepareThisVideo"
-               v-show='tyfetchVisibility'
                :data-videoid="value.id.videoId">
                  PLAY VIDEO
               </md-button>
           </md-table-cell>
-        <md-table-cell md-label="Thumbnails" md-sort-by="thumbnails" >
+        <md-table-cell v-show="ytListVisibilityRowThumbnails" md-label="Thumbnails" md-sort-by="thumbnails" >
             <md-card>
               <md-card-media>
                 <img :src="value.snippet.thumbnails.medium.url" alt="medium size">
@@ -53,6 +52,37 @@
         </md-table-cell>
       </md-table-row >
     </md-table>
+
+    <md-dialog :md-active.sync="showDialog">
+      <md-dialog-title>LIST SETTINGS</md-dialog-title>
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="YT SEARCH LIST OPTIONS">
+          <md-content class="md-scrollbar md-box-options">
+            <h3>Visibility:</h3>
+            <md-box v-bind:style="optionsStyle">
+              <md-switch class="md-primary md-raised"  v-bind:style="optionsStyle"
+                         v-model="ytListVisibilityRowChannelTitle">Channel Title</md-switch>
+            </md-box>
+            <md-box v-bind:style="optionsStyle">
+              <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
+                         v-model="ytListVisibilityRowTitle">Title</md-switch>
+            </md-box>
+            <md-box v-bind:style="optionsStyle">
+              <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
+                         v-model="ytListVisibilityRowVideoID">Video ID</md-switch>
+            </md-box>
+            <md-box v-bind:style="optionsStyle">
+              <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
+                         v-model="ytListVisibilityRowThumbnails">Thumbnails</md-switch>
+            </md-box>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+
+      <md-dialog-actions>
+        <md-button color="md-primary" @click="showDialog = false">HIDE</md-button>
+      </md-dialog-actions>
+    </md-dialog>
   </div>
 </template>
 
@@ -60,6 +90,18 @@
   .md-menu {
     margin: 24px;
   }
+
+  .md-box {
+    width: 120px;
+  }
+
+  .md-box-options {
+    padding: 20px 20px 20px 20px;
+   -webkit-box-shadow: 1px 1px 5px 5px rgba(0,0,0,0.75);
+   -moz-box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
+  }
+
 </style>
 
 <script lang="ts">
@@ -70,21 +112,28 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { mdMenu,
-          mdField,
          mdButton,
            mdIcon,
            mdCard,
-          mdInput
+          mdInput,
+          mdField
   } from 'vue-material'
 
   /**
-   * Enumerators
-   *
-   * YTSEARCHRESULTS for TYItem
+   * @description Enumerators:
+   *               YTITEM_ENUM for TYItem
+   *               YTRESULT_ENUM for YTResult
    */
-  enum YTITEM {
+
+  // eslint-disable-next-line
+  enum YTITEM_ENUM {
     KIND = "youtube#searchResult",
     ID_KIND = "youtube#video"
+  }
+
+  // eslint-disable-next-line
+  enum YTRESULT_ENUM {
+    KIND = "youtube#searchListResponse"
   }
 
   /**
@@ -104,24 +153,23 @@
   interface YTResult {
     etag: string
     items: any[]
-    kind:  string // "youtube#searchListResponse"  create enum in future
+    kind:  string
     nextPageToken: string
     pageInfo: {
       totalResults: number
       resultsPerPage: number
     }
-    regionCode: string // "RS"  create enum in future
+    regionCode: string
   }
 
   interface TYResponse {
     body: any
     headers: any
     result: YTResult
-    status: number // 200 create enum in future
-    statusText: any // null
+    status: number
+    statusText: any
   }
 
-  // window:Window
   // Register for components
   @Component({
     components: {
@@ -138,24 +186,20 @@
   export default class myYouTube extends Vue {
 
     private styleObject = {}
+    private showDialog = false
 
+    private optionsStyle = {
+      display: 'flex',
+      width: '100%',
+      paddingBottom: '10px',
+      // justifyContent: 'center',
+      textAlign: 'center',
+      itemsAlign: 'left',
+      height: '30px'
+    }
     constructor() {
       super()
     }
-
-    /**
-     * etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38"
-     * items:
-     *
-     *    etag: "mlweRndBtBgAcVC-11ZrL0oI7ok"
-     *    id: {kind: "youtube#video", videoId: "YPhJOC9-M_M"}
-     *    kind: "youtube#searchResult"
-     *    snippet: {publis
-     *    kind: "youtube#searchListResponse"
-     *    nextPageToken: "CBkQAA"
-     *    pageInfo: {totalResults: 400229, resultsPerPage: 25}
-     *    regionCode: "RS"
-     */
 
     /**
      * Fix initial undefined model
@@ -173,6 +217,10 @@
         },
         isAuthorized: false,
         tyfetchVisibility:false,
+        ytListVisibilityRowChannelTitle: false,
+        ytListVisibilityRowTitle: false,
+        ytListVisibilityRowVideoID: true,
+        ytListVisibilityRowThumbnails: true,
         spaceHForYTComponet: window.innerHeight * 0.9 + 'px'
       }
     }
@@ -250,8 +298,7 @@
         textAlign: 'center',
         flexDirection: 'column',
         height: this.$data.spaceHForYTComponet,
-        width: '100%',
-        border: 'solid blue 1px'
+        width: '100%'
       }
 
       var root = this

@@ -2,15 +2,9 @@
 <template>
   <div class="myHeader">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <md-menu>
-      <md-button md-menu-trigger>3D</md-button>
-      <md-menu-content>
-        <md-menu-item>About VuleService</md-menu-item>
-      </md-menu-content>
-    </md-menu>
 
     <md-menu md-size="medium" md-align-trigger>
-      <md-button md-menu-trigger>Start here</md-button>
+      <md-button class="md-primary md-raised" md-menu-trigger>Start here</md-button>
       <md-menu-content>
         <md-menu-item>
           <md-progress-spinner v-show='tyfetchVisibility'
@@ -28,6 +22,17 @@
             <md-icon>T</md-icon>
             Theme {{ switchThemeBtnLabel }}
           </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    <md-menu>
+      <md-button class="md-primary md-raised" md-menu-trigger>GO TO</md-button>
+      <md-menu-content>
+        <md-menu-item>
+           <md-button class="md-primary md-raised" md-menu-trigger>About&&Credits</md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button class="md-primary md-raised" md-menu-trigger>KURE Service</md-button>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
