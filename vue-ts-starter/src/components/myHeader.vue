@@ -29,13 +29,57 @@
       <md-button class="md-primary md-raised" md-menu-trigger>GO TO</md-button>
       <md-menu-content>
         <md-menu-item>
-           <md-button class="md-primary md-raised" md-menu-trigger>About&&Credits</md-button>
+           <md-button @click="showAboutDialog = true" class="md-primary md-raised" md-menu-trigger>About & Credits</md-button>
         </md-menu-item>
         <md-menu-item>
           <md-button class="md-primary md-raised" md-menu-trigger>KURE Service</md-button>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
+
+    <md-dialog :md-active.sync="showAboutDialog">
+      <md-dialog-title>About & Credits</md-dialog-title>
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="About VuleTube Service">
+          <md-content class="md-scrollbar" v-bind:style="optionsStyle">
+
+            <h3> Project name: VuleTube service</h3>
+            <h4> Mother project is vue-typescript-starter (or vule project generator) </h4>
+              <span>VuleTube use two components:</span>
+              <span>- myYouTube.vue</span>
+              <span>Getting response for youtube search.</span>
+              <span>Call server part for saving videos</span>
+              <span>- webgl-player.vue</span>
+              <span>Open opengles port view, look for</span>
+              <span>video source saved to the maximumroulette:3000</span>
+              <span>I use quick solution from npm:</span>
+              <a target="_blank" href="https://www.npmjs.com/package/youtube-dl">https://www.npmjs.com/package/youtube-dl</a>
+
+          </md-content>
+        </md-tab>
+        <md-tab md-label="Credits">
+          <md-content class="md-scrollbar">
+            <h3> Used in my project: </h3>
+            <md-content v-bind:style="optionsStyle">
+
+              <p>project structural/methodology </p>
+              <p>https://vuejs.org/ </p>
+
+              <p>JavaScript 3D library. </p>
+              <p>https://threejs.org/ </p>
+
+              <p>Download videos from youtube in node.js using youtube-dl. </p>
+              <p>https://www.npmjs.com/package/youtube-dl </p>
+
+            </md-content>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+      <md-dialog-actions>
+        <md-button color="md-primary" @click="showAboutDialog = false">HIDE</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
   </div>
 </template>
 
@@ -47,14 +91,26 @@
   .myHeader {
     width:100%;
     height: 41px;
+    -webkit-box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
   }
+
+  .md-content {
+    height: 500px;
+  }
+
 </style>
 
 <script lang="ts">
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { mdMenu, mdButton , mdIcon, mdProgressSpinner } from 'vue-material'
+  import { mdMenu,
+           mdButton,
+           mdIcon,
+           mdContent,
+           mdProgressSpinner } from 'vue-material'
 
   const CompProps = Vue.extend({
     props: {
@@ -69,11 +125,23 @@
       mdMenu,
       mdIcon,
       mdProgressSpinner,
+      mdContent
     }
   })
 
   @Component
   export default class myHeader extends CompProps {
+
+    private showAboutDialog: boolean = false
+
+    private optionsStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
+      paddingBottom: '10px',
+      itemsAlign: 'left',
+      height: '650px'
+    }
 
     constructor() {
       super()

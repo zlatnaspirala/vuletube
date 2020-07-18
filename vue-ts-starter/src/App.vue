@@ -4,7 +4,7 @@
     <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
     <div v-bind:style="styleObject">
       <myYouTube ref="myYouTube" ></myYouTube>
-      <threejsYoutubePlayer ref="myYouTubeThreejs" args={{}} ></threejsYoutubePlayer>
+      <threejsYoutubePlayer ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
@@ -64,9 +64,8 @@
 
     // Additional declaration is needed.
     // When you declare some properties in `Component` decorator.
-    count!: number
-    increment!: () => void
-
+    // count!: number
+    // increment!: () => void
     private styleObject;
 
     constructor() {
@@ -84,25 +83,19 @@
     }
 
     setupInstance = () => {
-
-      this.increment()
-      console.log('Attach Application event this.count => ', this.count)
-
+      this.$store.commit('increment')
+      console.log('Attach Application event this.count => ', this.$store.state.count)
     }
 
-    // computed
     get computedMsg (): string {
       return 'computed'
     }
 
-    // lifecycle hook
     mounted (): void {
       this.setupInstance()
     }
 
-
   }
-
 </script>
 
 <style>

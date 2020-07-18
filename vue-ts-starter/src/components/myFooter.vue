@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="styleObject" class="md-primary" >
+  <div v-bind:style="styleObject" class="md-primary myshadows" >
 
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Privacy Policy && Cookies</md-dialog-title>
@@ -168,9 +168,9 @@
       </md-dialog-actions>
     </md-dialog>
 
-    <md-content  class="md-primary">
+    <md-button class="md-primary">
       {{ $props.textContent }}
-    </md-content>
+    </md-button>
 
     <md-button class="md-primary md-raised" @click="showDialog = true">Private policy</md-button>
     <md-button class="md-primary md-raised" @click="showDialog = true">Cookies</md-button>
@@ -178,6 +178,11 @@
 </template>
 
 <style scoped>
+  .myshadows {
+    -webkit-box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
+  }
 </style>
 
 <script lang="ts">

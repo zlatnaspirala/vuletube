@@ -1,4 +1,5 @@
 # vue-ts-starter #
+## Project name: Vue project generator ##
 
   Production use `https` node application for web server.
 
@@ -25,6 +26,50 @@ Run:
 ```
 
 ## Project details ##
+
+### Project structure ###
+
+<pre>
+
+├── dist/  (This is auto generated)
+├── node_modules/  (This is auto generated)
+├── public/
+|   ├── videos/
+|       ├── list.html
+|   ├── bad.html
+|   ├── favicon.ico
+|   ├── index.html
+├── server/
+|   ├── node_modules/ (This is auto generated)
+|   ├── package.json
+|   ├── package-lock.json
+|   ├── server-connector.js
+├── src/
+|   ├── assets/
+|   |   ├── logo.png
+|   ├── components/
+|   |   ├── youtube-3d/
+|   |   |   ├── myYouTube.vue
+|   |   |   └── webgl-player.vue
+|   |   ├── myFooter.vue
+|   |   ├── myHeader.vue
+|   ├── App.vue
+|   └── styles/
+|   |   └── styles.scss
+|   ├── App.vue
+|   ├── main.ts
+|   ├── error-instance.ts
+|   ├── shims-tsx.d.ts
+|   ├── shims-vue.d.ts
+|   └── store.ts
+├── .gitignore
+├── README.md (This file)
+├── tsconfig.json
+├── package.json
+├── package-lock.json (This is auto generated)
+└── babel.config.js
+
+</pre>
 
 ### Components : ###
 

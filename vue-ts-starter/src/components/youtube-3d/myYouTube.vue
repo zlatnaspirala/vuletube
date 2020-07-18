@@ -1,6 +1,5 @@
 
 <template>
-
   <div v-bind:style="styleObject">
     <div id="player" style="position:absolute;width:320px;right:0;"></div>
     <md-field>
@@ -12,11 +11,9 @@
               maxlength="1200">
       </md-input>
     </md-field>
-
     <md-field>
       <md-button class="md-primary md-raised" @click="showDialog = true">SEARCH LIST OPTIONS</md-button>
     </md-field>
-
     <md-button class="md-primary md-raised"
                ref="ytfetch"
                @click="execute"
@@ -35,9 +32,9 @@
           data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
         </md-table-cell>
         <md-table-cell v-show="ytListVisibilityRowTitle" md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
-        <md-table-cell md-label="VideoId" md-sort-by="videoId" >
+        <md-table-cell v-show="ytListVisibilityRowVideoID" md-label="VideoId" md-sort-by="videoId">
           {{ value.id.videoId }} <br>
-          <md-button v-show="ytListVisibilityRowVideoID" class="md-primary md-raised"
+          <md-button class="md-primary md-raised"
                @click="prepareThisVideo"
                :data-videoid="value.id.videoId">
                  PLAY VIDEO
@@ -52,29 +49,28 @@
         </md-table-cell>
       </md-table-row >
     </md-table>
-
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>LIST SETTINGS</md-dialog-title>
       <md-tabs md-dynamic-height>
         <md-tab md-label="YT SEARCH LIST OPTIONS">
-          <md-content class="md-scrollbar md-box-options">
+          <md-content class="md-scrollbar md-content-options">
             <h3>Visibility:</h3>
-            <md-box v-bind:style="optionsStyle">
+            <md-content v-bind:style="optionsStyle">
               <md-switch class="md-primary md-raised"  v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowChannelTitle">Channel Title</md-switch>
-            </md-box>
-            <md-box v-bind:style="optionsStyle">
+            </md-content>
+            <md-content v-bind:style="optionsStyle">
               <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowTitle">Title</md-switch>
-            </md-box>
-            <md-box v-bind:style="optionsStyle">
+            </md-content>
+            <md-content v-bind:style="optionsStyle">
               <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowVideoID">Video ID</md-switch>
-            </md-box>
-            <md-box v-bind:style="optionsStyle">
+            </md-content>
+            <md-content v-bind:style="optionsStyle">
               <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowThumbnails">Thumbnails</md-switch>
-            </md-box>
+            </md-content>
           </md-content>
         </md-tab>
       </md-tabs>
@@ -87,15 +83,16 @@
 </template>
 
 <style lang="scss" scoped>
+
   .md-menu {
     margin: 24px;
   }
 
-  .md-box {
-    width: 120px;
+  .md-content {
+    width: 100%;
   }
 
-  .md-box-options {
+  .md-content-options {
     padding: 20px 20px 20px 20px;
    -webkit-box-shadow: 1px 1px 5px 5px rgba(0,0,0,0.75);
    -moz-box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
@@ -105,9 +102,9 @@
 </style>
 
 <script lang="ts">
+
   /*eslint no-unused-vars: 0*/
   declare var gapi: any;
-  /*eslint no-unused-vars: 0*/
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
@@ -116,7 +113,8 @@
            mdIcon,
            mdCard,
           mdInput,
-          mdField
+          mdField,
+          mdContent
   } from 'vue-material'
 
   /**
@@ -135,6 +133,12 @@
   enum YTRESULT_ENUM {
     KIND = "youtube#searchListResponse"
   }
+
+  const CompProps = Vue.extend({
+    props: {
+      options: Object
+    }
+  });
 
   /**
    * Best way is to create interface for
@@ -178,25 +182,26 @@
       mdIcon,
       mdCard,
       mdInput,
-      mdField
+      mdField,
+      mdContent
     }
   })
 
   @Component
-  export default class myYouTube extends Vue {
+  export default class myYouTube extends CompProps {
 
-    private styleObject = {}
-    private showDialog = false
+    private styleObject: Object = {}
+    private showDialog: boolean = false
 
     private optionsStyle = {
       display: 'flex',
       width: '100%',
       paddingBottom: '10px',
-      // justifyContent: 'center',
       textAlign: 'center',
       itemsAlign: 'left',
       height: '30px'
     }
+
     constructor() {
       super()
     }
@@ -230,9 +235,9 @@
       this.authenticate().then(this.loadClient)
     }
 
-    public computed = {
+    // public computed = {
       // test
-    }
+    // }
 
     private justItems: {} = {}
 
@@ -298,7 +303,9 @@
         textAlign: 'center',
         flexDirection: 'column',
         height: this.$data.spaceHForYTComponet,
-        width: '100%'
+        width: '100%',
+        paddingLeft: '4px',
+        paddingRight: '4px'
       }
 
       var root = this
@@ -328,7 +335,7 @@
       window.addEventListener('resize', () => {
         // Bug
         // console.log("test resize window.innerHeight ", window.innerHeight)
-        this.$set(this, "spaceHForYTComponet", window.innerHeight)
+        this.$set(this, "spaceHForYTComponet", window.innerHeight * 0.9)
       })
 
       // this.loadStartUpVideo()

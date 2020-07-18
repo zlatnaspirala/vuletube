@@ -2,13 +2,13 @@
 <template>
 
   <div v-bind:style="styleObject" >
-    <md-dialog v-bind:style="dialogStyle" :md-active.sync="showDialog">
+    <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>3D VIEW OPTIONS</md-dialog-title>
       <md-tabs md-dynamic-height>
         <md-tab md-label="3D VIEW OPTIONS">
           <md-content class="md-scrollbar">
 
-            <md-box>
+            <md-content>
              <md-field>
               <label>Camera deep: {{ this.camera.position.z }}</label>
                 <md-input v-bind:value="this.camera.position.z"
@@ -16,9 +16,9 @@
                       type="range">
                 </md-input>
               </md-field>
-             </md-box>
+             </md-content>
 
-             <md-box>
+             <md-content>
                <h3>Background:</h3>
 
               <md-field>
@@ -41,7 +41,7 @@
                        v-on:input="set3dBackground" type="range">
                 </md-input>
               </md-field>
-             </md-box>
+             </md-content>
 
           </md-content>
         </md-tab>
@@ -96,7 +96,7 @@
 
   const CompProps = Vue.extend({
     props: {
-      textContent: String
+      arg: Object
     }
   });
 
@@ -126,15 +126,10 @@
     private container
     private texvideo
     private webcamMesh
+    private showDialog: boolean = false
 
-    showDialog = false
-
-    styleObject = {
+    private styleObject = {
       width: '100%'
-    }
-
-    dialogStyle = {
-
     }
 
     constructor() {
@@ -150,6 +145,8 @@
     created(): void {
 
       this.container = this.$refs.container
+
+      console.info("Property options =>", this.$props.arg)
 
       this.$root.$on('videoInProgress', (args: any) => {
 

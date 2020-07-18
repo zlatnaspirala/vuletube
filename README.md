@@ -24,7 +24,7 @@
     7$ min cost
 
  ## Go to project folder ##
- ### [Starter readme](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter) ###
+ ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter) ###
 
  See setup-from-zero-point.md to make clear who this project is created.
 
@@ -101,5 +101,5 @@ npm i three ->
 ## Direct link for dev server ##
 
 ### VueTube web service 2020 ###
-https://maximumroulette.com:3000
 
+https://maximumroulette.com:3000
