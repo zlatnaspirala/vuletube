@@ -32,7 +32,8 @@
            <md-button @click="showAboutDialog = true" class="md-primary md-raised" md-menu-trigger>About & Credits</md-button>
         </md-menu-item>
         <md-menu-item>
-          <md-button class="md-primary md-raised" md-menu-trigger>KURE Service</md-button>
+          <md-button @click="window.open('https://maximumroulette.com:2020', '_blank')"
+                     class="md-primary md-raised" md-menu-trigger>KURE Service</md-button>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
@@ -40,9 +41,27 @@
     <md-dialog :md-active.sync="showAboutDialog">
       <md-dialog-title>About & Credits</md-dialog-title>
       <md-tabs md-dynamic-height>
+        <md-tab md-label="Credits">
+          <md-content class="md-scrollbar">
+            <h2> Used in my project: </h2>
+            <md-content v-bind:style="optionsStyle">
+
+              <p>project structural/methodology </p>
+              <a target="_blank" href="https://vuejs.org/">https://vuejs.org/</a>
+
+              <p>JavaScript 3D library. </p>
+              <a target="_blank" href="https://threejs.org/">https://threejs.org/</a>
+
+              <p>Download videos from youtube in node.js using youtube-dl. </p>
+              <a target="_blank" href="https://www.npmjs.com/package/youtube-dl">https://www.npmjs.com/package/youtube-dl</a>
+
+            </md-content>
+          </md-content>
+        </md-tab>
         <md-tab md-label="About VuleTube Service">
           <md-content class="md-scrollbar" v-bind:style="optionsStyle">
 
+            <img style="width:200px" src="../assets/vule-logo1.png" />
             <h3> Project name: VuleTube service</h3>
             <h4> Mother project is vue-typescript-starter (or vule project generator) </h4>
               <span>VuleTube use two components:</span>
@@ -55,23 +74,6 @@
               <span>I use quick solution from npm:</span>
               <a target="_blank" href="https://www.npmjs.com/package/youtube-dl">https://www.npmjs.com/package/youtube-dl</a>
 
-          </md-content>
-        </md-tab>
-        <md-tab md-label="Credits">
-          <md-content class="md-scrollbar">
-            <h3> Used in my project: </h3>
-            <md-content v-bind:style="optionsStyle">
-
-              <p>project structural/methodology </p>
-              <p>https://vuejs.org/ </p>
-
-              <p>JavaScript 3D library. </p>
-              <p>https://threejs.org/ </p>
-
-              <p>Download videos from youtube in node.js using youtube-dl. </p>
-              <p>https://www.npmjs.com/package/youtube-dl </p>
-
-            </md-content>
           </md-content>
         </md-tab>
       </md-tabs>
@@ -92,8 +94,8 @@
     width:100%;
     height: 41px;
     -webkit-box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.5);
-    -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
-    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.5);
   }
 
   .md-content {
@@ -131,6 +133,8 @@
 
   @Component
   export default class myHeader extends CompProps {
+
+    declare windowGlobal: Window
 
     private showAboutDialog: boolean = false
 
@@ -184,6 +188,9 @@
     }
 
     mounted (): void {
+
+      // this.windowGlobal = window
+
       (this.$root as any).$material.theming.theme='myDark'
       this.$set(this, 'tyfetchVisibility', false)
       this.$set(this, 'loginBtnVisibility', true)

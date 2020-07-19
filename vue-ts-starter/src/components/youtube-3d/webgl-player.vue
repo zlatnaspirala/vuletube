@@ -62,10 +62,11 @@
     <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
+    <md-button class="md-primary md-accent" @click="showDialog = true">webgl support</md-button>
+    <md-button class="md-primary md-raised" @click="showDialog = true">SETTINGS</md-button>
+
     <!-- threejs canvas tag -->
     <div class="canvasDom" ref="container"></div>
-
-    <md-button class="md-primary" @click="showDialog = true">SETTINGS</md-button>
 
   </div>
 </template>
@@ -127,6 +128,8 @@
     private texvideo
     private webcamMesh
     private showDialog: boolean = false
+
+    private planeAddedToScene: boolean = false
 
     private styleObject = {
       width: '100%'
@@ -206,7 +209,7 @@
 
       this.renderer = new THREE.WebGLRenderer({ antialias: true });
       this.renderer.setPixelRatio(window.devicePixelRatio);
-      this.renderer.setSize(window.innerWidth / 2, window.innerHeight * 0.9);
+      this.renderer.setSize(window.innerWidth / 2, window.innerHeight * 0.858);
       (this.$refs.container as HTMLElement).appendChild(this.renderer.domElement);
 
       var controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -246,10 +249,17 @@
         var mesh = new THREE.Mesh(geometry, material)
         mesh.position.z = -10
         mesh.lookAt(this.camera.position)
-        this.scene.add( mesh )
 
-        // Recall
-        this.texvideo.play()
+        if (this.planeAddedToScene === false) {
+          this.scene.add(mesh)
+          this.planeAddedToScene = true
+        }
+
+        try {
+          this.texvideo.play()
+        } catch(err) {
+          console.log(err)
+        }
 
       }
 
@@ -258,7 +268,7 @@
     private onWindowResize() {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize( window.innerWidth / 2, window.innerHeight * 0.9 );
+      this.renderer.setSize( window.innerWidth / 2, window.innerHeight * 0.8 );
     }
 
     private animate() {

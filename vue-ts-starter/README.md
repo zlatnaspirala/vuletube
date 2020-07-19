@@ -92,8 +92,12 @@ Run:
 
 ```js
   body: "{↵  "kind": "youtube#searchListResponse",↵  "etag""
-  headers: {cache-control: "private", content-encoding: "gzip", content-length: "5512", content-type: "application/json; charset=UTF-8", date: "Sun, 05 Jul 2020 20:47:06 GMT", …}
-  result: {kind: "youtube#searchListResponse", etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38", nextPageToken: "CBkQAA", regionCode: "RS", pageInfo: {…}, …}
+  headers: {cache-control: "private", content-encoding: "gzip",
+  content-length: "5512", content-type: "application/json; charset=UTF-8", date: "Sun, 05 Jul 2020 20:47:06 GMT", …}
+  result: {
+    kind: "youtube#searchListResponse",
+    etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38",
+    nextPageToken: "CBkQAA", regionCode: "RS", pageInfo: {…}, …}
   status: 200
   statusText: null
 ```
@@ -112,7 +116,7 @@ Run:
   "publishedAt": "2019-07-14T19:27:31Z",
   "channelId": "UCc1NtMtvoVzKnOtnai9LGsA",
   "title": "Create game engine - Visual typescript game engine",
-  "description": "Clone or download from : https://github.com/zlatnaspirala/visual-ts-game-engine Next video - \
+  "description": "Clone or download from : https://github.com/zlatnaspirala/visual-ts-game-engine Next video\
     developing in live - adding multiplayer feature. Project : Visual ts ...",
   "thumbnails": {
     "default": {
@@ -146,6 +150,12 @@ Run:
 }
 
 ```
+
+### VueMaterial help ###
+
+ Notes :
+
+ All other `<input type="file">` attributes, such as multiple and accept, can be used on md-field.
 
 ### Spiral position ###
 

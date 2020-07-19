@@ -2,6 +2,7 @@
 <template>
   <div v-bind:style="styleObject">
     <div id="player" style="position:absolute;width:320px;right:0;"></div>
+    <md-button class="md-primary md-raised" @click="showDialog = true">VIEW OPTIONS</md-button>
     <md-field>
       <label>Search youtube bar:</label>
       <md-input
@@ -11,16 +12,13 @@
               maxlength="1200">
       </md-input>
     </md-field>
-    <md-field>
-      <md-button class="md-primary md-raised" @click="showDialog = true">SEARCH LIST OPTIONS</md-button>
-    </md-field>
     <md-button class="md-primary md-raised"
                ref="ytfetch"
                @click="execute"
                v-show='tyfetchVisibility'>
                  RUN FETCH
     </md-button>
-    <md-table md-card v-show='tyfetchVisibility' >
+    <md-table v-bind:style="styleTableObject" md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
         <h2 class="md-title">YouTube results:</h2>
       </md-table-toolbar>
@@ -93,7 +91,7 @@
   }
 
   .md-content-options {
-    padding: 20px 20px 20px 20px;
+    padding: 25px 25px 25px 25px;
    -webkit-box-shadow: 1px 1px 5px 5px rgba(0,0,0,0.75);
    -moz-box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
     box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
@@ -119,7 +117,7 @@
 
   /**
    * @description Enumerators:
-   *               YTITEM_ENUM for TYItem
+   *               YTITEM_ENUM for YTItem
    *               YTRESULT_ENUM for YTResult
    */
 
@@ -144,7 +142,7 @@
    * Best way is to create interface for
    * youtube api call details.
    */
-  interface TYItem {
+  interface YTItem {
     etag: string
     id: {
       kind: string
@@ -156,7 +154,7 @@
 
   interface YTResult {
     etag: string
-    items: any[]
+    items: YTItem[]
     kind:  string
     nextPageToken: string
     pageInfo: {
@@ -200,6 +198,10 @@
       textAlign: 'center',
       itemsAlign: 'left',
       height: '30px'
+    }
+
+    private styleTableObject = {
+      width: '100%'
     }
 
     constructor() {
@@ -281,7 +283,7 @@
     private setNewResponse(r: any) {
       // this.currentApiRequest = r
       this.$data.yts.ytResponse = r
-      var items = r.result.items
+      var items = r.result.items as YTItem[]
 
       for ( var x = 0; x < items.length; x++) {
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
@@ -300,8 +302,8 @@
         flexDirection: 'column',
         height: this.$data.spaceHForYTComponet,
         width: '100%',
-        paddingLeft: '4px',
-        paddingRight: '4px'
+        paddingLeft: '6px',
+        paddingRight: '6px'
       }
 
       var root = this
