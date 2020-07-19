@@ -1,6 +1,11 @@
 # vue-ts-starter #
 ## Project name: Vue project generator ##
 
+## First feature: YouTube vs Threejs ##
+### Public access for VuleTube service: ###
+### https://maximumroulette.com:3000 ###
+![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/src/assets/vule-logo1.png)
+
   Production use `https` node application for web server.
 
 ```bash
