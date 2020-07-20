@@ -32,6 +32,19 @@ Run:
 
 ## Project details ##
 
+### Features ###
+
+  - version 0.0.2 [MASTER]
+   Getting response for youtube search.
+   Call server part for saving videos
+  - version 0.0.3 [MASTER]
+   Add options switch-place for two main components
+   Implement LocalStorageMemory class (For saving all
+   user infly data - view options etc.)
+  - version 0.0.4 [NEXT][WIP]
+   Save current (exist) options with localStorage and load on refresh.
+   Every next options will be implemented with localStorage support.
+
 ### Project structure ###
 
 <pre>
@@ -87,6 +100,7 @@ Run:
    video source saved to the maximumroulette:3000
    I use quick solution from npm:
    https://www.npmjs.com/package/youtube-dl
+
 
 #### Response for youtube api v3 call `search`. ####
 
@@ -155,7 +169,9 @@ Run:
 
  Notes :
 
- All other `<input type="file">` attributes, such as multiple and accept, can be used on md-field.
+ - All other `<input type="file">` attributes, such as multiple and accept, can be used on md-field.
+ - Icons used with https://fontawesome.com/v4.7.0/icons/
+
 
 ### Spiral position ###
 

@@ -1,10 +1,15 @@
 
 <template>
   <div id="app">
-    <myHeader slogan='Welcome to the vue-project-generator.'></myHeader>
+    <myHeader slogan='Welcome to the vue-project-generator.' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
     <div v-bind:style="styleObject">
-      <myYouTube ref="myYouTube" ></myYouTube>
-      <threejsYoutubePlayer ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
+
+      <myYouTube v-if="switchPlace" ref="myYouTube" ></myYouTube>
+      <threejsYoutubePlayer v-else ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
+
+      <threejsYoutubePlayer v-if="switchPlace" ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
+      <myYouTube v-else ref="myYouTube" ></myYouTube>
+
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
   </div>
@@ -24,6 +29,9 @@
   // Current component dev => myYouTube
   import myYouTube from './components/youtube-3d/myYouTube.vue'
   import threejsYoutubePlayer from './components/youtube-3d/webgl-player.vue'
+
+  // Test import custom class
+  import LocalStorageMemory from './local-storage/local-storage'
 
   Vue.use(VueMaterial as any)
 
@@ -62,11 +70,18 @@
       myYouTube: myYouTube
     }
 
+    private ls: LocalStorageMemory = new LocalStorageMemory()
+
     // Additional declaration is needed.
     // When you declare some properties in `Component` decorator.
     // count!: number
     // increment!: () => void
     private styleObject;
+
+    private switchPlace: boolean = false
+    private switchPlaceAction() {
+      this.switchPlace = !this.switchPlace
+    }
 
     constructor() {
       super()
@@ -79,6 +94,9 @@
         height: '100%',
         width: '100%'
       }
+
+      // test
+      // this.ls.save("styleObject", this.styleObject)
 
     }
 

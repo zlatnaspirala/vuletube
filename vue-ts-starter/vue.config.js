@@ -23,7 +23,7 @@ module.exports = {
     sourceMap: true
   },
   pwa: {
-    name: 'My App',
+    name: 'VULETUBE',
     themeColor: '#000000',
     msTileColor: '#ffffff',
     appleMobileWebAppCapable: 'yes',

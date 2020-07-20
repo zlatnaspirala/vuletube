@@ -3,18 +3,18 @@
 const spdy = require("spdy");
 const path = require("path");
 const port = 3000;
-var cors = require("cors");
-var express = require("express");
+// var cors = require("cors");
+// var express = require("express");
 var fs = require("fs");
 const youtubedl = require('youtube-dl');
-var https = require('https');
-var bodyParser = require("body-parser");
-var app = express();
-var compression = require("compression");
+// var https = require('https');
+// var bodyParser = require("body-parser");
+// var app = express();
+// var compression = require("compression");
 const static = require('node-static');
 var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/');
-var videoAccess = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/server/videos/');
-var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/';
+// var videoAccess = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/server/videos/');
+// var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/';
 
 var options = {
   key: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette.com.key"),
@@ -22,7 +22,7 @@ var options = {
   ca: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette_com.crt")
 };
 
-var httpRtc = require('https').createServer(options, function(request, response) {
+var https = require('https').createServer(options, function(request, response) {
 
     request.addListener('end', function() {
 

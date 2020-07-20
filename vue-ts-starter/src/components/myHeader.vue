@@ -37,9 +37,14 @@
         </md-menu-item>
       </md-menu-content>
     </md-menu>
+    <md-menu>
+      <md-button class="md-primary md-raised" @click="this.$props.switchPlaceA" md-menu-trigger>
+        <md-icon class="fa fa-superpowers"></md-icon>
+      </md-button>
+    </md-menu>
 
     <md-dialog :md-active.sync="showAboutDialog">
-      <md-dialog-title>About & Credits</md-dialog-title>
+      <md-dialog-title>Credits&About</md-dialog-title>
       <md-tabs md-dynamic-height>
         <md-tab md-label="Credits">
           <md-content class="md-scrollbar">
@@ -116,7 +121,8 @@
 
   const CompProps = Vue.extend({
     props: {
-      slogan: String
+      slogan: String,
+      switchPlaceA: { type: Function }
     }
   });
 

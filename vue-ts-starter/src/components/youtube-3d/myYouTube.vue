@@ -333,7 +333,7 @@
       window.addEventListener('resize', () => {
         // Bug
         // console.log("test resize window.innerHeight ", window.innerHeight)
-        this.$set(this, "spaceHForYTComponet", window.innerHeight * 0.9)
+        this.$set(this, "spaceHForYTComponet", window.innerHeight * 0.85)
       })
 
       // this.loadStartUpVideo()
