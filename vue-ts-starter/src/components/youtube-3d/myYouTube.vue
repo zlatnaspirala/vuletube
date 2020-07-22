@@ -50,7 +50,7 @@
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>LIST SETTINGS</md-dialog-title>
       <md-tabs md-dynamic-height>
-        <md-tab md-label="YT SEARCH LIST OPTIONS">
+        <md-tab md-label="VISIBILITY">
           <md-content class="md-scrollbar md-content-options">
             <h3>Visibility:</h3>
             <md-content v-bind:style="optionsStyle">
@@ -71,6 +71,15 @@
             </md-content>
           </md-content>
         </md-tab>
+        <md-tab md-label="SCREEN SPLIT">
+          <md-content class="md-scrollbar md-content-options">
+            <div>
+              RESIZE VIEWS <br>
+              <input :oninput="setupCompWidth()" min="25" max="100" v-bind:style="{ width: '100%' }"  type="range" v-model.number="componentWidthOptions"> {{ componentWidthOptions }}%
+            </div>
+          </md-content>
+        </md-tab>
+
       </md-tabs>
 
       <md-dialog-actions>
@@ -188,7 +197,7 @@
   @Component
   export default class myYouTube extends CompProps {
 
-    private styleObject: Object = {}
+    private styleObject: any = {}
     private showDialog: boolean = false
 
     private optionsStyle = {
@@ -200,7 +209,7 @@
       height: '30px'
     }
 
-    private styleTableObject = {
+    private styleTableObject: any = {
       width: '100%'
     }
 
@@ -228,8 +237,16 @@
         ytListVisibilityRowTitle: false,
         ytListVisibilityRowVideoID: true,
         ytListVisibilityRowThumbnails: true,
-        spaceHForYTComponet: window.innerHeight * 0.9 + 'px'
+        spaceHForYTComponet: window.innerHeight * 0.9 + 'px',
+        componentWidthOptions: '40'
       }
+    }
+
+    private setupCompWidth() {
+
+      //
+      this.$root.$emit('reziseCanvas');
+      this.styleObject.width = this.$data.componentWidthOptions + '%'
     }
 
     /*eslint  no-unused-labels: 1*/
@@ -301,9 +318,9 @@
         textAlign: 'center',
         flexDirection: 'column',
         height: this.$data.spaceHForYTComponet,
-        width: '100%',
         paddingLeft: '6px',
-        paddingRight: '6px'
+        paddingRight: '6px',
+        width: '50%'
       }
 
       var root = this

@@ -128,7 +128,6 @@
     private texvideo
     private webcamMesh
     private showDialog: boolean = false
-
     private planeAddedToScene: boolean = false
 
     private styleObject = {
@@ -137,6 +136,8 @@
 
     constructor() {
       super()
+
+
     }
 
     // lifecycle hook
@@ -148,6 +149,11 @@
     created(): void {
 
       this.container = this.$refs.container
+
+      this.$root.$on('reziseCanvas', () => {
+       console.log(" set canvas size !")
+       this.setCanvasElementSize()
+      });
 
       console.info("Property options =>", this.$props.arg)
 
@@ -265,10 +271,16 @@
 
     }
 
+    private setCanvasElementSize() {
+      this.renderer.setSize((this.$refs.container as HTMLElement).clientWidth, window.innerHeight * 0.81)
+    }
+
     private onWindowResize() {
-      this.camera.aspect = window.innerWidth / window.innerHeight;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize( window.innerWidth / 2, window.innerHeight * 0.8 );
+
+      this.camera.aspect = window.innerWidth / window.innerHeight
+      this.camera.updateProjectionMatrix()
+      this.setCanvasElementSize()
+
     }
 
     private animate() {
