@@ -121,17 +121,30 @@
       }
       // this.ls.save("styleObject", this.styleObject)
 
-      // Check page localStorage
-      // Only lower chars for naming ls objects.
+      /**
+       * @description  Check page localStorage
+       * Note: Only lower chars for naming ls objects.
+       */
       if (this.ls.load("first_time") === false) {
 
         console.info("App starts first time. Prepare storage data...")
 
-        this.ls.save("o_searchBox_width", '25')
+        /**
+         * In future enumerate for global config...
+         */
+        this.ls.save("o_searchbox_width", '25')
+        this.ls.save("o_searchbox_visibility_channel_title", "true")
+        this.ls.save("o_searchbox_visibility_title", "false")
+        this.ls.save("o_searchbox_visibility_videoid", "false")
+        this.ls.save("o_searchbox_visibility_thumbnails", "false")
 
         this.options = {
           searchBox: {
-            width: this.ls.load("o_searchBox_width")
+            width: this.ls.load("o_searchbox_width"),
+            visibilityChannelTitle:  this.ls.load("o_searchbox_visibility_channel_title"),
+            visibilityTitle:  this.ls.load("o_searchbox_visibility_title"),
+            visibilityVideoId:  this.ls.load("o_searchbox_visibility_videoid"),
+            visibilityThumbnails:  this.ls.load("o_searchbox_visibility_thumbnails"),
           }
         };
 
@@ -143,9 +156,13 @@
 
         this.options = {
           searchBox: {
-            width: this.ls.load("o_searchBox_width")
+            width: this.ls.load("o_searchbox_width"),
+            visibilityChannelTitle:  this.ls.load("o_searchbox_visibility_channel_title"),
+            visibilityTitle:  this.ls.load("o_searchbox_visibility_title"),
+            visibilityVideoId:  this.ls.load("o_searchbox_visibility_videoid"),
+            visibilityThumbnails:  this.ls.load("o_searchbox_visibility_thumbnails"),
           }
-        }
+        };
     }
       // test
       // this.ls.save("styleObject", this.styleObject)

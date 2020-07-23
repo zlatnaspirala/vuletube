@@ -54,7 +54,7 @@
           <md-content class="md-scrollbar md-content-options">
             <h3>Visibility:</h3>
             <md-content v-bind:style="optionsStyle">
-              <md-switch class="md-primary md-raised"  v-bind:style="optionsStyle"
+              <md-switch v-on:change="channelTitleOptionsChanged" class="md-primary md-raised"  v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowChannelTitle">Channel Title</md-switch>
             </md-content>
             <md-content v-bind:style="optionsStyle">
@@ -237,21 +237,27 @@
         },
         isAuthorized: false,
         tyfetchVisibility:false,
-        ytListVisibilityRowChannelTitle: false,
-        ytListVisibilityRowTitle: false,
-        ytListVisibilityRowVideoID: true,
-        ytListVisibilityRowThumbnails: true,
+        ytListVisibilityRowChannelTitle: Boolean(this.$props.arg.options.searchBox.visibilityChannelTitle),
+        ytListVisibilityRowTitle:  Boolean(this.$props.arg.options.searchBox.visibilityTitle),
+        ytListVisibilityRowVideoID:  Boolean(this.$props.arg.options.searchBox.visibilityVideoId),
+        ytListVisibilityRowThumbnails:  Boolean(this.$props.arg.options.searchBox.visibilityTrumbnails),
         spaceHForYTComponet: window.innerHeight * 0.9 + 'px',
         componentWidthOptions: this.$props.arg.options.searchBox.width
       }
     }
+
+    private channelTitleOptionsChanged () {
+      console.log(" CHANNEL TITLE CHANGED ", this.$data.ytListVisibilityRowChannelTitle )
+    }
+
+    // ..........
 
     private setupCompWidth() {
 
       //
       this.$root.$emit('reziseCanvas');
       this.styleObject.width = this.$data.componentWidthOptions + '%'
-      this.ls.save("o_searchBox_width", this.$data.componentWidthOptions)
+      this.ls.save("o_searchbox_width", this.$data.componentWidthOptions)
 
     }
 
@@ -318,7 +324,7 @@
 
     private mounted (): void {
 
-     console.log("Mounted myYouTube component. Arg => ", this.$props.arg)
+     console.log("Mounted myYouTube component. Arg => ", this.$props.arg.options.searchBox.visibilityChannelTitle)
 
      this.styleObject = {
         display: 'flex',
