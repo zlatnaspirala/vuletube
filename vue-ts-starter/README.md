@@ -35,13 +35,18 @@ Run:
 ### Features ###
 
   <b>- version 0.0.2 [MASTER] </b>
+  
    Getting response for youtube search.
    Call server part for saving videos
+   
   <b>- version 0.0.3 [MASTER] </b>
+  
    Add options switch-place for two main components
    Implement LocalStorageMemory class (For saving all
    user infly data - view options etc.)
+   
   <b>- version 0.0.4 [NEXT][WIP] </b>
+  
    Save current (exist) options with localStorage and load on refresh.
    Every next options will be implemented with localStorage support.
 
