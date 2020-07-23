@@ -34,14 +34,14 @@ Run:
 
 ### Features ###
 
-  - version 0.0.2 [MASTER]
+  <b>- version 0.0.2 [MASTER]</b>
    Getting response for youtube search.
    Call server part for saving videos
-  - version 0.0.3 [MASTER]
+  <b>- version 0.0.3 [MASTER]<.b>
    Add options switch-place for two main components
    Implement LocalStorageMemory class (For saving all
    user infly data - view options etc.)
-  - version 0.0.4 [NEXT][WIP]
+  <b>- version 0.0.4 [NEXT][WIP]</b>
    Save current (exist) options with localStorage and load on refresh.
    Every next options will be implemented with localStorage support.
 
@@ -91,11 +91,11 @@ Run:
 
 ### Components : ###
 
- - myYouTube.vue
+ <b> - myYouTube.vue </b>
    Getting response for youtube search.
    Call server part for saving videos
 
- - webgl-player.vue
+ <b> - webgl-player.vue </b>
    Open opengles port view, look for
    video source saved to the maximumroulette:3000
    I use quick solution from npm:
