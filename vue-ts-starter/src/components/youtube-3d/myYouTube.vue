@@ -124,6 +124,8 @@
           mdContent
   } from 'vue-material'
 
+  import LocalStorageMemory from '../../local-storage/local-storage';
+
   /**
    * @description Enumerators:
    *               YTITEM_ENUM for YTItem
@@ -143,7 +145,7 @@
 
   const CompProps = Vue.extend({
     props: {
-      options: Object
+      arg: Object,
     }
   });
 
@@ -213,6 +215,8 @@
       width: '100%'
     }
 
+    private ls: LocalStorageMemory = new LocalStorageMemory();
+
     constructor() {
       super()
     }
@@ -238,7 +242,7 @@
         ytListVisibilityRowVideoID: true,
         ytListVisibilityRowThumbnails: true,
         spaceHForYTComponet: window.innerHeight * 0.9 + 'px',
-        componentWidthOptions: '40'
+        componentWidthOptions: this.$props.arg.options.searchBox.width
       }
     }
 
@@ -247,6 +251,8 @@
       //
       this.$root.$emit('reziseCanvas');
       this.styleObject.width = this.$data.componentWidthOptions + '%'
+      this.ls.save("o_searchBox_width", this.$data.componentWidthOptions)
+
     }
 
     /*eslint  no-unused-labels: 1*/
@@ -311,6 +317,8 @@
     }
 
     private mounted (): void {
+
+     console.log("Mounted myYouTube component. Arg => ", this.$props.arg)
 
      this.styleObject = {
         display: 'flex',

@@ -271,7 +271,8 @@
 
     }
 
-    private setCanvasElementSize() {
+    private setCanvasElementSize = () => {
+      if (!this.renderer) { return }
       this.renderer.setSize((this.$refs.container as HTMLElement).clientWidth, window.innerHeight * 0.81)
     }
 

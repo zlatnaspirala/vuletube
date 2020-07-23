@@ -4,11 +4,11 @@
     <myHeader slogan='Welcome to the vue-project-generator.' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
     <div v-bind:style="styleObject">
 
-      <myYouTube v-if="switchPlace" ref="myYouTube" ></myYouTube>
+      <myYouTube v-if="switchPlace" ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
       <threejsYoutubePlayer v-else ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
 
       <threejsYoutubePlayer v-if="switchPlace" ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
-      <myYouTube v-else ref="myYouTube" ></myYouTube>
+      <myYouTube v-else ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
 
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
@@ -64,25 +64,50 @@
 
   export default class App extends AppProps {
 
-    // Annotate refs type
+    /**
+     * @description  Annotate refs type
+     * typescript addition.
+     */
     $refs!: {
       myHeader: myHeader,
       myYouTube: myYouTube
     }
 
+    /**
+     * @description `ls` is instance for localstorage operation
+     * I will use it like singletone for injection in places
+     * where is needed.
+     */
     private ls: LocalStorageMemory = new LocalStorageMemory()
 
-    // Additional declaration is needed.
-    // When you declare some properties in `Component` decorator.
-    // count!: number
-    // increment!: () => void
+    /**
+     * @description Additional declaration is needed.
+     * When you declare some properties in `Component` decorator.
+     * count!: number
+     * increment!: () => void
+     */
     private styleObject;
 
+    /**
+     * @description options are main object
+     * for user in fly setup. If user clear
+     * cache memory(localStorege) everything
+     * goes back to the default values.
+     */
+    private options: Object = {}
+
+    /**
+     * Switch place of two main components.
+     * Youtube & webGLPlayer
+     */
     private switchPlace: boolean = false
     private switchPlaceAction() {
       this.switchPlace = !this.switchPlace
     }
 
+    /**
+     * @description Initial method construct.
+     */
     constructor() {
       super()
 
@@ -94,7 +119,34 @@
         height: '100%',
         width: '100%'
       }
+      // this.ls.save("styleObject", this.styleObject)
 
+      // Check page localStorage
+      // Only lower chars for naming ls objects.
+      if (this.ls.load("first_time") === false) {
+
+        console.info("App starts first time. Prepare storage data...")
+
+        this.ls.save("o_searchBox_width", '25')
+
+        this.options = {
+          searchBox: {
+            width: this.ls.load("o_searchBox_width")
+          }
+        };
+
+        this.ls.save("first_time", 'storage-loaded')
+
+      } else {
+
+        console.info("App loading storage data...")
+
+        this.options = {
+          searchBox: {
+            width: this.ls.load("o_searchBox_width")
+          }
+        }
+    }
       // test
       // this.ls.save("styleObject", this.styleObject)
 
