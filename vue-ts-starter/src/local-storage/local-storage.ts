@@ -36,7 +36,7 @@ class LocalStorageMemory {
   public load(name) {
     if (localStorage.getItem(name) === "undefined" || localStorage.getItem(name) == null || localStorage.getItem(name) === "") {
       console.warn("LocalStorageMemory method load return's: ", localStorage.getItem(name));
-      return false;
+      return localStorage.getItem(name);
     } else {
       return JSON.parse((localStorage.getItem(name) as string));
     }

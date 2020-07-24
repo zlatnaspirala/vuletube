@@ -2,8 +2,8 @@
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
 @include md-register-theme("myDark", (
-  primary: md-get-palette-color(gray, A200), // The primary color of your application
-  accent: md-get-palette-color(gray, 500), // The accent or secondary color
+  primary: rgb(228, 228, 228), // The primary color of your application
+  accent: rgb(255, 255, 255), // The accent or secondary color
   whiteText: #987123,
   secondary: #982828,
   positive: #99ff88,
@@ -16,7 +16,7 @@
   whiteText: #123443,
   secondary: #987123,
   positive: #99ff88,
-  theme: light
+  // theme: dark
 ));
 
 @include md-register-theme("myOrange", (

@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <myHeader slogan='Welcome to the vue-project-generator.' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
+    <myHeader slogan='vuletube 0.4 local storage support added.' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
     <div v-bind:style="styleObject">
 
       <myYouTube v-if="switchPlace" ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
@@ -101,8 +101,10 @@
      * Youtube & webGLPlayer
      */
     private switchPlace: boolean = false
+
     private switchPlaceAction() {
       this.switchPlace = !this.switchPlace
+      this.ls.save("o_switch_place", this.switchPlace)
     }
 
     /**
@@ -125,7 +127,7 @@
        * @description  Check page localStorage
        * Note: Only lower chars for naming ls objects.
        */
-      if (this.ls.load("first_time") === false) {
+      if (this.ls.load("first_time") === null) {
 
         console.info("App starts first time. Prepare storage data...")
 
@@ -133,10 +135,17 @@
          * In future enumerate for global config...
          */
         this.ls.save("o_searchbox_width", '25')
-        this.ls.save("o_searchbox_visibility_channel_title", "true")
-        this.ls.save("o_searchbox_visibility_title", "false")
-        this.ls.save("o_searchbox_visibility_videoid", "false")
-        this.ls.save("o_searchbox_visibility_thumbnails", "false")
+        this.ls.save("o_searchbox_visibility_channel_title", false)
+        this.ls.save("o_searchbox_visibility_title", false)
+        this.ls.save("o_searchbox_visibility_videoid", true)
+        this.ls.save("o_searchbox_visibility_thumbnails", true)
+
+        // For threejs
+        this.ls.save("o_switch_place", true)
+        this.ls.save("o_webglbox_camera_z", 0.02)
+        this.ls.save("o_webglbox_background_r", "100")
+        this.ls.save("o_webglbox_background_g", "100")
+        this.ls.save("o_webglbox_background_b", "100")
 
         this.options = {
           searchBox: {
@@ -153,7 +162,6 @@
       } else {
 
         console.info("App loading storage data...")
-
         this.options = {
           searchBox: {
             width: this.ls.load("o_searchbox_width"),
@@ -162,7 +170,8 @@
             visibilityVideoId:  this.ls.load("o_searchbox_visibility_videoid"),
             visibilityThumbnails:  this.ls.load("o_searchbox_visibility_thumbnails"),
           }
-        };
+        }
+
     }
       // test
       // this.ls.save("styleObject", this.styleObject)
@@ -171,7 +180,7 @@
 
     setupInstance = () => {
       this.$store.commit('increment')
-      console.log('Attach Application event this.count => ', this.$store.state.count)
+      // console.log('Attach Application event this.count => ', this.$store.state.count)
     }
 
     get computedMsg (): string {
@@ -180,6 +189,7 @@
 
     mounted (): void {
       this.setupInstance()
+      this.switchPlace = this.ls.load("o_switch_place")
     }
 
   }

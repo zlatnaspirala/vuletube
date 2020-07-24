@@ -3,8 +3,8 @@
   <div v-bind:style="styleObject">
     <div id="player" style="position:absolute;width:320px;right:0;"></div>
     <md-button class="md-primary md-raised" @click="showDialog = true">VIEW OPTIONS</md-button>
-    <md-field>
-      <label>Search youtube bar:</label>
+    <md-field class="md-content-options">
+      <label class="labelText" >Search youtube bar:</label>
       <md-input
               v-model="yts.mySearchQuery"
               class="md-primary md-raised"
@@ -58,15 +58,15 @@
                          v-model="ytListVisibilityRowChannelTitle">Channel Title</md-switch>
             </md-content>
             <md-content v-bind:style="optionsStyle">
-              <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
+              <md-switch v-on:change="titleOptionsChanged" class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowTitle">Title</md-switch>
             </md-content>
             <md-content v-bind:style="optionsStyle">
-              <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
+              <md-switch v-on:change="videoIdOptionsChanged" class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowVideoID">Video ID</md-switch>
             </md-content>
             <md-content v-bind:style="optionsStyle">
-              <md-switch class="md-primary md-raised" v-bind:style="optionsStyle"
+              <md-switch v-on:change="trumbnailsOptionsChanged" class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowThumbnails">Thumbnails</md-switch>
             </md-content>
           </md-content>
@@ -101,9 +101,14 @@
 
   .md-content-options {
     padding: 25px 25px 25px 25px;
-   -webkit-box-shadow: 1px 1px 5px 5px rgba(0,0,0,0.75);
-   -moz-box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
-    box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.75);
+   -webkit-box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.75);
+   -moz-box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.75);
+  }
+
+  .labelText {
+    padding-top: 5px;
+    padding-left: 5px;
   }
 
 </style>
@@ -240,25 +245,34 @@
         ytListVisibilityRowChannelTitle: Boolean(this.$props.arg.options.searchBox.visibilityChannelTitle),
         ytListVisibilityRowTitle:  Boolean(this.$props.arg.options.searchBox.visibilityTitle),
         ytListVisibilityRowVideoID:  Boolean(this.$props.arg.options.searchBox.visibilityVideoId),
-        ytListVisibilityRowThumbnails:  Boolean(this.$props.arg.options.searchBox.visibilityTrumbnails),
+        ytListVisibilityRowThumbnails:  Boolean(this.$props.arg.options.searchBox.visibilityThumbnails),
         spaceHForYTComponet: window.innerHeight * 0.9 + 'px',
         componentWidthOptions: this.$props.arg.options.searchBox.width
       }
     }
 
-    private channelTitleOptionsChanged () {
-      console.log(" CHANNEL TITLE CHANGED ", this.$data.ytListVisibilityRowChannelTitle )
+    private channelTitleOptionsChanged(): void {
+      this.ls.save("o_searchbox_visibility_channel_title", this.$data.ytListVisibilityRowChannelTitle.toString())
     }
 
-    // ..........
+    private titleOptionsChanged(): void {
+      this.ls.save("o_searchbox_visibility_title", this.$data.ytListVisibilityRowTitle.toString())
+    }
+
+    private videoIdOptionsChanged(): void {
+      this.ls.save("o_searchbox_visibility_videoid", this.$data.ytListVisibilityRowVideoID.toString())
+    }
+
+    private trumbnailsOptionsChanged(): void {
+      this.ls.save("o_searchbox_visibility_thumbnails", this.$data.ytListVisibilityRowThumbnails.toString())
+    }
+
+    // ......
 
     private setupCompWidth() {
-
-      //
       this.$root.$emit('reziseCanvas');
       this.styleObject.width = this.$data.componentWidthOptions + '%'
       this.ls.save("o_searchbox_width", this.$data.componentWidthOptions)
-
     }
 
     /*eslint  no-unused-labels: 1*/
@@ -324,8 +338,6 @@
 
     private mounted (): void {
 
-     console.log("Mounted myYouTube component. Arg => ", this.$props.arg.options.searchBox.visibilityChannelTitle)
-
      this.styleObject = {
         display: 'flex',
         alignItems: 'center',
@@ -344,7 +356,7 @@
 
       if (typeof gapi === 'undefined') {
         setTimeout( () => {
-          console.log('Object gapi:', gapi)
+          // console.log('Object gapi:', gapi)
           root.start(gapi)
         } , 2500)
       } else {

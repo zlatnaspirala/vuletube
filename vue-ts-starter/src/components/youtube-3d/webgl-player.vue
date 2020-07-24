@@ -5,46 +5,44 @@
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>3D VIEW OPTIONS</md-dialog-title>
       <md-tabs md-dynamic-height>
-        <md-tab md-label="3D VIEW OPTIONS">
+        <md-tab md-label="CAMERA Z">
           <md-content class="md-scrollbar">
-
-            <md-content>
              <md-field>
-              <label>Camera deep: {{ this.camera.position.z }}</label>
+              <label>CAMERA DEEP: {{ this.camera.position.z }}</label>
                 <md-input v-bind:value="this.camera.position.z"
-                      v-on:input="testThisFunc"
+                      v-on:input="setCameraDeepByZ"
                       type="range">
                 </md-input>
               </md-field>
-             </md-content>
+          </md-content>
+        </md-tab>
 
-             <md-content>
-               <h3>Background:</h3>
-
-              <md-field>
+        <md-tab md-label="Background">
+          <md-content>
+            <h3>BACKGROUND:</h3>
+              <md-field >
               <label>Red component: </label>
-                <md-input min="0" max="255" ref="redcomponent" value="0"
+                <md-input min="0" max="255" ref="redcomponent" v-bind:value="this.optionsBackground.backgroundR"
                   v-on:input="set3dBackground" type="range">
                 </md-input>
               </md-field>
 
               <md-field>
               <label>Green component: </label>
-                <md-input min="0" max="255" ref="greencomponent" value="0"
+                <md-input min="0" max="255" ref="greencomponent" v-bind:value="this.optionsBackground.backgroundG"
                           v-on:input="set3dBackground" type="range">
                 </md-input>
               </md-field>
 
               <md-field>
               <label>Blue component: </label>
-                <md-input min="0" max="255" ref="bluecomponent" value="0"
+                <md-input min="0" max="255" ref="bluecomponent" v-bind:value="this.optionsBackground.backgroundB"
                        v-on:input="set3dBackground" type="range">
                 </md-input>
               </md-field>
              </md-content>
-
-          </md-content>
         </md-tab>
+
       </md-tabs>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
@@ -83,6 +81,7 @@
   import Component from 'vue-class-component'
   import * as THREE from 'three/build/three.module'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+  import LocalStorageMemory from '../../local-storage/local-storage';
 
   import {
     mdTabs,
@@ -120,9 +119,10 @@
 
     declare YT;
 
+    private ls: LocalStorageMemory = new LocalStorageMemory()
     private camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 )
     private scene = new THREE.Scene()
-    private renderer
+    private renderer = new THREE.WebGLRenderer({ antialias: true })
     private video
     private container
     private texvideo
@@ -134,16 +134,29 @@
       width: '100%'
     }
 
-    constructor() {
-      super()
-
-
+    private optionsBackground = {
+      backgroundR: 0,
+      backgroundG: 0,
+      backgroundB: 0
     }
+    //  Boolean(this.$props.arg.options.searchBox.visibilityThumbnails)
 
     // lifecycle hook
     mounted (): void {
+
       this.init()
       this.animate()
+
+      this.optionsBackground.backgroundR = this.ls.load("o_webglbox_background_r")
+      this.optionsBackground.backgroundG = this.ls.load("o_webglbox_background_g")
+      this.optionsBackground.backgroundB = this.ls.load("o_webglbox_background_b")
+
+      this.renderer.setClearColor ("rgb(" +
+        this.optionsBackground.backgroundR + "," +
+        this.optionsBackground.backgroundG+ "," +
+        this.optionsBackground.backgroundB + ")"
+      )
+
     }
 
     created(): void {
@@ -151,11 +164,8 @@
       this.container = this.$refs.container
 
       this.$root.$on('reziseCanvas', () => {
-       console.log(" set canvas size !")
        this.setCanvasElementSize()
       });
-
-      console.info("Property options =>", this.$props.arg)
 
       this.$root.$on('videoInProgress', (args: any) => {
 
@@ -173,8 +183,11 @@
 
     }
 
-    private testThisFunc (currValue: any): void {
+    private setCameraDeepByZ(currValue: any): void {
       this.camera.position.z = currValue
+      console.log("New value ", currValue)
+      this.ls.save("o_webglbox_camera_z", currValue)
+
     }
 
     private trySource(args: any) {
@@ -198,7 +211,7 @@
     private init() {
 
       this.video = this.$refs.webcam;
-      this.camera.position.z = 0.01;
+      this.camera.position.z = this.ls.load("o_webglbox_camera_z");
 
       var texture = new THREE.VideoTexture( this.video );
       var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
@@ -213,7 +226,7 @@
       geometry.scale(0.3, 0.3, 0.3);
       this.scene.add(this.webcamMesh);
 
-      this.renderer = new THREE.WebGLRenderer({ antialias: true });
+      // this.renderer =
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.setSize(window.innerWidth / 2, window.innerHeight * 0.858);
       (this.$refs.container as HTMLElement).appendChild(this.renderer.domElement);
@@ -239,6 +252,9 @@
       } else {
         console.error( 'MediaDevices interface not available.' );
       }
+
+      // Last action
+      // this.set3dBackground()
 
     }
 
@@ -272,7 +288,10 @@
     }
 
     private setCanvasElementSize = () => {
-      if (!this.renderer) { return }
+      if (!this.renderer) {
+        console.warn("BAD")
+        return
+      }
       this.renderer.setSize((this.$refs.container as HTMLElement).clientWidth, window.innerHeight * 0.81)
     }
 
@@ -294,10 +313,15 @@
     }
 
     private set3dBackground(): void {
+
       this.renderer.setClearColor ("rgb(" +
-       (this.$refs.redcomponent as any).localValue + "," +
-       (this.$refs.greencomponent as any).localValue + "," +
-       (this.$refs.bluecomponent as any).localValue + ")", 1);
+        (this.$refs.redcomponent as mdInput).localValue + "," +
+        (this.$refs.greencomponent as mdInput).localValue + "," +
+        (this.$refs.bluecomponent as mdInput).localValue + ")", 1)
+
+      this.ls.save("o_webglbox_background_r", (this.$refs.redcomponent as mdInput).localValue.toString())
+      this.ls.save("o_webglbox_background_g", (this.$refs.greencomponent as mdInput).localValue.toString())
+      this.ls.save("o_webglbox_background_b", (this.$refs.bluecomponent as mdInput).localValue.toString())
     }
 
   }
