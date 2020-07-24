@@ -55,10 +55,12 @@
     },
     // Vuex's component binding helper can use here
     computed: mapState([
-      'count'
+      'count',
+      'appYtResultItems'
     ]),
     methods: mapMutations([
-      'increment'
+      'increment',
+      'saveResponse'
     ])
   })
 
@@ -86,6 +88,10 @@
      * count!: number
      * increment!: () => void
      */
+     count!: number
+     increment!: () => void
+     saveResponse!: () => void
+
     private styleObject;
 
     /**
@@ -146,6 +152,7 @@
         this.ls.save("o_webglbox_background_r", "100")
         this.ls.save("o_webglbox_background_g", "100")
         this.ls.save("o_webglbox_background_b", "100")
+        this.ls.save("o_webglbox_search_results_preview", true)
 
         this.options = {
           searchBox: {
@@ -179,8 +186,7 @@
     }
 
     setupInstance = () => {
-      this.$store.commit('increment')
-      // console.log('Attach Application event this.count => ', this.$store.state.count)
+      console.log('Attach Application event this.count => ', this.$store.state.count)
     }
 
     get computedMsg (): string {

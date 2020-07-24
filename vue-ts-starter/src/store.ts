@@ -2,19 +2,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-interface CounterState {
+interface ApplicationStateI {
   count: number
+  appYtResultItems: Object
 }
 
 Vue.use(Vuex)
 
 const state = {
-  count: 0
+  count: 0,
+  appYtResultItems: Object
 }
 
 const mutations = {
-  increment (state: CounterState) {
+  increment (state: ApplicationStateI) {
     state.count++
+  },
+  saveResponse(state: ApplicationStateI, { items }) {
+    console.log("Coliano ..............")
+    state.appYtResultItems = items
   }
 }
 

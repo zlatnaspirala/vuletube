@@ -207,18 +207,17 @@
     private styleObject: any = {}
     private showDialog: boolean = false
 
-    private optionsStyle = {
+    private optionsStyle: Partial<CSSStyleDeclaration> = {
       display: 'flex',
       width: '100%',
       paddingBottom: '10px',
       textAlign: 'center',
-      itemsAlign: 'left',
       height: '30px'
     }
 
-    private styleTableObject: any = {
+    private styleTableObject: Partial<CSSStyleDeclaration> = {
       width: '100%',
-      height: '100%'
+      height: '76%'
     }
 
     private ls: LocalStorageMemory = new LocalStorageMemory();
@@ -325,9 +324,13 @@
     }
 
     private setNewResponse(r: any) {
-      // this.currentApiRequest = r
+
       this.$data.yts.ytResponse = r
       var items = r.result.items as YTItem[]
+
+      // test store or emit ?>?>?>
+      this.$store.commit('saveResponse', { items: items })
+      this.$root.$emit('ytItemsReady', { items: items })
 
       for ( var x = 0; x < items.length; x++) {
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])

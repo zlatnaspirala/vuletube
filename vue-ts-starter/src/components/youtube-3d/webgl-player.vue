@@ -1,11 +1,11 @@
 
 <template>
 
-  <div v-bind:style="styleObject" >
+  <div v-bind:style="styleObject">
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>3D VIEW OPTIONS</md-dialog-title>
       <md-tabs md-dynamic-height>
-        <md-tab md-label="CAMERA Z">
+        <md-tab md-label="GENERAL">
           <md-content class="md-scrollbar">
              <md-field>
               <label>CAMERA DEEP: {{ this.camera.position.z }}</label>
@@ -14,6 +14,10 @@
                       type="range">
                 </md-input>
               </md-field>
+            <md-content v-bind:style="optionsStyle">
+              <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
+                v-model="optionsSearchResultPreview">Visibility of results in 3d env.</md-switch>
+            </md-content>
           </md-content>
         </md-tab>
 
@@ -73,6 +77,10 @@
   .canvasDom {
     width:100%;
   }
+
+  .md-tab {
+    padding: 25px 25px 25px 25px;
+  }
 </style>
 
 <script lang="ts">
@@ -120,7 +128,7 @@
     declare YT;
 
     private ls: LocalStorageMemory = new LocalStorageMemory()
-    private camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 )
+    private camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100)
     private scene = new THREE.Scene()
     private renderer = new THREE.WebGLRenderer({ antialias: true })
     private video
@@ -134,11 +142,23 @@
       width: '100%'
     }
 
+    private optionsStyle = {
+      display: 'flex',
+      width: '100%',
+      paddingBottom: '1px',
+      textAlign: 'center',
+      itemsAlign: 'left',
+      height: '60px',
+      // paddingLeft: '10px'
+    }
+
     private optionsBackground = {
       backgroundR: 0,
       backgroundG: 0,
       backgroundB: 0
     }
+
+    private optionsSearchResultPreview: boolean = false
     //  Boolean(this.$props.arg.options.searchBox.visibilityThumbnails)
 
     // lifecycle hook
@@ -150,6 +170,8 @@
       this.optionsBackground.backgroundR = this.ls.load("o_webglbox_background_r")
       this.optionsBackground.backgroundG = this.ls.load("o_webglbox_background_g")
       this.optionsBackground.backgroundB = this.ls.load("o_webglbox_background_b")
+
+      this.optionsSearchResultPreview = this.ls.load("o_webglbox_search_results_preview")
 
       this.renderer.setClearColor ("rgb(" +
         this.optionsBackground.backgroundR + "," +
@@ -165,6 +187,10 @@
 
       this.$root.$on('reziseCanvas', () => {
        this.setCanvasElementSize()
+      });
+
+      this.$root.$on('ytItemsReady', (args) => {
+       console.log("OK I WILL TRY IT IN ", args)
       });
 
       this.$root.$on('videoInProgress', (args: any) => {
@@ -183,9 +209,11 @@
 
     }
 
+    private searchResultPreviewOptionsChanged() {}
+
     private setCameraDeepByZ(currValue: any): void {
       this.camera.position.z = currValue
-      console.log("New value ", currValue)
+      // console.log("New value ", currValue)
       this.ls.save("o_webglbox_camera_z", currValue)
 
     }
@@ -289,7 +317,7 @@
 
     private setCanvasElementSize = () => {
       if (!this.renderer) {
-        console.warn("BAD")
+        console.warn(".....")
         return
       }
       this.renderer.setSize((this.$refs.container as HTMLElement).clientWidth, window.innerHeight * 0.81)
