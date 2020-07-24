@@ -60,8 +60,8 @@
     <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
-    <md-button class="md-primary md-accent" @click="showDialog = true">webgl support</md-button>
-    <md-button class="md-primary md-raised" @click="showDialog = true">SETTINGS</md-button>
+    <!--md-button class="md-primary md-accent" @click="showDialog = true">webgl support</md-button-->
+    <md-button class="md-primary md-raised" @click="showDialog = true">3D VIEW OPTIONS</md-button>
 
     <!-- threejs canvas tag -->
     <div class="canvasDom" ref="container"></div>
