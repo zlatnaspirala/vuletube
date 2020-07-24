@@ -217,7 +217,8 @@
     }
 
     private styleTableObject: any = {
-      width: '100%'
+      width: '100%',
+      height: '100%'
     }
 
     private ls: LocalStorageMemory = new LocalStorageMemory();
@@ -467,11 +468,13 @@
 
     private start(gapi: any) {
 
-      gapi.load("client:auth2", function() {
+      gapi.load("client:auth2", () => {
         gapi.auth2.init({
           client_id: "556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com"
-        }).then (function(ee) {
-          console.log('Passed...', ee)
+        }).then ((ee) => {
+          console.log(gapi.auth2.init)
+        }).catch(() => {
+          console.log("Error in start func.")
         })
       })
 
