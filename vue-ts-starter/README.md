@@ -53,9 +53,10 @@ Run:
    <b>- version 0.0.5 [WIP NEXT] </b>
 
    Prepare for search result preview in 3d.
-   without raycast potions for navigate.
-   options for :
+   without raycast options for navigate.
+   Add options for:
     - save result number per page - pagination.
+    - show result in 3d
 
 ### Project structure ###
 
