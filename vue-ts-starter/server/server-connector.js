@@ -34,16 +34,13 @@ var https = require('https').createServer(options, function(request, response) {
         const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4';
 
         // Prapare dynamic path for images
-        var trumbPath = 'https://i.ytimg.com/vi/' + localVid[1] + '/mqdefault.jpg'
+        var trumbPath = ['https://i.ytimg.com/vi/' + localVid[1] + '/mqdefault.jpg'];
         // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
-        console.log(trumbPath + " TRUMB PATH")
+        console.log(trumbPath + " TRUMB PATH");
 
-        const options = {
-          url: trumbPath,
-          dest: '../dist/trumbnails/' + 'vule' + localVid[1] + 'jpg'
-        }
+        var dest = '../dist/trumbnails/' + 'vule' + localVid[1] + '.jpg';
 
-        download.image(trumbPath, options.dest)
+        download.image(trumbPath, dest)
         .then(({ filename }) => {
           console.log('Saved to', filename)
         })
