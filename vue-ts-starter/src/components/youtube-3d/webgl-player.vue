@@ -205,14 +205,14 @@
 
         var testString = ''
         // args.items
-        args.forEach(element => {
-          console.log(".....", element.snippet.trumbnails.medium.url)
-          testString += ',' + element.snippet.trumbnails.medium.url
+        args.items.forEach(element => {
+          console.log(".....", element.snippet.thumbnails.medium.url)
+          testString += ',' + element.snippet.thumbnails.medium.url
         });
 
-        fetch('/saveTrumbnails?imgs=' + testString)
+        fetch('/saveThumbnails?imgs=' + testString)
           .then((response) => {
-
+            console.log(response)
           }).catch(function(err) {
             console.log('Fetch in webgl component: ', err);
         });

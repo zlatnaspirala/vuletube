@@ -66,7 +66,7 @@
                          v-model="ytListVisibilityRowVideoID">Video ID</md-switch>
             </md-content>
             <md-content v-bind:style="optionsStyle">
-              <md-switch v-on:change="trumbnailsOptionsChanged" class="md-primary md-raised" v-bind:style="optionsStyle"
+              <md-switch v-on:change="thumbnailsOptionsChanged" class="md-primary md-raised" v-bind:style="optionsStyle"
                          v-model="ytListVisibilityRowThumbnails">Thumbnails</md-switch>
             </md-content>
           </md-content>
@@ -263,7 +263,7 @@
       this.ls.save("o_searchbox_visibility_videoid", this.$data.ytListVisibilityRowVideoID.toString())
     }
 
-    private trumbnailsOptionsChanged(): void {
+    private thumbnailsOptionsChanged(): void {
       this.ls.save("o_searchbox_visibility_thumbnails", this.$data.ytListVisibilityRowThumbnails.toString())
     }
 

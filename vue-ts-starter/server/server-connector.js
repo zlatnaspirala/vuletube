@@ -95,24 +95,30 @@ var https = require('https').createServer(options, function(request, response) {
                       Voli
                       svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
 
-      } else  if (request.url.search(/.saveTrumbnails/g) != -1) {
+      } else  if (request.url.search(/.saveThumbnails/g) != -1) {
 
         const localImg = request.url.split("?imgs=");
-        console.log("Images => ", localImg[1]);
+
 
         var testIMG = localImg[1].split(",")
 
+        for (var j = 0; j < testIMG.length;j++) {
+          console.log("Images => ", testIMG[j]);
 
-        // Prapare dynamic path for images
-        var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[1] + '/mqdefault.jpg';
-        // Format:
-        // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
-        console.log(trumbPath + " TRUMB PATH");
-        var dest = '../dist/trumbnails/' + 'vule' + localVid[1] + '.jpg';
+          // Prapare dynamic path for images
+          var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[j] + '/mqdefault.jpg';
+          // Format:
+          // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
+          console.log(trumbPath + " TRUMB PATH");
+          var dest = '../dist/thumbnails/' + 'vule' + localVid[j] + '.jpg';
 
-        download(trumbPath, dest, function()  {
-          console.log('trumbnails downloaded.');
-        });
+          // check exist ....
+
+          download(trumbPath, dest, function()  {
+            console.log('thumbnails downloaded.');
+          });
+
+        }
 
       } else {
         console.log("Client looks at request.url ",  request.url);
