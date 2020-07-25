@@ -110,7 +110,7 @@ var https = require('https').createServer(options, function(request, response) {
           // Format:
           // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
           console.log(trumbPath + " TRUMB PATH");
-          var dest = '../dist/thumbnails/' + 'vule' + localVid[j] + '.jpg';
+          var dest = '../dist/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
 
           // check exist ....
 
