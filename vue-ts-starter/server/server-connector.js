@@ -45,19 +45,6 @@ var https = require('https').createServer(options, function(request, response) {
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
         const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4';
 
-        // Prapare dynamic path for images
-        var trumbPath = 'https://i.ytimg.com/vi/' + localVid[1] + '/mqdefault.jpg';
-        // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
-        console.log(trumbPath + " TRUMB PATH");
-
-        var dest = '../dist/trumbnails/' + 'vule' + localVid[1] + '.jpg';
-
-        download(trumbPath, dest, function()  {
-          console.log('done >>>>>>>>>>');
-        });
-
-
-
         try {
           if (fs.existsSync(checkvideo)) {
             // file exists
@@ -109,6 +96,23 @@ var https = require('https').createServer(options, function(request, response) {
                       svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
 
       } else  if (request.url.search(/.saveTrumbnails/g) != -1) {
+
+        const localImg = request.url.split("?imgs=");
+        console.log("Images => ", localImg[1]);
+
+        var testIMG = localImg[1].split(",")
+
+
+        // Prapare dynamic path for images
+        var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[1] + '/mqdefault.jpg';
+        // Format:
+        // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
+        console.log(trumbPath + " TRUMB PATH");
+        var dest = '../dist/trumbnails/' + 'vule' + localVid[1] + '.jpg';
+
+        download(trumbPath, dest, function()  {
+          console.log('trumbnails downloaded.');
+        });
 
       } else {
         console.log("Client looks at request.url ",  request.url);

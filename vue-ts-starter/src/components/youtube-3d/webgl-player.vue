@@ -202,6 +202,21 @@
       });
 
       this.$root.$on('ytItemsReady', (args) => {
+
+        var testString = ''
+        // args.items
+        args.forEach(element => {
+          console.log(".....", element.snippet.trumbnails.medium.url)
+          testString += ',' + element.snippet.trumbnails.medium.url
+        });
+
+        fetch('/saveTrumbnails?imgs=' + testString)
+          .then((response) => {
+
+          }).catch(function(err) {
+            console.log('Fetch in webgl component: ', err);
+        });
+
        console.log("OK I WILL TRY IT IN ", args)
         if (this.optionsSearchResultPreview) {
           this.addSearchResult3dObjects(args.items)
