@@ -40,7 +40,11 @@ var https = require('https').createServer(options, function(request, response) {
 
         var dest = '../dist/trumbnails/' + 'vule' + localVid[1] + '.jpg';
 
-        download.image(trumbPath, dest)
+        var options = {
+          url: trumbPath,
+          dest: dest
+        }
+        download.image(options)
         .then(({ filename }) => {
           console.log('Saved to', filename)
         })
