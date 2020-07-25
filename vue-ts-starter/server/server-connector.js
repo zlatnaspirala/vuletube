@@ -13,13 +13,25 @@ const youtubedl = require('youtube-dl')
 // var compression = require("compression");
 const static = require('node-static')
 var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/');
-const download = require('image-downloader')
 
 var options = {
   key: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette.com.key"),
   cert: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette_com.crt"),
   ca: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette_com.crt")
 };
+
+var fs = require('fs'),
+    request = require('request');
+
+var download = function(uri, filename, callback) {
+  request.head(uri, function(err, res, body){
+    console.log('content-type:', res.headers['content-type']);
+    console.log('content-length:', res.headers['content-length']);
+
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  });
+};
+
 
 var https = require('https').createServer(options, function(request, response) {
 
@@ -40,15 +52,11 @@ var https = require('https').createServer(options, function(request, response) {
 
         var dest = '../dist/trumbnails/' + 'vule' + localVid[1] + '.jpg';
 
-        var options = {
-          url: trumbPath.toString(),
-          dest: dest.toString()
-        }
-        download.image(options)
-        .then(({ filename }) => {
-          console.log('Saved to', filename)
-        })
-        .catch((err) => console.error(err))
+        download(trumbPath, dest, function()  {
+          console.log('done >>>>>>>>>>');
+        });
+
+
 
         try {
           if (fs.existsSync(checkvideo)) {
