@@ -19,6 +19,7 @@
     "gcp-metadata": "^4.1.0",
     "google-auth-library": "^6.0.1",
     "googleapis": "^52.1.0",
+    "image-downloader": "^4.0.1",
     "node-static": "^0.7.11",
     "path": "^0.12.7",
     "spdy": "^4.0.2",

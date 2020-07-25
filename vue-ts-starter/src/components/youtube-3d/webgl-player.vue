@@ -14,6 +14,13 @@
                       type="range">
                 </md-input>
               </md-field>
+          <md-field>
+            <label>PREVIEW PER PAGE: {{ this.previewPerPage }}</label>
+              <md-input v-bind:value="this.previewPerPage"
+                v-on:input="previewPerPageChanged" type="range">
+            </md-input>
+          </md-field>
+
             <md-content v-bind:style="optionsStyle">
               <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
                 v-model="optionsSearchResultPreview">Visibility of results in 3d env.</md-switch>
@@ -134,9 +141,14 @@
     private video
     private container
     private texvideo
+
     private webcamMesh
+    private meshGroupSearchResult = new THREE.Object3D()
+
     private showDialog: boolean = false
     private planeAddedToScene: boolean = false
+
+    private previewPerPage: number = 25
 
     private styleObject = {
       width: '100%'
@@ -191,6 +203,9 @@
 
       this.$root.$on('ytItemsReady', (args) => {
        console.log("OK I WILL TRY IT IN ", args)
+        if (this.optionsSearchResultPreview) {
+          this.addSearchResult3dObjects(args.items)
+        }
       });
 
       this.$root.$on('videoInProgress', (args: any) => {
@@ -209,7 +224,13 @@
 
     }
 
-    private searchResultPreviewOptionsChanged() {}
+    private previewPerPageChanged() {
+      console.log(" ewPerPageChanged >>>>>>>>>>>>")
+    }
+
+    private searchResultPreviewOptionsChanged() {
+      console.log(" searchResultPreviewOptionsChanged >>>>>>>>>>>>")
+    }
 
     private setCameraDeepByZ(currValue: any): void {
       this.camera.position.z = currValue
@@ -241,20 +262,27 @@
       this.video = this.$refs.webcam;
       this.camera.position.z = this.ls.load("o_webglbox_camera_z");
 
-      var texture = new THREE.VideoTexture( this.video );
-      var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
-      geometry.scale( 0.5, 0.5, 0.5 );
-      var material = new THREE.MeshBasicMaterial( { map: texture } );
+      // ORIGINAL var texture = new THREE.VideoTexture( this.video )
+      var texture = new THREE.TextureLoader().load('assets/vule-logo1.png')
 
-      this.webcamMesh = new THREE.Mesh(geometry, material);
+      var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
+      geometry.scale(0.5, 0.5, 0.5)
+      var material = new THREE.MeshBasicMaterial({ map: texture })
+
+      this.webcamMesh = new THREE.Mesh(geometry, material)
       this.webcamMesh.position.z = -9
       this.webcamMesh.position.x = -7
       this.webcamMesh.position.y = 3.5
-      // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ));
+      // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ))
       geometry.scale(0.3, 0.3, 0.3);
-      this.scene.add(this.webcamMesh);
 
-      // this.renderer =
+
+
+      // ask
+      this.scene.add(this.webcamMesh)
+      // ask
+      this.scene.add(this.meshGroupSearchResult)
+
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.setSize(window.innerWidth / 2, window.innerHeight * 0.858);
       (this.$refs.container as HTMLElement).appendChild(this.renderer.domElement);
@@ -336,8 +364,38 @@
       this.renderer.render( this.scene, this.camera );
     }
 
-    private setupWebcamMesh () {
-      // test
+    private clearSearchResultFromScene() {
+      for (var i = this.meshGroupSearchResult.children.length - 1;i >= 0; i--) {
+        this.meshGroupSearchResult.children[i].geometry.dispose()
+        this.meshGroupSearchResult.children[i].material.dispose()
+        this.meshGroupSearchResult.remove(this.meshGroupSearchResult.children[i])
+      }
+      this.meshGroupSearchResult.children = []
+    }
+
+    private addSearchResult3dObjects(currentItems) {
+      // test dev
+      console.log("COOLLLLL, clear first not best good for now")
+      this.clearSearchResultFromScene()
+
+      for (var x = 0;x < currentItems.length / 2;x++) {
+        for (var y = 0;y < currentItems.length / 2;y++) {
+
+          // currentItems[0].snippet.thumbnails.medium.url
+          var texture = new THREE.TextureLoader().load(currentItems[0].snippet.thumbnails.medium.url)
+          var geometry = new THREE.PlaneBufferGeometry(16, 9)
+          geometry.scale(0.25, 0.25, 0.25)
+          var material = new THREE.MeshBasicMaterial({ map: texture })
+          var meshPlaneSmall = new THREE.Mesh(geometry, material)
+          meshPlaneSmall.position.z = -9
+          meshPlaneSmall.position.x = -7 + x * 3
+          meshPlaneSmall.position.y = -8 + y * 3
+          this.meshGroupSearchResult.add(meshPlaneSmall)
+
+        }
+      }
+
+
     }
 
     private set3dBackground(): void {

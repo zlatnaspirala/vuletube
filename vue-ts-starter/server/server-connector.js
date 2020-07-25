@@ -1,20 +1,19 @@
 
 // Protocol http2
-const spdy = require("spdy");
-const path = require("path");
+const spdy = require("spdy")
+const path = require("path")
 const port = 3000;
 // var cors = require("cors");
 // var express = require("express");
-var fs = require("fs");
-const youtubedl = require('youtube-dl');
+var fs = require("fs")
+const youtubedl = require('youtube-dl')
 // var https = require('https');
 // var bodyParser = require("body-parser");
 // var app = express();
 // var compression = require("compression");
-const static = require('node-static');
+const static = require('node-static')
 var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/');
-// var videoAccess = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/server/videos/');
-// var basePath = '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/';
+const download = require('image-downloader')
 
 var options = {
   key: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette.com.key"),
@@ -32,8 +31,23 @@ var https = require('https').createServer(options, function(request, response) {
         const localVid = request.url.split("?vid=");
         console.log("videoID => ", localVid[1]);
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
-
         const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4';
+
+        // Prapare dynamic path for images
+        var trumbPath = 'https://i.ytimg.com/vi/' + localVid[1] + '/mqdefault.jpg'
+        // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
+        console.log(trumbPath + " TRUMB PATH")
+
+        const options = {
+          url: trumbPath,
+          dest: '../dist/trumbnails/' + 'vule' + localVid[1] + 'jpg'
+        }
+
+        download.image(options)
+        .then(({ filename }) => {
+          console.log('Saved to', filename)
+        })
+        .catch((err) => console.error(err))
 
         try {
           if (fs.existsSync(checkvideo)) {
@@ -73,6 +87,7 @@ var https = require('https').createServer(options, function(request, response) {
 
           }
         ).catch(function(err){
+          // reject()
           console.log("Error in promise", err)
         });
 
@@ -83,6 +98,8 @@ var https = require('https').createServer(options, function(request, response) {
                       Jer igru vule
                       Voli
                       svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
+
+      } else  if (request.url.search(/.saveTrumbnails/g) != -1) {
 
       } else {
         console.log("Client looks at request.url ",  request.url);

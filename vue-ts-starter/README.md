@@ -52,7 +52,9 @@ Run:
 
    <b>- version 0.0.5 [WIP NEXT] </b>
 
-   Prepare for search result preview in 3d.
+   - Added new server module :
+   `npm install --save image-downloader`
+   - Prepare for search result preview in 3d.
    without raycast options for navigate.
    Add options for:
     - save result number per page - pagination.

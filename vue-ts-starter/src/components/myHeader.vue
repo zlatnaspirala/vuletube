@@ -66,7 +66,7 @@
         <md-tab md-label="About VuleTube Service">
           <md-content class="md-scrollbar" v-bind:style="optionsStyle">
 
-            <img style="width:200px" src="../assets/vule-logo1.png" />
+            <img style="width:200px" src="assets/vule-logo1.png" />
             <h3> Project name: VuleTube service</h3>
             <h4> Mother project is vue-typescript-starter (or vule project generator) </h4>
               <span>VuleTube use two components:</span>
