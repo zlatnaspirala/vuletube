@@ -206,8 +206,8 @@
         var testString = ''
         // args.items
         args.items.forEach(element => {
-          console.log(".....", element.snippet.thumbnails.medium.url)
-          testString += ',' + element.snippet.thumbnails.medium.url
+          console.log(".....", element.id.videoId)
+          testString += ',' + element.id.videoId
         });
 
         console.log("BEFORE FETCH IN WEGBL ", args)

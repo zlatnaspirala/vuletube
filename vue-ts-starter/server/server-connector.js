@@ -88,49 +88,42 @@ var https = require('https').createServer(options, function(request, response) {
         });
 
         response.writeHead(200, {'Content-Type': 'text/plain'});
-        response.end(`Not bad \n Man \n
-                      Nikada nisam
-                      Ja bio lud k'o sad \
-                      Jer igru vule
-                      Voli
-                      svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
+        response.end(`VuleTube service \n
+                      ---------------- \n
+                      https://maximumroulette.com:3000 `);
 
       } else  if (request.url.search(/.saveThumbnails/g) != -1) {
 
-        const localImg = request.url.split("?imgs=");
-
-        console.log("localImg => ", localImg[1]);
-
-        var testIMG = localImg[1].split(",")
-
-        console.log(testIMG[0], " NULTI ")
+        let localImg = request.url.split("?imgs=");
+        let testIMG = localImg[1].split(",")
 
         for (var j = 0; j < testIMG.length;j++) {
-
-
-          console.log("Images => ", testIMG[j]);
-
           /**
            * Prapare dynamic path for images
            * Format:
            * https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
            */
           var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[j] + '/mqdefault.jpg';
-
-          console.log(trumbPath + " TRUMB PATH")
           if (testIMG[j] != '') {
+            var oneTimeLocalFlag = true;
             var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
             // check exist ....
-            download(trumbPath, dest, function()  {
+            download(trumbPath, dest, () =>  {
               console.log('thumbnails downloaded.')
-            });
+              if (oneTimeLocalFlag == true) {
+                //
+                response.writeHead(200, {'Content-Type': 'text/plain'});
+                response.end(`VuleTube service \n
+                              ---------------- \n
+                              https://maximumroulette.com:3000 `);
+                });
+              }
 
           }
-
         }
 
       } else {
-        console.log("Client looks at request.url ",  request.url);
+        console.info("request.url => ",  request.url);
         file.serve(request, response);
       }
 
