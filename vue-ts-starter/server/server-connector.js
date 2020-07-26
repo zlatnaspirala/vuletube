@@ -114,7 +114,7 @@ var https = require('https').createServer(options, function(request, response) {
             console.log("CATCH")
             return;
           }
-          var dest = '../dist/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
+          var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
 
           // check exist ....
 
