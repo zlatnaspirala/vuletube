@@ -116,11 +116,10 @@ var https = require('https').createServer(options, function(request, response) {
                 response.end(`VuleTube service \n
                               ---------------- \n
                               https://maximumroulette.com:3000 `);
-                });
-              }
-
-          }
+               }
+            });
         }
+      }
 
       } else {
         console.info("request.url => ",  request.url);
