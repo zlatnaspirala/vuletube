@@ -210,18 +210,26 @@
           testString += ',' + element.snippet.thumbnails.medium.url
         });
 
+        console.log("BEFORE FETCH IN WEGBL ", args)
+
+        var testLogic = false
+
         fetch('/saveThumbnails?imgs=' + testString)
           .then((response) => {
-            console.log(response)
+
+            // console.log("OK I WILL TRY IT IN ", args)
+            console.log("OK I WILL TRY IT IN ", args)
+            if (this.optionsSearchResultPreview && testLogic == true) {
+              // this.addSearchResult3dObjects(args.items)
+            }
+
+            console.log(">>>>>>>>>>>>>>>>>" + response)
           }).catch(function(err) {
             console.log('Fetch in webgl component: ', err);
         });
 
-       console.log("OK I WILL TRY IT IN ", args)
-        if (this.optionsSearchResultPreview) {
-          this.addSearchResult3dObjects(args.items)
-        }
-      });
+
+      })
 
       this.$root.$on('videoInProgress', (args: any) => {
 
@@ -397,7 +405,10 @@
         for (var y = 0;y < currentItems.length / 2;y++) {
 
           // currentItems[0].snippet.thumbnails.medium.url
-          var texture = new THREE.TextureLoader().load(currentItems[0].snippet.thumbnails.medium.url)
+          // DEV
+
+          var texture = new THREE.TextureLoader().load( )
+
           var geometry = new THREE.PlaneBufferGeometry(16, 9)
           geometry.scale(0.25, 0.25, 0.25)
           var material = new THREE.MeshBasicMaterial({ map: texture })

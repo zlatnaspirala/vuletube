@@ -99,6 +99,7 @@ var https = require('https').createServer(options, function(request, response) {
 
         const localImg = request.url.split("?imgs=");
 
+        console.log("localImg => ", localImg[1]);
 
         var testIMG = localImg[1].split(",")
 
