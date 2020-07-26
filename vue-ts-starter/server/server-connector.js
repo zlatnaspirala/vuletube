@@ -103,25 +103,29 @@ var https = require('https').createServer(options, function(request, response) {
 
         var testIMG = localImg[1].split(",")
 
+        console.log(testIMG[0], " NULTI ")
+
         for (var j = 0; j < testIMG.length;j++) {
+
+
           console.log("Images => ", testIMG[j]);
 
-          // Prapare dynamic path for images
+          /**
+           * Prapare dynamic path for images
+           * Format:
+           * https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
+           */
           var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[j] + '/mqdefault.jpg';
-          // Format:
-          // https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
-          console.log(trumbPath + " TRUMB PATH");
-          if (testIMG[j] == '') {
-            console.log("CATCH")
-            return;
+
+          console.log(trumbPath + " TRUMB PATH")
+          if (testIMG[j] != '') {
+            var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
+            // check exist ....
+            download(trumbPath, dest, function()  {
+              console.log('thumbnails downloaded.')
+            });
+
           }
-          var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
-
-          // check exist ....
-
-          download(trumbPath, dest, function()  {
-            console.log('thumbnails downloaded.');
-          });
 
         }
 
