@@ -75,6 +75,11 @@
             <b>Analytics</b>
             <p>We may use third-party Service Providers to monitor and analyze the use of our Service.</p>
 
+            <b>Camera usage</b>
+
+            <p> Application access webcam on load. There is no any stream save of track.</p>
+            <p> Webcam feature is in `work in progress` status. </p>
+
             <b>Google Analytics</b>
 
             <p>Google Analytics is a web analytics service offered by Google that tracks and reports website traffic. Google uses the data collected to track and monitor the use of our Service. This data is shared with other Google services. Google may use the collected data to contextualize and personalize the ads of its own advertising network.</p>
@@ -89,21 +94,18 @@
             <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
 
             <b>Children's Privacy</b>
+
             <p>Our Service does not address anyone under the age of 18 ("Children").</p>
-
             <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
-
             <p>Changes To This Privacy Policy</p>
             <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-
             <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the "effective date" at the top of this Privacy Policy.</p>
-
             <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
 
             <h3>Contact Us</h3>
-            <p>If you have any questions about this Privacy Policy, please contact us:</p>
 
-            <p>By email: zlatnaspirala@gmail.com</p>
+            <p>If you have any questions about this Privacy Policy, please contact us:</p>
+            <b>By email: zlatnaspirala@gmail.com</b>
           </md-content>
         </md-tab>
 

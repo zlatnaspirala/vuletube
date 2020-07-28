@@ -1,18 +1,30 @@
 
-// Protocol http2
+/**
+ * Server part
+ * @description Server based on nodejs.
+ * - Protocol http2 - spdy
+ * - Hosted on maximumroulette.com:3000
+ */
+
+ /**
+  * @description Possible implementatiuon in future.
+  *
+  * var cors = require("cors")
+  * var express = require("express")
+  * var https = require('https')
+  * var bodyParser = require("body-parser")
+  * var app = express()
+  * var compression = require("compression")
+  **/
+
 const spdy = require("spdy")
 const path = require("path")
 const port = 3000;
-// var cors = require("cors");
-// var express = require("express");
 var fs = require("fs")
 const youtubedl = require('youtube-dl')
-// var https = require('https');
-// var bodyParser = require("body-parser");
-// var app = express();
-// var compression = require("compression");
 const static = require('node-static')
-var file = new (static.Server)('/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/');
+var file = new (static.Server)(
+  '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/')
 
 var options = {
   key: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette.com.key"),
@@ -24,31 +36,30 @@ var fs = require('fs'),
     request = require('request');
 
 var download = function(uri, filename, callback) {
-  request.head(uri, function(err, res, body){
-    console.log('content-type:', res.headers['content-type']);
-    console.log('content-length:', res.headers['content-length']);
-
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  request.head(uri, function(err, res, body) {
+    console.log('content-type:', res.headers['content-type'])
+    console.log('content-length:', res.headers['content-length'])
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback)
   });
 };
-
 
 var https = require('https').createServer(options, function(request, response) {
 
     request.addListener('end', function() {
 
       if (request.url.search(/.nidza|.dzoni/g) != -1) {
+
         // file.serveFile('bad.html', 402, {}, request, response);
-        console.log("Vule bule request.url., ", request.url);
-        const localVid = request.url.split("?vid=");
-        console.log("videoID => ", localVid[1]);
-        const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1];
-        const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4';
+        const localVid = request.url.split("?vid=")
+        console.log("videoID => ", localVid[1])
+        console.log("Vule bule request.url., ", request.url)
+        const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1]
+        const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4'
 
         try {
           if (fs.existsSync(checkvideo)) {
             // file exists
-            console.log("FILE EXIST SKIP...")
+            console.log("skip...")
             response.writeHead(200, {'Content-Type': 'text/plain'});
             response.end(`Not bad \n Man \n
                       Nikada nisam
@@ -62,35 +73,34 @@ var https = require('https').createServer(options, function(request, response) {
           console.error(err)
         }
 
-          const myPromise = new Promise((resolve, reject) =>{
+          const myPromise = new Promise((resolve, reject) => {
 
             var test = youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
             resolve(test)
 
-          }).then(
-            (video) => {
+          }).then((video) => {
 
             video.on('info', function(info) {
               console.log('Download started')
-              console.log('filename: ' + info._filename)
-              console.log('size: ' + info.size)
+              // console.log('filename: ' + info._filename)
+              // console.log('size: ' + info.size)
             })
 
             const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-            video.pipe(fs.createWriteStream(videoName,  {
+            video.pipe(fs.createWriteStream(videoName, {
               flag: "w+"
-           }));
+            }))
 
           }
-        ).catch(function(err){
-          // reject()
+        ).catch(function(err) {
+          reject()
           console.log("Error in promise", err)
         });
 
-        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.writeHead(200, {'Content-Type': 'text/plain'})
         response.end(`VuleTube service \n
-                      ---------------- \n
-                      https://maximumroulette.com:3000 `);
+                      version 0.0.5 \n
+                      https://maximumroulette.com:3000 `)
 
       } else  if (request.url.search(/.saveThumbnails/g) != -1) {
 
@@ -103,29 +113,30 @@ var https = require('https').createServer(options, function(request, response) {
            * Format:
            * https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg
            */
-          var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[j] + '/mqdefault.jpg';
+          var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[j] + '/mqdefault.jpg'
           if (testIMG[j] != '') {
-            var oneTimeLocalFlag = true;
-            var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg';
+            var oneTimeLocalFlag = true
+            var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg'
             // check exist ....
+
             download(trumbPath, dest, () =>  {
               console.log('thumbnails downloaded.')
               if (oneTimeLocalFlag == true) {
                 //
-                response.writeHead(200, {'Content-Type': 'text/plain'});
+                response.writeHead(200, {'Content-Type': 'text/plain'})
                 response.end(`VuleTube service \n
-                              ---------------- \n
-                              https://maximumroulette.com:3000 `);
+                              version 0.0.5 \n
+                              https://maximumroulette.com:3000 `)
                }
             });
         }
       }
 
       } else {
-        console.info("request.url => ",  request.url);
-        file.serve(request, response);
+        console.info("request.url => ", request.url)
+        file.serve(request, response)
       }
 
-    }).resume();
+    }).resume()
 
-  }).listen(3000);
+  }).listen(3000)

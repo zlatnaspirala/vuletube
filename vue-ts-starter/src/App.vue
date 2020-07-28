@@ -11,7 +11,7 @@
       <myYouTube v-else ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
 
     </div>
-    <myFooter textContent='https://maximumroulette.com:3000 VueTube web service 2020'></myFooter>
+    <myFooter textContent='https://maximumroulette.com:3000 VuleTube web service 2020'></myFooter>
   </div>
 </template>
 
@@ -142,17 +142,18 @@
          */
         this.ls.save("o_searchbox_width", '25')
         this.ls.save("o_searchbox_visibility_channel_title", false)
-        this.ls.save("o_searchbox_visibility_title", false)
-        this.ls.save("o_searchbox_visibility_videoid", true)
+        this.ls.save("o_searchbox_visibility_title", true)
+        this.ls.save("o_searchbox_visibility_videoid", false)
         this.ls.save("o_searchbox_visibility_thumbnails", true)
 
         // For threejs
         this.ls.save("o_switch_place", true)
-        this.ls.save("o_webglbox_camera_z", 0.02)
+        this.ls.save("o_webglbox_camera_z", 5.5)
         this.ls.save("o_webglbox_background_r", "100")
         this.ls.save("o_webglbox_background_g", "100")
         this.ls.save("o_webglbox_background_b", "100")
         this.ls.save("o_webglbox_search_results_preview", true)
+        this.ls.save("o_webglbox_preview_per_page", 20)
 
         this.options = {
           searchBox: {

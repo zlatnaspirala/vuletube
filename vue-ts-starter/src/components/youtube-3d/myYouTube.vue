@@ -6,6 +6,7 @@
     <md-field class="md-content-options">
       <label class="labelText" >Search youtube bar:</label>
       <md-input
+              @keyup.enter="execute()"
               v-model="yts.mySearchQuery"
               class="md-primary md-raised"
               placeholder="Search youtube:"
@@ -16,7 +17,7 @@
                ref="ytfetch"
                @click="execute"
                v-show='tyfetchVisibility'>
-                 RUN FETCH
+                 SEARCH
     </md-button>
     <md-table v-bind:style="styleTableObject" md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
@@ -25,11 +26,19 @@
       <md-table-row :key="value" md-selectable="single"
           slot="md-table-row" :slot-scope="yts.ytResponse.result"
           v-for="value in yts.ytResponse.result.items">
-        <md-table-cell v-show="ytListVisibilityRowChannelTitle" @click="prepareThisVideo" md-label="VideoId" md-sort-by="VideoId" >
-          {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
-          data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
+        <md-table-cell v-show="ytListVisibilityRowChannelTitle" md-label="VideoId" md-sort-by="VideoId" >
+          <div @click="prepareThisVideo" :data-videoid="value.id.videoId">
+            {{ value.id.kind }} from <b> {{ value.snippet.channelTitle }} </b>
+            data: <b> {{ value.snippet.publishTime.split("T")[0] }} </b>
+          </div>
         </md-table-cell>
-        <md-table-cell v-show="ytListVisibilityRowTitle" md-label="Title" md-sort-by="title" >{{ value.snippet.title }}</md-table-cell>
+        <md-table-cell v-show="ytListVisibilityRowTitle"
+                 md-label="Title"
+                 md-sort-by="title" >
+                 <div @click="prepareThisVideo" :data-videoid="value.id.videoId">
+                   {{ value.snippet.title }}
+                 </div>
+        </md-table-cell>
         <md-table-cell v-show="ytListVisibilityRowVideoID" md-label="VideoId" md-sort-by="videoId">
           {{ value.id.videoId }} <br>
           <md-button class="md-primary md-raised"
@@ -41,7 +50,9 @@
         <md-table-cell v-show="ytListVisibilityRowThumbnails" md-label="Thumbnails" md-sort-by="thumbnails" >
             <md-card>
               <md-card-media>
-                <img :src="value.snippet.thumbnails.medium.url" alt="medium size">
+                <div @click="prepareThisVideo" :data-videoid="value.id.videoId">
+                  <img :src="value.snippet.thumbnails.medium.url" alt="medium size">
+                </div>
               </md-card-media>
             </md-card>
         </md-table-cell>
@@ -204,9 +215,8 @@
   @Component
   export default class myYouTube extends CompProps {
 
-    private styleObject: any = {}
     private showDialog: boolean = false
-
+    private styleObject: Partial<CSSStyleDeclaration> = {}
     private optionsStyle: Partial<CSSStyleDeclaration> = {
       display: 'flex',
       width: '100%',
@@ -214,16 +224,15 @@
       textAlign: 'center',
       height: '30px'
     }
-
     private styleTableObject: Partial<CSSStyleDeclaration> = {
       width: '100%',
       height: '76%'
     }
-
-    private ls: LocalStorageMemory = new LocalStorageMemory();
+    private ls: LocalStorageMemory = new LocalStorageMemory()
 
     constructor() {
       super()
+      console.log('construction')
     }
 
     /**
@@ -267,8 +276,6 @@
       this.ls.save("o_searchbox_visibility_thumbnails", this.$data.ytListVisibilityRowThumbnails.toString())
     }
 
-    // ......
-
     private setupCompWidth() {
       this.$root.$emit('reziseCanvas');
       this.styleObject.width = this.$data.componentWidthOptions + '%'
@@ -276,15 +283,20 @@
     }
 
     /*eslint  no-unused-labels: 1*/
-    private loginIn() {
+    private loginIn(): void {
       this.authenticate().then(this.loadClient)
     }
 
-    private justItems: {} = {}
+    // private justItems: {} = {}
 
     private prepareThisVideo(e) {
 
       var passVideoId = e.target.parentElement.parentElement.getAttribute("data-videoid")
+      if (typeof passVideoId === 'undefined' || passVideoId === null) {
+        passVideoId = e.currentTarget.getAttribute("data-videoid")
+      }
+      console.log("DEVpassVideoId ", passVideoId)
+
       fetch('/dzoni?vid=' + passVideoId)
       .then(
         (response) => {
@@ -312,14 +324,10 @@
             videoId: handler[1]
           }
           this.$root.$emit('videoInProgress', passArgs)
-          // Examine the text in the response
-          // response.json().then(function(data) {
-            // console.log(data);
-          // });
         }
       )
       .catch(function(err) {
-        console.log('Fetch Error :-S', err);
+        console.error('Fetch Error => ', err);
       });
     }
 
@@ -327,22 +335,18 @@
 
       this.$data.yts.ytResponse = r
       var items = r.result.items as YTItem[]
-
-      // test store or emit ?>?>?>
       this.$store.commit('saveResponse', { items: items })
       this.$root.$emit('ytItemsReady', { items: items })
 
       for ( var x = 0; x < items.length; x++) {
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
-        this.$set(this.justItems, items[x].id.videoId, items[x].id.videoId)
+        // this.$set(this.justItems, items[x].id.videoId, items[x].id.videoId)
       }
-
-      // console.log('What is better we will se -> ', this.currentApiRequest)
     }
 
     private mounted (): void {
 
-     this.styleObject = {
+      this.styleObject = {
         display: 'flex',
         alignItems: 'center',
         textAlign: 'center',
@@ -374,7 +378,6 @@
         } catch(err) {
           console.warn(err)
         }
-
       })
 
       window.addEventListener('resize', () => {
@@ -389,7 +392,6 @@
 
     private loadStartUpVideo() {
       /* eslint no-unused-vars: 0 */
-      // var YT;
       var tag = document.createElement('script')
       tag.src = "https://www.youtube.com/iframe_api"
       document.head.appendChild(tag)
@@ -397,36 +399,33 @@
       var player;
       (window as any).player = player = {};
 
-
       /* eslint no-unused-vars: 1 */
       (window as any).onYouTubeIframeAPIReady = function() {
 
-      var done = false;
-
+        var done = false;
         console.log('onPlayerReady')
-          player = new (window as any).YT.Player('player', {
+        player = new (window as any).YT.Player('player', {
           height: '195',
           width: '320',
-          videoId: 'M7lc1UVf-VE', // TOdo7dhvSwg Mr k
+          videoId: 'M7lc1UVf-VE',
           events: {
             'onReady': (event) => {
-             event.target.playVideo();
+              event.target.playVideo();
             },
             'onStateChange': (event) => {
-            if (event.data == (window as any).YT.PlayerState.PLAYING && !done) {
-              setTimeout(() => {
-                player.stopVideo();
-              }, 6000);
-              done = true;
+              if (event.data == (window as any).YT.PlayerState.PLAYING && !done) {
+                setTimeout(() => {
+                  player.stopVideo();
+                }, 6000);
+                done = true;
+              }
             }
-      }
           }
-        });
+        })
       }
-
     }
 
-    private authenticate() {
+    private authenticate(): any {
       return gapi.auth2.getAuthInstance()
           .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
           .then(() => {
@@ -435,7 +434,7 @@
             console.info("Sign-in successful");
           },
           function(err) {
-            console.error("Error signing in", err);
+            console.error("Error signing in => ", err);
           });
     }
 
@@ -450,14 +449,14 @@
         });
     }
 
-    private execute() {
+    private execute(): void {
 
       var root = this
       return (gapi as any).client.youtube.search.list({
         "part": [
           "snippet"
         ],
-        "maxResults": 25,
+        "maxResults": root.ls.load("o_webglbox_preview_per_page"),
         "q": root.$data.yts.mySearchQuery
       })
         .then((response) => {
@@ -465,19 +464,19 @@
           this.setNewResponse(response)
         },
         function(err: any) {
-          console.error("Execute error", err);
-        });
+          console.error("Execute error for client.youtube.search.list => ", err)
+        })
     }
 
-    private start(gapi: any) {
+    private start(gapi: any): void {
 
       gapi.load("client:auth2", () => {
         gapi.auth2.init({
           client_id: "556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com"
-        }).then ((ee) => {
-          console.log(gapi.auth2.init)
-        }).catch(() => {
-          console.log("Error in start func.")
+        }).then (() => {
+          console.info("Gapi is ready => " + gapi.auth2.init)
+        }).catch((err) => {
+          console.warn("Error in start func.", err)
         })
       })
 

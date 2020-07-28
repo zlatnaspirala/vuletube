@@ -1,9 +1,10 @@
+
 # Project name: vue-ts-starter #
 
- ### Creator: Nikola Lukic 2020 ###
- ### Visual Code editor used ###
- ### Code formater vsPrettier ###
- ### Version "Ecstacy of gold" ###
+ #### Creator: Nikola Lukic 2020 ####
+ #### Visual Code editor used ####
+ #### Code formater vsPrettier ####
+ #### Version "Ecstacy of gold" ####
 
 
 ## Project objective ##
@@ -17,16 +18,18 @@
   - Google account login based on node.js server.
   - Calling Youtube API v3. and preview in classic html tags. [DONE]
   - Implementing three.js video preview sub component[DONE]
+  - Preview thumbnails with threejs component. [DONE]
   - Implementing custom webGL2 (glmatrix) video preview sub component.
   - Kure Video Chat (kurento) Mixing yt video with camera stream.
-  - Visual ts game engine
+  - Visual ts game engine - some kind of implementation
+  - Implementing AR (commercial)
   - Google map API - Not free (maybe for 3d vs maps)
     7$ min cost
 
  ## Go to project folder ##
  ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter) ###
 
- See setup-from-zero-point.md to make clear who this project is created.
+ See `setup-from-zero-point.md` to make clear who this project is created.
 
  Help links:
 
@@ -86,7 +89,8 @@ npm i three ->
 ### Features DONE ###
 
   - YouTube component. Log in , fetch data from youtube APi v3.
-  - Added threejs lib / my subComponent
+    preview images in list
+  - Added threejs lib / my subComponent and preview video and thumbnails.
 
 ### Formating ###
 

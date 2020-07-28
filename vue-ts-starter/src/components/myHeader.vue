@@ -51,13 +51,16 @@
             <h2> Used in my project: </h2>
             <md-content v-bind:style="optionsStyle">
 
-              <p>project structural/methodology </p>
+              <h3>Project structural/methodology </h3>
               <a target="_blank" href="https://vuejs.org/">https://vuejs.org/</a>
 
-              <p>JavaScript 3D library. </p>
+              <h3> youtube.com services </h3>
+              <a target="_blank" href="https://youtube.com/">https://youtube.com/</a>
+
+              <h3>JavaScript 3D library. </h3>
               <a target="_blank" href="https://threejs.org/">https://threejs.org/</a>
 
-              <p>Download videos from youtube in node.js using youtube-dl. </p>
+              <h3>Download videos from youtube in node.js using youtube-dl.</h3>
               <a target="_blank" href="https://www.npmjs.com/package/youtube-dl">https://www.npmjs.com/package/youtube-dl</a>
 
             </md-content>
@@ -76,8 +79,9 @@
               <span>- webgl-player.vue</span>
               <span>Open opengles port view, look for</span>
               <span>video source saved to the maximumroulette:3000</span>
-              <span>I use quick solution from npm:</span>
-              <a target="_blank" href="https://www.npmjs.com/package/youtube-dl">https://www.npmjs.com/package/youtube-dl</a>
+              <span>This project is open source :</span>
+              <a target="_blank" href="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/LICENSE">LICENCE</a>
+              <a target="_blank" href="https://github.com/zlatnaspirala/vue-typescript-starter/">Download source code</a>
 
           </md-content>
         </md-tab>
@@ -104,6 +108,7 @@
   }
 
   .md-content {
+    font-size: 150%;
     height: 500px;
   }
 
@@ -194,8 +199,6 @@
     }
 
     mounted (): void {
-
-      // this.windowGlobal = window
 
       (this.$root as any).$material.theming.theme='myDark'
       this.$set(this, 'tyfetchVisibility', false)

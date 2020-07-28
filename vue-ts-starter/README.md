@@ -34,31 +34,37 @@ Run:
 
 ### Features ###
 
-  <b>- version 0.0.2 [MASTER] </b>
+ <b>- version 0.0.2 [MASTER] </b>
 
-   Getting response for youtube search.
-   Call server part for saving videos
+  - Getting response for youtube search.
+  - Call server part for saving videos
 
-  <b>- version 0.0.3 [MASTER] </b>
+ <b>- version 0.0.3 [MASTER] </b>
 
-   Add options switch-place for two main components
-   Implement LocalStorageMemory class (For saving all
+  - Add options switch-place for two main components
+  - Implement LocalStorageMemory class (For saving all
    user infly data - view options etc.)
 
-  <b>- version 0.0.4 [MASTER] </b>
+ <b>- version 0.0.4 [MASTER] </b>
 
-   Save current (exist) options with localStorage and load on refresh.
-   Every next options will be implemented with localStorage support.
+  - Save current (exist) options with localStorage and load on refresh.
+  - Every next options will be implemented with localStorage support.
 
-   <b>- version 0.0.5 [WIP NEXT] </b>
+ <b>- version 0.0.5 [MASTER] </b>
 
-   - Added new server module :
+  - Added new server module :
    `npm install --save image-downloader`
-   - Prepare for search result preview in 3d.
-   without raycast options for navigate.
+  - Prepare for search result preview in 3d.
+   with raycast options for navigate.
    Add options for:
-    - save result number per page - pagination.
-    - show result in 3d
+  - save result number per page - pagination.
+  - show result in 3d
+
+ <b> version 0.0.6 [WIP NEXT] </b>
+
+  - Adding progress for video duration.
+  - Adding webcam options
+
 
 ### Project structure ###
 
@@ -67,8 +73,11 @@ Run:
 ├── dist/  (This is auto generated)
 ├── node_modules/  (This is auto generated)
 ├── public/
+|   ├── assets/
+|   |   └── logo.png
+|   ├── thumbnails/
 |   ├── videos/
-|       ├── list.html
+|   |   └── list.html
 |   ├── bad.html
 |   ├── favicon.ico
 |   ├── index.html
@@ -78,8 +87,6 @@ Run:
 |   ├── package-lock.json
 |   ├── server-connector.js
 ├── src/
-|   ├── assets/
-|   |   ├── logo.png
 |   ├── components/
 |   |   ├── youtube-3d/
 |   |   |   ├── myYouTube.vue
@@ -186,7 +193,8 @@ Run:
 
  - All other `<input type="file">` attributes, such as multiple and accept, can be used on md-field.
  - Icons used with https://fontawesome.com/v4.7.0/icons/
-
+ - eslint or any other cheker full strict only for proc build
+   in dev status lint will pass more roles.
 
 ### Spiral position ###
 
@@ -224,5 +232,5 @@ Not in use at the moment.
 
 ## Direct link for dev server ##
 
-### VueTube web service 2020 ###
+### VueTube web DEV [WIP] service 2020 ###
 https://maximumroulette.com:3000
