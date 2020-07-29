@@ -107,3 +107,5 @@ npm i three ->
 ### VueTube web service 2020 ###
 
 https://maximumroulette.com:3000
+
+https://www.youtube.com/watch?v=-lwkKzFLzk0

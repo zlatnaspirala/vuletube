@@ -2,7 +2,7 @@
 <template>
   <div id="app">
     <myHeader slogan='vuletube 0.4 local storage support added.' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
-    <div v-bind:style="styleObject">
+    <div ref="mybodycontent" v-bind:style="styleObject">
 
       <myYouTube v-if="switchPlace" ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
       <threejsYoutubePlayer v-else ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
@@ -72,7 +72,8 @@
      */
     $refs!: {
       myHeader: myHeader,
-      myYouTube: myYouTube
+      myYouTube: myYouTube,
+      mybodycontent: HTMLDivElement
     }
 
     /**
@@ -105,6 +106,7 @@
     /**
      * Switch place of two main components.
      * Youtube & webGLPlayer
+     * Better to remove from here ...
      */
     private switchPlace: boolean = false
 
@@ -188,6 +190,7 @@
 
     setupInstance = () => {
       console.log('Attach Application event this.count => ', this.$store.state.count)
+      console.log('Test Application refs mybodycontent => ', this.$refs.mybodycontent)
     }
 
     get computedMsg (): string {

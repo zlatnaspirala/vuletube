@@ -2,7 +2,6 @@
 <template>
   <div class="myHeader">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <md-menu md-size="medium" md-align-trigger>
       <md-button class="md-primary md-raised" md-menu-trigger>Start here</md-button>
       <md-menu-content>
@@ -79,6 +78,9 @@
               <span>- webgl-player.vue</span>
               <span>Open opengles port view, look for</span>
               <span>video source saved to the maximumroulette:3000</span>
+
+              <div id="paypal-button-container"></div>
+
               <span>This project is open source :</span>
               <a target="_blank" href="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/LICENSE">LICENCE</a>
               <a target="_blank" href="https://github.com/zlatnaspirala/vue-typescript-starter/">Download source code</a>
@@ -205,6 +207,32 @@
       this.$set(this, 'loginBtnVisibility', true)
       this.$set(this, 'switchThemeBtnLabel', 'myDark')
       console.log('Load theme Slogan is -> ' + this.$props.slogan)
+
+      /* test paypal
+              paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'blue',
+          layout: 'vertical',
+          label: 'paypal',
+
+      },
+      createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: '20'
+                  }
+              }]
+          });
+      },
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              alert('Transaction completed by ' + details.payer.name.given_name + '!');
+          });
+      }
+  }).render('#paypal-button-container');
+  */
     }
 
   }

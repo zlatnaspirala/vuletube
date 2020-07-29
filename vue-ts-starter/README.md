@@ -1,10 +1,22 @@
-# vue-ts-starter #
-## Project name: Vue project generator ##
 
-## First feature: YouTube vs Threejs ##
-### Public access for VuleTube service: ###
-### https://maximumroulette.com:3000 ###
-![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/src/assets/vule-logo1.png)
+# vue-ts-starter #
+### Project name: Vue project generator ###
+
+#### First feature: YouTube vs Threejs ####
+#### version 0.0.5 ####
+#### Public access for VuleTube service: ####
+#### https://maximumroulette.com:3000 ####
+
+
+![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png)
+
+Screenshot:
+
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.jpg)
+
+YouTube presentation:
+
+![youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)
 
   Production use `https` node application for web server.
 
@@ -34,6 +46,12 @@ Run:
 
 ### Features ###
 
+Note:
+```
+  0.0.x => any changes
+  0.x.1 ... n => any changes + updated present logic or new big feature.
+  x.1.1 ... n => release git/build point version.
+```
  <b>- version 0.0.2 [MASTER] </b>
 
   - Getting response for youtube search.
@@ -60,8 +78,10 @@ Run:
   - save result number per page - pagination.
   - show result in 3d
 
- <b> version 0.0.6 [WIP NEXT] </b>
+ <b> version 0.1.1 [WIP NEXT] </b>
 
+  - Adding paypal donate buttons
+  - Prevent raycast click event behind 3d plane video FIX@
   - Adding progress for video duration.
   - Adding webcam options
 
