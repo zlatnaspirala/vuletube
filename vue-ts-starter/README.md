@@ -84,6 +84,7 @@ Note:
   - Prevent raycast click event behind 3d plane video FIX@
   - Adding progress for video duration.
   - Adding webcam options
+  - Replace text with icons
 
 
 ### Project structure ###

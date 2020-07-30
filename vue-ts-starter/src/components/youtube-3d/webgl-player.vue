@@ -3,63 +3,63 @@
   <div v-bind:style="styleObject">
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>3D VIEW OPTIONS</md-dialog-title>
-        <md-tabs md-dynamic-height>
-          <md-tab md-label="GENERAL">
-            <md-content class="md-scrollbar">
-              <md-field>
-                <label>CAMERA DEEP: {{ this.camera.position.z }}</label>
-                  <md-input v-bind:value="this.camera.position.z"
-                        v-on:input="setCameraDeepByZ"
-                        type="range">
-                  </md-input>
-                </md-field>
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="GENERAL">
+          <md-content class="md-scrollbar">
             <md-field>
-              <label>PREVIEW PER PAGE: {{ this.previewPerPage }}</label>
-                <md-input min="10" max="50" step="10" v-bind:value="this.previewPerPage"
-                  v-on:input="previewPerPageChanged" type="range">
-              </md-input>
-            </md-field>
+              <label>CAMERA DEEP: {{ this.camera.position.z }}</label>
+                <md-input v-bind:value="this.camera.position.z"
+                      v-on:input="setCameraDeepByZ"
+                      type="range">
+                </md-input>
+              </md-field>
+          <md-field>
+            <label>PREVIEW PER PAGE: {{ this.previewPerPage }}</label>
+              <md-input min="10" max="50" step="10" v-bind:value="this.previewPerPage"
+                v-on:input="previewPerPageChanged" type="range">
+            </md-input>
+          </md-field>
 
-              <md-content v-bind:style="optionsStyle">
-                <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
-                  v-model="optionsSearchResultPreview">Visibility of results in 3d env.</md-switch>
-              </md-content>
+            <md-content v-bind:style="optionsStyle">
+              <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
+                v-model="optionsSearchResultPreview">Visibility of results in 3d env.</md-switch>
             </md-content>
-          </md-tab>
+          </md-content>
+        </md-tab>
 
-          <md-tab md-label="Background">
-            <md-content>
-              <h3>BACKGROUND:</h3>
-                <md-field >
-                <label>Red component: </label>
-                  <md-input min="0" max="255" ref="redcomponent" v-bind:value="this.oBackground.r"
-                    v-on:input="set3dBackground" type="range">
-                  </md-input>
-                </md-field>
+        <md-tab md-label="Background">
+          <md-content>
+            <h3>BACKGROUND:</h3>
+              <md-field >
+              <label>Red component: </label>
+                <md-input min="0" max="255" ref="redcomponent" v-bind:value="this.oBackground.r"
+                  v-on:input="set3dBackground" type="range">
+                </md-input>
+              </md-field>
 
-                <md-field>
-                <label>Green component: </label>
-                  <md-input min="0" max="255" ref="greencomponent" v-bind:value="this.oBackground.g"
-                            v-on:input="set3dBackground" type="range">
-                  </md-input>
-                </md-field>
+              <md-field>
+              <label>Green component: </label>
+                <md-input min="0" max="255" ref="greencomponent" v-bind:value="this.oBackground.g"
+                          v-on:input="set3dBackground" type="range">
+                </md-input>
+              </md-field>
 
-                <md-field>
-                <label>Blue component: </label>
-                  <md-input min="0" max="255" ref="bluecomponent" v-bind:value="this.oBackground.b"
-                        v-on:input="set3dBackground" type="range">
-                  </md-input>
-                </md-field>
-              </md-content>
-          </md-tab>
+              <md-field>
+              <label>Blue component: </label>
+                <md-input min="0" max="255" ref="bluecomponent" v-bind:value="this.oBackground.b"
+                      v-on:input="set3dBackground" type="range">
+                </md-input>
+              </md-field>
+            </md-content>
+        </md-tab>
 
-        </md-tabs>
+      </md-tabs>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
       </md-dialog-actions>
     </md-dialog>
 
-    <!-- Texture video tag -->
+    <!-- Texture video tag  @timeupdate='updateCurrentTime'-->
     <video ref="texvideo"
            v-bind:style="{ display: 'none',
                           position: 'absolute',
@@ -71,9 +71,24 @@
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
     <md-field class="menubox">
-      <md-button class="md-primary md-raised" @click="showDialog = true">3D VIEW OPTIONS</md-button>
-      <md-button class="md-primary md-raised" @click="$refs.texvideo.play()">PLAY</md-button>
-      <md-button class="md-primary md-raised" @click="$refs.texvideo.pause()">PAUSE</md-button>
+      <md-button class="md-primary md-raised" @click="showDialog = true">
+        <md-icon class="fa fa-cog"></md-icon>
+      </md-button>
+      <md-button class="md-primary md-raised" @click="$refs.texvideo.play()">
+        <md-icon class="fa fa-play"></md-icon>
+      </md-button>
+      <md-button class="md-primary md-raised" @click="$refs.texvideo.pause()">
+        <md-icon class="fa fa-pause"></md-icon>
+      </md-button>
+
+      <!-- v-bind:value="localCurrentTime" v-on:input="changeCurrentVideoPosition" -->
+      <md-field class="currentTimeField" >
+        <label>Duration {{ getDuration() }} currentTime {{ localCurrentTime }} </label>
+        <md-input step="1" min="0" :max="getDuration()" :value="localCurrentTime"
+         type="range">
+        </md-input>
+      </md-field>
+
     </md-field>
 
     <!-- threejs canvas tag -->
@@ -90,6 +105,11 @@
   .md-tab {
     padding: 25px 25px 25px 25px;
   }
+
+  .currentTimeField {
+    margin: 4px 0 0;
+  }
+
 </style>
 
 <style lang="scss" scoped>
@@ -178,6 +198,8 @@
     private planeAddedToScene: boolean = false
     private previewPerPage: number = 25
 
+    private localCurrentTime: any = null
+
     private styleObject = {
       width: '100%'
     }
@@ -198,6 +220,17 @@
       b: 0
     }
 
+    // UNRESOLVED VUE LIMITATIONS
+    // For audio and video html object cat not be used bind: v-model or any
+    // Effect : initialy load value without update, or lag video on @time
+
+    // I will use classic interval
+    private runVideoReactor() {
+      setInterval(() => {
+        this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
+      }, 500)
+    }
+
     mounted (): void {
 
       this.init()
@@ -215,6 +248,8 @@
         this.oBackground.g+ "," +
         this.oBackground.b + ")"
       )
+
+      this.runVideoReactor()
 
     }
 
@@ -409,6 +444,30 @@
         console.error('MediaDevices interface not available.')
       }
 
+    }
+
+    private getDuration(): number | any {
+      if (typeof this.$refs.texvideo !== 'undefined' &&
+          typeof (this.$refs.texvideo as HTMLVideoElement).duration !== 'undefined' &&
+          !isNaN((this.$refs.texvideo as HTMLVideoElement).duration)) {
+        return (this.$refs.texvideo as HTMLVideoElement).duration
+      } else {
+        return 0
+      }
+    }
+
+    private getCurrentTime() {
+      if (typeof this.$refs.texvideo !== 'undefined' &&
+          typeof (this.$refs.texvideo as HTMLVideoElement).currentTime !== 'undefined' ) {
+        return (this.$refs.texvideo as HTMLVideoElement).currentTime
+      } else {
+        return 0
+      }
+    }
+
+    private changeCurrentVideoPosition(testValue): void {
+      (this.$refs.texvideo as HTMLVideoElement).currentTime = testValue
+      // console.log('changeCurrentVideoPosition', testValue)
     }
 
     private prepareVideoTexture = (visualShape: string) => {

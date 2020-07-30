@@ -2,7 +2,9 @@
 <template>
   <div v-bind:style="styleObject">
     <div id="player" style="position:absolute;width:320px;right:0;"></div>
-    <md-button class="md-primary md-raised" @click="showDialog = true">2D VIEW OPTIONS</md-button>
+    <md-button class="md-primary md-raised" @click="showDialog = true">
+      <md-icon class="fa fa-cog"></md-icon>
+    </md-button>
     <md-field class="md-content-options">
       <label class="labelText" >Search youtube bar:</label>
       <md-input
