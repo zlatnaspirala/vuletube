@@ -44,6 +44,11 @@ Run:
 
 ## Project details ##
 
+  - Vue3
+  - Version: typescript 3.9.6
+  - Visual Code Text Editor used.
+  - NodeJS baclend part
+
 ### Features ###
 
 Note:
@@ -83,8 +88,8 @@ Note:
   - Adding paypal donate buttons
   - Prevent raycast click event behind 3d plane video FIX@
   - Adding progress for video duration.
-  - Adding webcam options
-  - Replace text with icons
+  - Adding webcam options.
+  - Replace text with icons.
 
 
 ### Project structure ###
@@ -216,6 +221,37 @@ Note:
  - Icons used with https://fontawesome.com/v4.7.0/icons/
  - eslint or any other cheker full strict only for proc build
    in dev status lint will pass more roles.
+
+
+### About routes ###
+
+```
+Simple Routing From Scratch
+If you only need very simple routing and do not wish to involve a full-featured router library,
+you can do so by dynamically rendering a page-level component like this:
+
+const NotFound = { template: '<p>Page not found</p>' }
+const Home = { template: '<p>home page</p>' }
+const About = { template: '<p>about page</p>' }
+
+const routes = {
+  '/': Home,
+  '/about': About
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    currentRoute: window.location.pathname
+  },
+  computed: {
+    ViewComponent () {
+      return routes[this.currentRoute] || NotFound
+    }
+  },
+  render (h) { return h(this.ViewComponent) }
+})
+```
 
 ### Spiral position ###
 

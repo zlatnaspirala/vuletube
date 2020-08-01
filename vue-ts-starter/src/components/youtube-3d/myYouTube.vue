@@ -350,8 +350,7 @@
 
       this.styleObject = {
         display: 'flex',
-        alignItems: 'center',
-        textAlign: 'center',
+        alignItems: 'flex-start',
         flexDirection: 'column',
         height: this.$data.spaceHForYTComponet,
         paddingLeft: '6px',

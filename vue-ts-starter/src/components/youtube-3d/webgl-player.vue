@@ -74,14 +74,22 @@
       <md-button class="md-primary md-raised" @click="showDialog = true">
         <md-icon class="fa fa-cog"></md-icon>
       </md-button>
+      <md-button class="md-primary md-raised"
+                 @click="videoCameraOptionsChanged"
+                 v-model="optionsVideoCamera">
+        <md-icon :class="{'activeCamera': optionsVideoCamera === true}"
+                  class="fa fa-video-camera"></md-icon>
+      </md-button>
+      <md-button class="md-primary md-raised" @click="searchResultPreviewOptionsChanged()"
+                 v-model="optionsSearchResultPreview">
+        <md-icon ref="menuOptionsSearchResultPreviewIcon" class="fa fa-th"></md-icon>
+      </md-button>
       <md-button class="md-primary md-raised" @click="$refs.texvideo.play()">
         <md-icon class="fa fa-play"></md-icon>
       </md-button>
       <md-button class="md-primary md-raised" @click="$refs.texvideo.pause()">
         <md-icon class="fa fa-pause"></md-icon>
       </md-button>
-
-      <!-- v-bind:value="localCurrentTime" v-on:input="changeCurrentVideoPosition" -->
       <md-field class="currentTimeField" >
         <label>Duration {{ getDuration() }} currentTime {{ localCurrentTime }} </label>
         <md-input step="1" min="0" :max="getDuration()" :value="localCurrentTime"
@@ -98,6 +106,11 @@
 </template>
 
 <style scoped>
+
+  .activeCamera {
+    color: red !important;
+  }
+
   .canvasDom {
     width:100%;
   }
@@ -113,6 +126,7 @@
 </style>
 
 <style lang="scss" scoped>
+
   .md-dialog /deep/.md-dialog-container {
     max-width: 1000px;
   }
@@ -197,6 +211,9 @@
     private optionsSearchResultPreview: boolean = false
     private planeAddedToScene: boolean = false
     private previewPerPage: number = 25
+    private optionsVideoCamera: boolean = false
+    private isVideoCameraActive: boolean = false
+    private videoCameraStream: MediaStream | null = null
 
     private localCurrentTime: any = null
 
@@ -223,8 +240,8 @@
     // UNRESOLVED VUE LIMITATIONS
     // For audio and video html object cat not be used bind: v-model or any
     // Effect : initialy load value without update, or lag video on @time
-
-    // I will use classic interval
+    // I will use classic native js interval call
+    // Works perfect
     private runVideoReactor() {
       setInterval(() => {
         this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
@@ -232,6 +249,8 @@
     }
 
     mounted (): void {
+
+      this.optionsVideoCamera = this.ls.load("o_camera")
 
       this.init()
       this.animate()
@@ -341,6 +360,9 @@
     private searchResultPreviewOptionsChanged(value): void {
       this.ls.save("o_webglbox_search_results_preview", value)
       this.meshGroupSearchResult.visible = value
+
+      console.log(">>>>>this.$refs.menuOptionsSearchResultPreviewIcon>>>>>>>>", this.$refs.menuOptionsSearchResultPreviewIcon)
+
     }
 
     private setCameraDeepByZ(currValue: any): void {
@@ -348,7 +370,7 @@
       this.ls.save("o_webglbox_camera_z", currValue)
     }
 
-  private prepareThisVideo(arg) {
+    private prepareThisVideo(arg) {
 
       var passVideoId = arg
       fetch('/dzoni?vid=' + passVideoId)
@@ -428,17 +450,38 @@
       window.addEventListener('click', this.rayClickHandler, false)
       this.renderer.domElement.addEventListener('mousemove', this.onMouseMove, false)
 
+      this.accessVideoCamera()
+
+    }
+
+    private stopVideoCamera() {
+
+      if (this.videoCameraStream) {
+        var track = this.videoCameraStream.getTracks()[0]
+        track.stop()
+        this.isVideoCameraActive = false
+      }
+
+    }
+
+    private accessVideoCamera() {
+
+      if (this.optionsVideoCamera == false) {
+        return;
+      }
+
       if ( navigator.mediaDevices && navigator.mediaDevices.getUserMedia ) {
 
-        var constraints = { video: { width: 1280, height: 720, facingMode: 'user' } };
-
+        var constraints = { video: { width: 1280, height: 720, facingMode: 'user' } }
         navigator.mediaDevices.getUserMedia( constraints ).then((stream) => {
-          // apply the stream to the video element used in the texture
-          this.video.srcObject = stream;
+          this.video.srcObject = stream
+          this.videoCameraStream = stream
           this.video.play();
-        } ).catch( function ( error ) {
-          console.error( 'Unable to access the camera/webcam.', error );
-        } );
+          this.isVideoCameraActive = true
+        }).catch((error) => {
+          console.error( 'Unable to access the camera/webcam.', error )
+          this.isVideoCameraActive = false
+        })
 
       } else {
         console.error('MediaDevices interface not available.')
@@ -633,6 +676,26 @@
       this.ls.save("o_webglbox_background_r", r.toString())
       this.ls.save("o_webglbox_background_g", g.toString())
       this.ls.save("o_webglbox_background_b", b.toString())
+    }
+
+    private videoCameraOptionsChanged() {
+      this.optionsVideoCamera = !this.optionsVideoCamera
+      this.ls.save("o_camera", this.optionsVideoCamera)
+
+      if (this.isVideoCameraActive === true && this.optionsVideoCamera === false) {
+        // turn off
+        console.log("TURN OFF")
+        this.stopVideoCamera()
+
+      } else if (this.isVideoCameraActive === false && this.optionsVideoCamera === true) {
+        // turn on
+        console.log("TURN ON")
+        this.accessVideoCamera()
+
+
+
+      }
+
     }
 
   }

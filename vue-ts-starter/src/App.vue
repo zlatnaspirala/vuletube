@@ -142,6 +142,7 @@
         /**
          * In future enumerate for global config...
          */
+        this.ls.save("o_camera", false)
         this.ls.save("o_searchbox_width", '25')
         this.ls.save("o_searchbox_visibility_channel_title", false)
         this.ls.save("o_searchbox_visibility_title", true)
@@ -181,10 +182,7 @@
             visibilityThumbnails:  this.ls.load("o_searchbox_visibility_thumbnails"),
           }
         }
-
-    }
-      // test
-      // this.ls.save("styleObject", this.styleObject)
+      }
 
     }
 
@@ -217,4 +215,5 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
   }
+
 </style>
