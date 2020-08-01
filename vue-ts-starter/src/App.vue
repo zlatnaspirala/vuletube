@@ -115,6 +115,8 @@
       this.ls.save("o_switch_place", this.switchPlace)
     }
 
+    private currentRoute
+
     /**
      * @description Initial method construct.
      */
@@ -187,8 +189,9 @@
     }
 
     setupInstance = () => {
-      console.log('Attach Application event this.count => ', this.$store.state.count)
       console.log('Test Application refs mybodycontent => ', this.$refs.mybodycontent)
+      this.currentRoute = window.location.pathname
+      console.log('Attach Application event this.currentRoute => ', this.currentRoute)
     }
 
     get computedMsg (): string {

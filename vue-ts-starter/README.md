@@ -1,21 +1,17 @@
 
 # vue-ts-starter #
 ### Project name: Vue project generator ###
-
-#### First feature: YouTube vs Threejs ####
-#### version 0.0.5 ####
-#### Public access for VuleTube service: ####
-#### https://maximumroulette.com:3000 ####
-
+##### First feature: YouTube vs Threejs #####
+##### version 0.0.5 #####
+##### Public access for VuleTube service: #####
+##### https://maximumroulette.com:3000 #####
 
 ![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png)
 
 Screenshot:
-
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.jpg)
 
 YouTube presentation:
-
 ![youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)
 
   Production use `https` node application for web server.
@@ -49,7 +45,7 @@ Run:
   - Visual Code Text Editor used.
   - NodeJS baclend part
 
-### Features ###
+### Features Flow ###
 
 Note:
 ```
@@ -83,14 +79,19 @@ Note:
   - save result number per page - pagination.
   - show result in 3d
 
- <b> version 0.1.1 [WIP NEXT] </b>
+ <b> version 0.1.1 [MASTER] </b>
 
-  - Adding paypal donate buttons
-  - Prevent raycast click event behind 3d plane video FIX@
   - Adding progress for video duration.
   - Adding webcam options.
   - Replace text with icons.
 
+ <b> version 0.1.2 [NEXT-WIP] </b>
+
+  - Adding paypal donate buttons
+
+ <b> version 0.1.3 [NEXT] </b>
+
+  - Prevent raycast click event behind 3d plane video FIX@
 
 ### Project structure ###
 
@@ -168,13 +169,13 @@ Note:
 
 ```json
 {
-"kind": "youtube#searchResult",
-"etag": "mlweRndBtBgAcVC-11ZrL0oI7ok",
-"id": {
-  "kind": "youtube#video",
-  "videoId": "YPhJOC9-M_M"
-},
-"snippet": {
+  "kind": "youtube#searchResult",
+  "etag": "mlweRndBtBgAcVC-11ZrL0oI7ok",
+  "id": {
+    "kind": "youtube#video",
+    "videoId": "YPhJOC9-M_M"
+  },
+  "snippet": {
   "publishedAt": "2019-07-14T19:27:31Z",
   "channelId": "UCc1NtMtvoVzKnOtnai9LGsA",
   "title": "Create game engine - Visual typescript game engine",
@@ -182,13 +183,16 @@ Note:
     developing in live - adding multiplayer feature. Project : Visual ts ...",
   "thumbnails": {
     "default": {
-      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/default.jpg", "width": 120, "height": 90
+      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/default.jpg",
+      "width": 120, "height": 90
     },
     "medium": {
-      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg", "width": 320, "height": 180
+      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/mqdefault.jpg",
+      "width": 320, "height": 180
     },
     "high": {
-      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/hqdefault.jpg", "width": 480, "height": 360
+      "url": "https://i.ytimg.com/vi/YPhJOC9-M_M/hqdefault.jpg",
+      "width": 480, "height": 360
     }
   },
   "channelTitle": "javascript fanatic",
@@ -224,6 +228,8 @@ Note:
 
 
 ### About routes ###
+
+From official:
 
 ```
 Simple Routing From Scratch
