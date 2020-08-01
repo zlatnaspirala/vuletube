@@ -12,7 +12,7 @@ Screenshot:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.jpg)
 
 YouTube presentation:
-![youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)
+[youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)
 
   Production use `https` node application for web server.
 
