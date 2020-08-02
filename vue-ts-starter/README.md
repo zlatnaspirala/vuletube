@@ -88,6 +88,7 @@ Note:
  <b> version 0.1.2 [NEXT-WIP] </b>
 
   - Adding paypal donate buttons
+  - test nui webcamer controler [DEV] [WIP]
 
  <b> version 0.1.3 [NEXT] </b>
 
