@@ -1,0 +1,3 @@
+[submodule "vue-ts-starter/public/submodules/nui-commander/nui-commander"]
+	path = vue-ts-starter/public/submodules/nui-commander/nui-commander
+	url = https://github.com/zlatnaspirala/nui-commander
