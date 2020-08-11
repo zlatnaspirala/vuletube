@@ -66,36 +66,28 @@
 
       this.window = window;
 
+      this.window.app = {}
+
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/system/buffer-load.js")
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
 
-      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/main.js",
-        function () {
-          console.log("App constructed...")
-        }
-      )
-
-
-
     }
 
     mounted (): void {
 
-      var root = this
+      var root = this as nuiCommander
 
-   setTimeout(function () {
+      setTimeout(function () {
 
-    var browser =  new this.window.detectBrowser()
-    this.window.app.drawer = new this.window.canvasEngine(this.window.interActionController)
-    this.window.app.drawer.draw()
-    root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
+        var browser =  new this.window.detectBrowser()
+        this.window.app.drawer = new this.window.canvasEngine(this.window.interActionController)
+        this.window.app.drawer.draw()
+        root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
+        console.log("Nui commander is constructed.", browser);
 
-     console.log("Nui commander is constructed.", browser);
-   }, 1000)
-
-      // SCRIPT.LOAD("scripts/controls/main-function-menu.js")
+      }, 1000)
 
     }
 
