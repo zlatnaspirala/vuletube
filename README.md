@@ -7,6 +7,12 @@
  #### Version "Ecstacy of gold" ####
 
 
+## Clone project command: ##
+
+```js
+  git clone --recurse-submodules https://github.com/zlatnaspirala/vue-typescript-starter
+```
+
 ## Project objective ##
 
  To create perfect modular fit for any type project.
@@ -91,6 +97,7 @@ npm i three ->
   - YouTube component. Log in , fetch data from youtube APi v3.
     preview images in list
   - Added threejs lib / my subComponent and preview video and thumbnails.
+    Play video in webGL context , control video from status bar buttons UI.
 
 ### Formating ###
 

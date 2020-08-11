@@ -1,7 +1,16 @@
 
 <template>
-  <div>
-    NUI WEBCAM CONTROL COMPONENT
+  <div ref="nuicontainer"  v-bind:style="nuiCommanderStyle" >
+
+    <div id="container">
+      <div id="content">
+        <video id="webcam" autoplay width="640" height="480"></video>
+        <canvas id="canvas-source" width="640" height="480"></canvas>
+        <canvas id="canvas-blended" width="640" height="480" style="display: none;"></canvas>
+        <div id="xylo"></div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -14,7 +23,7 @@
 </style>
 
 <script lang="ts">
- import Vue from 'vue'
+  import Vue from 'vue'
   import Component from 'vue-class-component'
   import {
   /*mdTabs,
@@ -42,7 +51,67 @@
   })
 
   @Component
-  export default class myFooter extends CompProps {
+  export default class nuiCommander extends CompProps {
+
+    declare window : Window | any
+
+    private nuiCommanderStyle = {
+      position: "absolute",
+      right: 0,
+      top: 0
+    }
+
+    constructor() {
+      super()
+
+      this.window = window;
+
+      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
+      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/system/buffer-load.js")
+      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
+      this.asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
+
+      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/main.js",
+        function () {
+          console.log("App constructed...")
+        }
+      )
+
+
+
+    }
+
+    mounted (): void {
+
+      var root = this
+
+   setTimeout(function () {
+
+    var browser =  new this.window.detectBrowser()
+    this.window.app.drawer = new this.window.canvasEngine(this.window.interActionController)
+    this.window.app.drawer.draw()
+    root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
+
+     console.log("Nui commander is constructed.", browser);
+   }, 1000)
+
+      // SCRIPT.LOAD("scripts/controls/main-function-menu.js")
+
+    }
+
+    asyncLoad(path, callback?) {
+
+      if (typeof callback === "undefined") {
+        callback =  function () {}
+      }
+
+      var nuiScript = document.createElement("script")
+      nuiScript.src = path
+      document.head.appendChild(nuiScript)
+      nuiScript.onload = function () {
+        callback()
+      }
+    }
 
   }
 </script>

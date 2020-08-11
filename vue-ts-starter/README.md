@@ -14,10 +14,12 @@ Screenshot:
 YouTube presentation:
 [youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)
 
-  Production use `https` node application for web server.
+Production use `https` node application for web server.
 
-```bash
-  git clone https://github.com/zlatnaspirala/vue-typescript-starter
+ Clone whole project with submodules:
+
+```js
+  git clone --recurse-submodules https://github.com/zlatnaspirala/vue-typescript-starter
 ```
 
 ```bash
@@ -40,10 +42,10 @@ Run:
 
 ## Project details ##
 
-  - Vue3
+  - Vue3 vs TS
   - Version: typescript 3.9.6
   - Visual Code Text Editor used.
-  - NodeJS baclend part
+  - NodeJS based backend part.
 
 ### Features Flow ###
 
@@ -53,6 +55,7 @@ Note:
   0.x.1 ... n => any changes + updated present logic or new big feature.
   x.1.1 ... n => release git/build point version.
 ```
+
  <b>- version 0.0.2 [MASTER] </b>
 
   - Getting response for youtube search.
@@ -93,6 +96,7 @@ Note:
  <b> version 0.1.3 [NEXT] </b>
 
   - Prevent raycast click event behind 3d plane video FIX@
+  - test nui webcamer controler [DEV] [WIP]
 
 ### Project structure ###
 

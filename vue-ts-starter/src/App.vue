@@ -10,6 +10,9 @@
       <threejsYoutubePlayer v-if="switchPlace" ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
       <myYouTube v-else ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
 
+      <nuiCommander></nuiCommander>
+
+
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VuleTube web service 2020'></myFooter>
   </div>
@@ -21,6 +24,7 @@
   import { Component } from 'vue-property-decorator'
   import myHeader from './components/myHeader.vue'
   import myFooter from './components/myFooter.vue'
+  import nuiCommander from './components/nui-webcam-control/nui-webcam-control.vue'
   import { mapState, mapMutations } from 'vuex'
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
@@ -51,7 +55,8 @@
       myHeader,
       myFooter,
       myYouTube,
-      threejsYoutubePlayer
+      threejsYoutubePlayer,
+      nuiCommander
     },
     // Vuex's component binding helper can use here
     computed: mapState([
