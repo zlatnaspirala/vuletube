@@ -81,9 +81,9 @@
 
       setTimeout(function () {
 
-        var browser =  new this.window.detectBrowser()
-        this.window.app.drawer = new this.window.canvasEngine(this.window.interActionController)
-        this.window.app.drawer.draw()
+        var browser =  new root.window.detectBrowser()
+        root.window.app.drawer = new root.window.canvasEngine(root.window.interActionController)
+        root.window.app.drawer.draw()
         root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
         console.log("Nui commander is constructed.", browser);
 
