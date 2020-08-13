@@ -2,13 +2,11 @@
 <template>
   <div ref="nuicontainer"  v-bind:style="nuiCommanderStyle" >
 
-    <div id="container">
-      <div id="content">
-        <video id="webcam" autoplay width="640" height="480"></video>
-        <canvas id="canvas-source" width="640" height="480"></canvas>
+    <div id="container" ref="container" class="content myshadows">
+        <video id="webcam" autoplay width="640" height="480" style="display: none;" ></video>
+        <canvas id="canvas-source" width="640" height="480" style="bottom: 0;"></canvas>
         <canvas id="canvas-blended" width="640" height="480" style="display: none;"></canvas>
         <div id="xylo"></div>
-      </div>
     </div>
 
   </div>
@@ -20,6 +18,23 @@
     -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
     box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
   }
+
+  .content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index:1210;
+    background-color: black;
+    color: lime;
+  }
+
+  #xylo {
+    display: none;
+    z-index: -1;
+    opacity: 0.1;
+  }
+
 </style>
 
 <script lang="ts">
@@ -41,13 +56,7 @@
 
   // Register for components
   @Component({
-    components: {
-      /*mdButton,
-      mdTabs,
-      mdTab,
-      mdDialogActions,
-      mdContent*/
-    }
+    components: {}
   })
 
   @Component
@@ -57,15 +66,17 @@
 
     private nuiCommanderStyle = {
       position: "absolute",
-      right: 0,
-      top: 0
+      left: 0,
+      bottom: 0,
+      width: "320px",
+      height: "320px",
+      zIndex: 10000
     }
 
     constructor() {
       super()
 
       this.window = window;
-
       this.window.app = {}
 
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
@@ -75,9 +86,11 @@
 
     }
 
-    mounted (): void {
+    mounted(): void {
 
       var root = this as nuiCommander
+
+      // (this.$refs.container as HTMLElement).style.left = "0";
 
       setTimeout(function () {
 
@@ -85,6 +98,11 @@
         root.window.app.drawer = new root.window.canvasEngine(root.window.interActionController)
         root.window.app.drawer.draw()
         root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
+        root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-button.js")
+        root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-msg-box.js",
+        function() {
+          root.attachMainNuiControls()
+        })
         console.log("Nui commander is constructed.", browser);
 
       }, 1000)
@@ -103,6 +121,29 @@
       nuiScript.onload = function () {
         callback()
       }
+    }
+
+    private attachMainNuiControls() {
+
+       var root = this
+      // test
+      console.log("NUI ATTACH");
+
+     this.window.app.drawer.elements.push(
+      new this.window.nuiMsgBox(
+        "Do you love this project?",
+        function (answer) {
+          console.log(answer)
+          root.window.app.drawer.removeElementByName("nuiMsgBox")
+          if (answer == "yes") {
+            alert("Good")
+          } else {
+            alert("Ok good buy.")
+            window.location.href = "https://google.com"
+          }
+        }))
+
+
     }
 
   }
