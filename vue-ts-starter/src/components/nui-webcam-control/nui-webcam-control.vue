@@ -40,6 +40,8 @@
 <script lang="ts">
   import Vue from 'vue'
   import Component from 'vue-class-component'
+  import { VoiceCommander } from '../../../public/submodules/voice-commander/voice-commander/src/vanilla-javascript-ecma6/voice-commander'
+
   import {
   /*mdTabs,
     mdTab,
@@ -63,6 +65,8 @@
   export default class nuiCommander extends CompProps {
 
     declare window : Window | any
+
+    private vc: VoiceCommander = new VoiceCommander()
 
     private nuiCommanderStyle = {
       position: "absolute",
@@ -89,8 +93,6 @@
     mounted(): void {
 
       var root = this as nuiCommander
-
-      // (this.$refs.container as HTMLElement).style.left = "0";
 
       setTimeout(function () {
 
@@ -125,24 +127,42 @@
 
     private attachMainNuiControls() {
 
-       var root = this
-      // test
-      console.log("NUI ATTACH");
+      var root = this
 
-     this.window.app.drawer.elements.push(
-      new this.window.nuiMsgBox(
+      this.window.app.drawer.elements.push(
+       new this.window.nuiMsgBox(
         "Do you love this project?",
         function (answer) {
+
           console.log(answer)
           root.window.app.drawer.removeElementByName("nuiMsgBox")
+
           if (answer == "yes") {
-            alert("Good")
+
+            console.log("Good")
+            setTimeout( () => {
+              root.window.app.drawer.elements.push(
+              new root.window.nuiMsgBox(
+                "Do you wanna to activate voice commander?",
+                function (answer) {
+                  root.window.app.drawer.removeElementByName("nuiMsgBox")
+                  if (answer == "yes") {
+
+                    root.vc.run()
+
+                  }
+                }))
+            }, 800)
+
           } else {
+
             alert("Ok good buy.")
             window.location.href = "https://google.com"
           }
+
         }))
 
+      console.log("nui-commander controls attached.");
 
     }
 
