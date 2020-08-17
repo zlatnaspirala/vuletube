@@ -91,12 +91,13 @@ Note:
  <b> version 0.1.2 [NEXT-WIP] </b>
 
   - Adding paypal donate buttons
-  - test nui webcamer controler [DEV] [WIP]
+  - test nui webcamer controller [DEV] [WIP]
+  - test nui/voice controller [DEV] [WIP]
 
  <b> version 0.1.3 [NEXT] </b>
 
   - Prevent raycast click event behind 3d plane video FIX@
-  - test nui webcamer controler [DEV] [WIP]
+  - test nui webcamer controller [DEV] [WIP]
 
 ### Project structure ###
 
