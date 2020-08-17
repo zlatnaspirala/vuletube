@@ -25,6 +25,7 @@
   - Calling Youtube API v3. and preview in classic html tags. [DONE]
   - Implementing three.js video preview sub component[DONE]
   - Preview thumbnails with threejs component. [DONE]
+  - NUI commander and Voice commander [WIP]
   - Implementing custom webGL2 (glmatrix) video preview sub component.
   - Kure Video Chat (kurento) Mixing yt video with camera stream.
   - Visual ts game engine - some kind of implementation

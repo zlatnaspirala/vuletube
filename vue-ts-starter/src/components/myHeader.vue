@@ -136,6 +136,8 @@
            mdContent,
            mdProgressSpinner } from 'vue-material'
 
+  // test
+  import { switchTheme } from './../my-common/common-func'
   const CompProps = Vue.extend({
     props: {
       slogan: String,
@@ -172,8 +174,11 @@
     }
 
     constructor() {
+
       super()
       this.windowGlobal = window
+      this.switchTheme = switchTheme.bind(this)
+
     }
 
     data() {
@@ -186,6 +191,7 @@
     }
 
     switchTheme() {
+      /*
       try {
         if ((this.$root as any).$material.theming.theme == 'myDark') {
           (this.$root as any).$material.theming.theme='myLight'
@@ -202,6 +208,7 @@
       }catch(err) {
         console.warn('Error =>', err)
       }
+      */
     }
 
     changeTheme (themeEnu: string) {

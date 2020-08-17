@@ -1,5 +1,5 @@
 
-export function switchTheme() {
+export function switchTheme (this: any) {
   try {
     if ((this.$root as any).$material.theming.theme == 'myDark') {
       (this.$root as any).$material.theming.theme='myLight'

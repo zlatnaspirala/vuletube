@@ -140,6 +140,7 @@
           if (answer == "yes") {
 
             console.log("Good")
+            root.defineNuiActionController()
             setTimeout( () => {
               root.window.app.drawer.elements.push(
               new root.window.nuiMsgBox(
@@ -162,7 +163,21 @@
 
         }))
 
-      console.log("nui-commander controls attached.");
+      console.log("nui-commander controls attached.")
+
+    }
+
+    defineNuiActionController = () => {
+
+      var root = this
+      var actions = this.window.interActionController
+      var indicators = this.window.indicatorsBlocks
+
+      indicators.text[0] = "VOICE"
+      actions.main[0].onAction = function(){
+        root.vc.run()
+      }
+
 
     }
 
