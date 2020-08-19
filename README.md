@@ -36,7 +36,7 @@
  ## Go to project folder ##
  ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter) ###
 
- See `setup-from-zero-point.md` to make clear who this project is created.
+ See `setup-from-zero-point.md` to make clear who this project was created.
 
  Help links:
 
