@@ -1,18 +1,19 @@
 
 <template>
-  <div ref="nuicontainer"  v-bind:style="nuiCommanderStyle" >
 
+  <div ref="nuicontainer"  v-bind:style="nuiCommanderStyle" >
     <div id="container" ref="container" class="content myshadows">
         <video id="webcam" autoplay width="640" height="480" style="display: none;" ></video>
         <canvas id="canvas-source" width="640" height="480" style="bottom: 0;"></canvas>
         <canvas id="canvas-blended" width="640" height="480" style="display: none;"></canvas>
         <div id="xylo"></div>
     </div>
-
   </div>
+
 </template>
 
 <style scoped>
+
   .myshadows {
     -webkit-box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.5);
     -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.5);
@@ -24,7 +25,7 @@
     left: 0;
     bottom: 0;
     overflow: hidden;
-    z-index:1210;
+    z-index:1000;
     background-color: black;
     color: lime;
   }
@@ -38,17 +39,11 @@
 </style>
 
 <script lang="ts">
+
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { VoiceCommander } from '../../../public/submodules/voice-commander/voice-commander/src/vanilla-javascript-ecma6/voice-commander'
-
-  import {
-  /*mdTabs,
-    mdTab,
-    mdButton,
-    mdDialogActions,
-    mdContent*/
-   }  from 'vue-material'
+  import { switchTheme } from '../../my-common/common-func'
 
   const CompProps = Vue.extend({
     props: {
@@ -65,6 +60,7 @@
   export default class nuiCommander extends CompProps {
 
     declare window : Window | any
+    declare operations: {} | any;
 
     private vc: VoiceCommander = new VoiceCommander()
 
@@ -80,8 +76,12 @@
     constructor() {
       super()
 
-      this.window = window;
+      this.window = window
       this.window.app = {}
+
+      this.operations = {
+        switchTheme: switchTheme.bind(this)
+      }
 
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/system/buffer-load.js")
@@ -107,7 +107,7 @@
         })
         console.log("Nui commander is constructed.", browser);
 
-      }, 1000)
+      }, 250)
 
     }
 
@@ -165,6 +165,8 @@
 
       console.log("nui-commander controls attached.")
 
+      // Register for nui-voice operations
+      this.operations.switchTheme()
     }
 
     defineNuiActionController = () => {
@@ -174,10 +176,14 @@
       var indicators = this.window.indicatorsBlocks
 
       indicators.text[0] = "VOICE"
-      actions.main[0].onAction = function(){
+      actions.main[0].onAction = function() {
         root.vc.run()
       }
 
+      indicators.text[1] = "THEME"
+      actions.main[1].onAction = function() {
+        root.operations.switchTheme()
+      }
 
     }
 
