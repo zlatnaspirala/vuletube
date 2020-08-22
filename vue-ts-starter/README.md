@@ -232,6 +232,9 @@ Note:
  - eslint or any other cheker full strict only for proc build
    in dev status lint will pass more roles.
 
+ - In public/assets/icons i added complete `fontawesome-free-5.14.0-web` package.
+
+
 
 ### About routes ###
 
