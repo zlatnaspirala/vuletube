@@ -44,6 +44,7 @@
   import Component from 'vue-class-component'
   import { VoiceCommander } from '../../../public/submodules/voice-commander/voice-commander/src/vanilla-javascript-ecma6/voice-commander'
   import { switchTheme } from '../../my-common/common-func'
+  import myHeader from '../myHeader.vue';
 
   const CompProps = Vue.extend({
     props: {
@@ -53,7 +54,9 @@
 
   // Register for components
   @Component({
-    components: {}
+    components: {
+      myHeader
+    }
   })
 
   @Component
@@ -81,6 +84,7 @@
 
       this.operations = {
         switchTheme: switchTheme.bind(this)
+        // // showAboutDialogClick()
       }
 
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
@@ -154,17 +158,13 @@
             }, 800)
 
           } else {
-            alert("Ok good buy.")
+            console.log("Ok good buy.")
             window.location.href = "https://google.com"
           }
 
         }))
 
-      console.log("nui-commander controls attached.")
-
-      // Register for nui-voice operations
-      // this.operations.switchTheme()
-
+      console.info("nui-commander controls attached.")
     }
 
     defineNuiActionController = () => {
@@ -183,16 +183,33 @@
         root.operations.switchTheme()
       }
 
-      var commanderIconField0 = new Image();
-      commanderIconField0.src = "/assets/icons/svgs/solid/file-audio.svg";
+      // About
+      indicators.text[7] = "ABOUT"
+      actions.main[7].onAction = function() {
+        (root.$root.$children[0].$children[0] as myHeader).showAboutDialogClick()
+      }
+
+      // logo for vuletube
+      indicators.text[63] = "VULETUBE"
+      actions.main[63].onAction = function() {
+      }
+
+      var commanderIconField0 = new Image()
+      commanderIconField0.src = "/assets/icons/svgs/solid/file-audio.svg"
       commanderIconField0.onload = function () {
         indicators.icons[0] = this
       }
 
-      var commanderIconField = new Image();
-      commanderIconField.src = "/assets/icons/svgs/brands/superpowers.svg";
+      var commanderIconField = new Image()
+      commanderIconField.src = "/assets/icons/svgs/brands/superpowers.svg"
       commanderIconField.onload = function () {
         indicators.icons[1] = this
+      }
+
+      var commanderIconField7 = new Image()
+      commanderIconField7.src = "/assets/icons/pngs/information.png"
+      commanderIconField7.onload = function () {
+        indicators.icons[7] = this
       }
 
     }

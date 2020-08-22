@@ -1,5 +1,5 @@
 
-# vue-ts-starter #
+# VULETUBE web application #
 ### Project name: Vue project generator ###
 ##### First feature: YouTube vs Threejs #####
 ##### version 0.0.5 #####
@@ -88,16 +88,29 @@ Note:
   - Adding webcam options.
   - Replace text with icons.
 
- <b> version 0.1.2 [NEXT-WIP] </b>
+ <b> version 0.1.2 [MASTER] </b>
 
   - Adding paypal donate buttons
-  - test nui webcamer controller [DEV] [WIP]
-  - test nui/voice controller [DEV] [WIP]
+
+  - test nui webcamer controller [DEV]
+      - voice commander activate   => function0
+      - information/about          => function7
+      - switch theme               => function1
+
+  - test nui/voice controller [DEV]
+     Just basic - voice-commander need to be improved.
+
+ Screenshot:
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.2.png)
 
  <b> version 0.1.3 [NEXT] </b>
 
   - Prevent raycast click event behind 3d plane video FIX@
-  - test nui webcamer controller [DEV] [WIP]
+  - test nui/voice controller [DEV]
+     Just basic - voice-commander need to be improved also
+     to inject  pre-command -> action command like
+     v-command : `search` then listening for `what to search` .
+
 
 ### Project structure ###
 
@@ -107,7 +120,16 @@ Note:
 ├── node_modules/  (This is auto generated)
 ├── public/
 |   ├── assets/
+|   |   └── icons/
+|   |   |   └── svgs
+|   |   |   └── pngs
+|   |   └── vule-logo1.png
 |   |   └── logo.png
+|   |   └── sounds/
+|   |   |   └── note.mp3 ...
+|   |   └── submodules/
+|   |   |   └── nui-commander/
+|   |   |   └── voice-commander/
 |   ├── thumbnails/
 |   ├── videos/
 |   |   └── list.html
@@ -121,11 +143,15 @@ Note:
 |   ├── server-connector.js
 ├── src/
 |   ├── components/
+|   |   ├── nui-webcam-control/
+|   |   |   ├── nui-webcam-control.vue
 |   |   ├── youtube-3d/
 |   |   |   ├── myYouTube.vue
 |   |   |   └── webgl-player.vue
 |   |   ├── myFooter.vue
 |   |   ├── myHeader.vue
+|   ├── my-common/
+|   ├── local-storage/
 |   ├── App.vue
 |   └── styles/
 |   |   └── styles.scss
@@ -138,6 +164,7 @@ Note:
 ├── .gitignore
 ├── README.md (This file)
 ├── tsconfig.json
+├── vue.config.js
 ├── package.json
 ├── package-lock.json (This is auto generated)
 └── babel.config.js

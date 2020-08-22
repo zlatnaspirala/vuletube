@@ -29,7 +29,7 @@
       <md-button class="md-primary md-raised" md-menu-trigger>GO TO</md-button>
       <md-menu-content>
         <md-menu-item>
-           <md-button @click="showAboutDialogClick()" class="md-primary md-raised" md-menu-trigger>About & Credits</md-button>
+           <md-button @click="showAboutDialogClick()" class="md-primary md-raised" md-menu-trigger>Donate, About and Credits</md-button>
         </md-menu-item>
         <md-menu-item>
           <md-button @click="window.open('https://maximumroulette.com:2020', '_blank')"
@@ -46,14 +46,6 @@
     <md-dialog :md-active.sync="showAboutDialog">
       <md-dialog-title>Credits&About</md-dialog-title>
       <md-tabs md-dynamic-height>
-
-        <md-tab md-label="Donate">
-          <md-content class="md-scrollbar" style="text-align:center;" >
-            <h3> Thank you for using my software. </h3>
-            <br>
-            <div id="paypal-button-container"></div>
-          </md-content>
-        </md-tab>
 
         <md-tab md-label="Credits">
           <md-content class="md-scrollbar">
@@ -75,6 +67,15 @@
             </md-content>
           </md-content>
         </md-tab>
+
+        <md-tab md-label="Donate">
+          <md-content class="md-scrollbar" style="text-align:center;" >
+            <h3> Thank you for using my software. </h3>
+            <br>
+            <div id="paypal-button-container"></div>
+          </md-content>
+        </md-tab>
+
         <md-tab md-label="About VuleTube Service">
           <md-content class="md-scrollbar" v-bind:style="optionsStyle">
             <img style="width:200px;margin: -5px -5px -5px -5px;" src="/assets/vule-logo1.png" />
@@ -190,26 +191,7 @@
       }
     }
 
-    switchTheme() {
-      /*
-      try {
-        if ((this.$root as any).$material.theming.theme == 'myDark') {
-          (this.$root as any).$material.theming.theme='myLight'
-          this.changeTheme('myLight')
-        } else if ((this.$root as any).$material.theming.theme == 'myLight') {
-          (this.$root as any).$material.theming.theme='myOrange'
-          this.changeTheme('myOrange')
-        } else if ((this.$root as any).$material.theming.theme == 'myOrange') {
-          (this.$root as any).$material.theming.theme='myDark'
-          this.changeTheme('myDark')
-        } else {
-          console.log('(this.$root as any).$material.theming.theme=myDark' , (this.$root as any).$material.theming.theme='myDark')
-        }
-      }catch(err) {
-        console.warn('Error =>', err)
-      }
-      */
-    }
+    switchTheme() {}
 
     changeTheme (themeEnu: string) {
       this.$set(this, 'switchThemeBtnLabel', themeEnu)
@@ -225,7 +207,6 @@
       this.$set(this, 'tyfetchVisibility', false)
       this.$set(this, 'loginBtnVisibility', true)
       this.$set(this, 'switchThemeBtnLabel', 'myDark')
-      console.log('Load theme Slogan is -> ')
 
     }
 
@@ -264,11 +245,12 @@
       }
     }
 
-    showAboutDialogClick() {
+    public showAboutDialogClick() {
 
       this.showAboutDialog = true
       this.createPayPalDonateButton()
 
     }
+
   }
 </script>
