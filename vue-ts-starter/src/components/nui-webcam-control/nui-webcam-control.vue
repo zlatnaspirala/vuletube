@@ -148,15 +148,12 @@
                 function (answer) {
                   root.window.app.drawer.removeElementByName("nuiMsgBox")
                   if (answer == "yes") {
-
                     root.vc.run()
-
                   }
                 }))
             }, 800)
 
           } else {
-
             alert("Ok good buy.")
             window.location.href = "https://google.com"
           }
@@ -166,7 +163,8 @@
       console.log("nui-commander controls attached.")
 
       // Register for nui-voice operations
-      this.operations.switchTheme()
+      // this.operations.switchTheme()
+
     }
 
     defineNuiActionController = () => {
@@ -183,6 +181,18 @@
       indicators.text[1] = "THEME"
       actions.main[1].onAction = function() {
         root.operations.switchTheme()
+      }
+
+      var commanderIconField0 = new Image();
+      commanderIconField0.src = "/assets/icons/svgs/solid/file-audio.svg";
+      commanderIconField0.onload = function () {
+        indicators.icons[0] = this
+      }
+
+      var commanderIconField = new Image();
+      commanderIconField.src = "/assets/icons/svgs/brands/superpowers.svg";
+      commanderIconField.onload = function () {
+        indicators.icons[1] = this
       }
 
     }

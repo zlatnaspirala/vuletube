@@ -12,7 +12,6 @@
 
       <nuiCommander></nuiCommander>
 
-
     </div>
     <myFooter textContent='https://maximumroulette.com:3000 VuleTube web service 2020'></myFooter>
   </div>
