@@ -65,7 +65,15 @@
     declare window : Window | any
     declare operations: {} | any;
 
-    private vc: VoiceCommander = new VoiceCommander()
+    private vcOptions = {
+      callback: (r) => {
+        var getArrayList = r.split(' ')
+        console.log('Voice list length-> ' + getArrayList.length +
+                     '\n \n Command word => ' , getArrayList[0])
+      }
+    }
+
+    private vc: VoiceCommander = new VoiceCommander(this.vcOptions)
 
     private nuiCommanderStyle = {
       position: "absolute",
@@ -143,8 +151,9 @@
 
           if (answer == "yes") {
 
-            console.log("Good")
+            console.log("Good answer is yes.")
             root.defineNuiActionController()
+            root.defineVoiceActionController()
             setTimeout( () => {
               root.window.app.drawer.elements.push(
               new root.window.nuiMsgBox(
@@ -175,12 +184,19 @@
 
       indicators.text[0] = "VOICE"
       actions.main[0].onAction = function() {
-        root.vc.run()
+        if (actions.main[1].status == false) {
+          root.vc.run()
+        }
       }
 
       indicators.text[1] = "THEME"
       actions.main[1].onAction = function() {
         root.operations.switchTheme()
+      }
+
+      indicators.text[2] = "LOGIN"
+      actions.main[2].onAction = function() {
+        root.$root.$emit('googleApiLoginEvent', { start: 'start googleApiLoginEvent' })
       }
 
       // About
@@ -200,10 +216,16 @@
         indicators.icons[0] = this
       }
 
-      var commanderIconField = new Image()
-      commanderIconField.src = "/assets/icons/svgs/brands/superpowers.svg"
-      commanderIconField.onload = function () {
+      var commanderIconField1 = new Image()
+      commanderIconField1.src = "/assets/icons/svgs/brands/superpowers.svg"
+      commanderIconField1.onload = function () {
         indicators.icons[1] = this
+      }
+
+      var commanderIconField2 = new Image()
+      commanderIconField2.src = "/assets/icons/svgs/solid/key.svg"
+      commanderIconField2.onload = function () {
+        indicators.icons[2] = this
       }
 
       var commanderIconField7 = new Image()
@@ -211,6 +233,14 @@
       commanderIconField7.onload = function () {
         indicators.icons[7] = this
       }
+
+    }
+
+    defineVoiceActionController = () => {
+
+      // var root = this
+      console.log('defineVoiceActionCOntroller =>')
+
 
     }
 
