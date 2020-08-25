@@ -45,6 +45,8 @@
   import { VoiceCommander } from '../../../public/submodules/voice-commander/voice-commander/src/vanilla-javascript-ecma6/voice-commander'
   import { switchTheme } from '../../my-common/common-func'
   import myHeader from '../myHeader.vue';
+  import myYouTube from '../youtube-3d/myYouTube.vue'
+  import App from '../../App.vue';
 
   const CompProps = Vue.extend({
     props: {
@@ -55,7 +57,9 @@
   // Register for components
   @Component({
     components: {
-      myHeader
+      myHeader,
+      myYouTube,
+      App
     }
   })
 
@@ -66,11 +70,43 @@
     declare operations: {} | any;
 
     private vcOptions = {
+
       callback: (r) => {
+
+        var root = this
+
         var getArrayList = r.split(' ')
-        console.log('Voice list length-> ' + getArrayList.length +
-                     '\n \n Command word => ' , getArrayList[0])
+        console.info('Voice list length-> ' + getArrayList.length +
+                     '\n \n Command word => ' , getArrayList[0] +
+                     '\n \n next => ' , getArrayList[1])
+
+        /**
+         * @description Command word is =>
+         *                `search` , `search for`
+         */
+        if (getArrayList.length > 1) {
+
+          if (getArrayList[0] === 'search' ||
+              getArrayList[0] === 'search' && getArrayList[1] === 'for') {
+
+            let searchText: string = '';
+            getArrayList.forEach((element, index) => {
+              if (index !== 0) {
+                searchText += element + ' '
+              }
+            });
+            // command
+            (root.$root.$children[0].$children[2] as myYouTube).$data.yts.mySearchQuery = searchText
+            console.info("searchText => ", searchText)
+
+          }
+
+        } else {
+          console.log('getArrayList.length is ', getArrayList.length)
+        }
+
       }
+
     }
 
     private vc: VoiceCommander = new VoiceCommander(this.vcOptions)
@@ -199,6 +235,11 @@
         root.$root.$emit('googleApiLoginEvent', { start: 'start googleApiLoginEvent' })
       }
 
+      indicators.text[3] = "SpinPlaces"
+      actions.main[3].onAction = function() {
+        (root.$root.$children[0] as App).switchPlaceAction()
+      }
+
       // About
       indicators.text[7] = "ABOUT"
       actions.main[7].onAction = function() {
@@ -217,7 +258,7 @@
       }
 
       var commanderIconField1 = new Image()
-      commanderIconField1.src = "/assets/icons/svgs/brands/superpowers.svg"
+      commanderIconField1.src = "/assets/icons/svgs/solid/th-large.svg"
       commanderIconField1.onload = function () {
         indicators.icons[1] = this
       }
@@ -226,6 +267,12 @@
       commanderIconField2.src = "/assets/icons/svgs/solid/key.svg"
       commanderIconField2.onload = function () {
         indicators.icons[2] = this
+      }
+
+      var commanderIconField3 = new Image()
+      commanderIconField3.src = "/assets/icons/svgs/brands/superpowers.svg"
+      commanderIconField3.onload = function () {
+        indicators.icons[3] = this
       }
 
       var commanderIconField7 = new Image()

@@ -80,6 +80,11 @@
       mybodycontent: HTMLDivElement
     }
 
+    public switchPlaceAction() {
+      this.switchPlace = !this.switchPlace
+      this.ls.save("o_switch_place", this.switchPlace)
+    }
+
     /**
      * @description `ls` is instance for localstorage operation
      * I will use it like singletone for injection in places
@@ -113,11 +118,6 @@
      * Better to remove from here ...
      */
     private switchPlace: boolean = false
-
-    private switchPlaceAction() {
-      this.switchPlace = !this.switchPlace
-      this.ls.save("o_switch_place", this.switchPlace)
-    }
 
     private currentRoute
 
