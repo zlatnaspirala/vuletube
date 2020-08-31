@@ -205,6 +205,7 @@
     private webcamMesh
     private meshGroupSearchResult = new THREE.Object3D()
     private INTERSECTED: any = null
+    private preventRaycastClickAction: boolean = false
     private lastHoveredElement: any
 
     private showDialog: boolean = false
@@ -336,7 +337,10 @@
             this.INTERSECTED = intersects[0].object;
             this.INTERSECTED.material.opacity = 1;
             console.log("Cliked on name ---> " + intersects[0].object.name);
-            this.prepareThisVideo(intersects[0].object.name.substring(1))
+
+            if (!this.preventRaycastClickAction) {
+              this.prepareThisVideo(intersects[0].object.name.substring(1))
+            }
 
         } else {
 
@@ -407,7 +411,7 @@
           this.prepareVideoTexture('plane')
         }, 3000)
 
-        alert("Please wait 5 sec...")
+        console.info("Please wait 2s ...")
 
       }catch(err) {
         console.warn("Link is broken...", err)
@@ -448,6 +452,8 @@
 
       window.addEventListener('resize', this.onWindowResize, false)
       window.addEventListener('click', this.rayClickHandler, false)
+      window.addEventListener('mouseup', this.onMouseUp, false)
+
       this.renderer.domElement.addEventListener('mousemove', this.onMouseMove, false)
 
       this.accessVideoCamera()
@@ -595,7 +601,13 @@
       this.renderer.render(this.scene, this.camera)
     }
 
+    private onMouseUp = (event) => {
+      this.preventRaycastClickAction = false
+    }
+
     private onMouseMove = (event) => {
+
+      this.preventRaycastClickAction = true
       this.mouse.x = ((event.clientX - (this.$refs.container as HTMLElement).offsetLeft) /
       ((this.$refs.container as HTMLElement).clientWidth )) * 2 - 1;
       this.mouse.y = -((event.clientY - (this.$refs.container as HTMLElement).offsetTop) /
@@ -686,14 +698,10 @@
         // turn off
         console.log("TURN OFF")
         this.stopVideoCamera()
-
       } else if (this.isVideoCameraActive === false && this.optionsVideoCamera === true) {
         // turn on
         console.log("TURN ON")
         this.accessVideoCamera()
-
-
-
       }
 
     }

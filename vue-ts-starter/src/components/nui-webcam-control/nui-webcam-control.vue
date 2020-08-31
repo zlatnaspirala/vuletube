@@ -101,8 +101,15 @@
 
           }
 
-        } else {
+        } else if (getArrayList.length === 1) {
+
+          // Direct command
+          if (getArrayList[0] === 'theme' || getArrayList[0] === 'switch') {
+             (root.$root.$children[0].$children[0] as myHeader).switchTheme()
+          }
           console.log('getArrayList.length is ', getArrayList.length)
+        } else {
+          console.info('getArrayList.length =>', getArrayList.length )
         }
 
       }
@@ -225,23 +232,23 @@
         }
       }
 
-      indicators.text[1] = "THEME"
+      indicators.text[8] = "THEME"
       actions.main[1].onAction = function() {
         root.operations.switchTheme()
       }
 
-      indicators.text[2] = "LOGIN"
+      indicators.text[16] = "LOGIN"
       actions.main[2].onAction = function() {
         root.$root.$emit('googleApiLoginEvent', { start: 'start googleApiLoginEvent' })
       }
 
-      indicators.text[3] = "SpinPlaces"
+      // indicators.text[3] = "SpinPlaces"
       actions.main[3].onAction = function() {
         (root.$root.$children[0] as App).switchPlaceAction()
       }
 
       // About
-      indicators.text[7] = "ABOUT"
+      indicators.text[56] = "ABOUT"
       actions.main[7].onAction = function() {
         (root.$root.$children[0].$children[0] as myHeader).showAboutDialogClick()
       }

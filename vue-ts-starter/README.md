@@ -100,6 +100,9 @@ Note:
   - test nui/voice controller [DEV]
      Just basic - voice-commander need to be improved.
 
+     Login proccess need mouse or touch event trigger.
+     Can't be passed with nui or voice commander.
+
  Screenshot:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.2.png)
 
@@ -107,10 +110,8 @@ Note:
 
   - Prevent raycast click event behind 3d plane video FIX@
   - test nui/voice controller [DEV]
-     Just basic - voice-commander need to be improved also
-     to inject  pre-command -> action command like
-     v-command : `search` then listening for `what to search` .
-
+     pre-command -> action command =>
+     v-command : `search` or `search for` then listening for `what to search` .
 
 ### Project structure ###
 
