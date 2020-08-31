@@ -97,7 +97,8 @@
             });
             // command
             (root.$root.$children[0].$children[2] as myYouTube).$data.yts.mySearchQuery = searchText
-            console.info("searchText => ", searchText)
+            console.info("searchText => ", searchText);
+            (root.$root.$children[0].$children[2] as myYouTube).execute()
 
           }
 

@@ -237,6 +237,25 @@
       console.log('construction')
     }
 
+    public execute(): void {
+
+      var root = this
+      return (gapi as any).client.youtube.search.list({
+        "part": [
+          "snippet"
+        ],
+        "maxResults": root.ls.load("o_webglbox_preview_per_page"),
+        "q": root.$data.yts.mySearchQuery
+      })
+        .then((response) => {
+          console.log("Response", response)
+          this.setNewResponse(response)
+        },
+        function(err: any) {
+          console.error("Execute error for client.youtube.search.list => ", err)
+        })
+    }
+
     /**
      * Fix initial undefined model
      */
@@ -448,25 +467,6 @@
         function(err) {
           console.error("Error loading GAPI client for API", err);
         });
-    }
-
-    private execute(): void {
-
-      var root = this
-      return (gapi as any).client.youtube.search.list({
-        "part": [
-          "snippet"
-        ],
-        "maxResults": root.ls.load("o_webglbox_preview_per_page"),
-        "q": root.$data.yts.mySearchQuery
-      })
-        .then((response) => {
-          console.log("Response", response)
-          this.setNewResponse(response)
-        },
-        function(err: any) {
-          console.error("Execute error for client.youtube.search.list => ", err)
-        })
     }
 
     private start(gapi: any): void {
