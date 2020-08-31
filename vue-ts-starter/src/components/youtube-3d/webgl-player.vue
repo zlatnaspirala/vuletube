@@ -601,7 +601,7 @@
       this.renderer.render(this.scene, this.camera)
     }
 
-    private onMouseUp = (event) => {
+    private onMouseUp = () => {
       this.preventRaycastClickAction = false
     }
 
