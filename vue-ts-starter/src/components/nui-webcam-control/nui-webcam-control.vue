@@ -162,7 +162,7 @@
         })
         console.log("Nui commander is constructed.", browser);
 
-      }, 250)
+      }, 1200)
 
     }
 

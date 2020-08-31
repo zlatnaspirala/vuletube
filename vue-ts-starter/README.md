@@ -113,6 +113,10 @@ Note:
      pre-command -> action command =>
      v-command : `search` or `search for` then listening for `what to search` .
 
+ How to upload on production (windows):
+  - Build on windows mashine host with `npm run build` then simple upload dist/ with
+    ftp client to the public vps. Run in server/node `node server-connector.js`
+
 ### Project structure ###
 
 <pre>
