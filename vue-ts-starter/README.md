@@ -112,6 +112,7 @@ Note:
   - test nui/voice controller [DEV]
      pre-command -> action command =>
      v-command : `search` or `search for` then listening for `what to search` .
+  - NUI commander visibility option implemented
 
 
 ### Production ###
@@ -125,7 +126,7 @@ Note:
 
  From submodules projects root =>
  `git pull https://github.com/zlatnaspirala/nui-commander master`
- 
+
 
 ### Project structure ###
 

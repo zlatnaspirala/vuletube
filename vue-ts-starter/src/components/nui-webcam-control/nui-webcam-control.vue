@@ -169,7 +169,10 @@
           try {
             console.info("Event nuiVisibilityOptionsChanged => ", args)
             root.nuiVisibility = args.nuiVisibility
-            root.window.app.drawer.systemOnPause = args.nuiVisibility
+            root.window.app.drawer.systemOnPause = !args.nuiVisibility
+            if (root.window.app.drawer.systemOnPause === false) {
+              root.window.app.drawer.update()
+            }
             console.log(root.window.app.drawer.systemOnPause)
           } catch(err) {
             console.warn(err)
