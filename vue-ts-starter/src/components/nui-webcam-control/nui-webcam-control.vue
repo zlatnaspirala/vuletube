@@ -1,7 +1,7 @@
 
 <template>
 
-  <div ref="nuicontainer"  v-bind:style="nuiCommanderStyle" >
+  <div ref="nuicontainer"  v-bind:style="nuiCommanderStyle" v-show='nuiVisibility'>
     <div id="content" ref="container" class="content myshadows">
         <video id="webcam" autoplay width="640" height="480" style="display: none;" ></video>
         <canvas id="canvas-source" width="640" height="480" style="bottom: 0;"></canvas>
@@ -119,6 +119,8 @@
 
     private vc: VoiceCommander = new VoiceCommander(this.vcOptions)
 
+    private nuiVisibility: boolean = true
+
     private nuiCommanderStyle = {
       position: "absolute",
       left: 0,
@@ -162,6 +164,16 @@
           root.attachMainNuiControls()
         })
         console.log("Nui commander is constructed.", browser);
+
+        root.$root.$on('nuiVisibilityOptionsChanged',  function(this: typeof Vue, args: any) {
+          try {
+            console.info("Event nuiVisibilityOptionsChanged => ", args)
+            root.nuiVisibility = args.nuiVisibility
+            console.log(root.window.app.drawer.systemOnPause)
+          } catch(err) {
+            console.warn(err)
+          }
+        })
 
       }, 500)
 

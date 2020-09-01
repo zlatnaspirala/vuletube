@@ -93,6 +93,18 @@
           </md-content>
         </md-tab>
 
+        <md-tab md-label="NUI & VOICE COMMANDER">
+          <md-content class="md-scrollbar md-content-options">
+            <div>
+              <h3>Visibility:</h3>
+              <md-content v-bind:style="optionsStyle">
+                <md-switch v-on:change="nuiVisibilityOptionsChanged" class="md-primary md-raised" v-bind:style="optionsStyle"
+                           v-model="nuiVisibility">NUI commander visibility</md-switch>
+              </md-content>
+            </div>
+          </md-content>
+        </md-tab>
+
       </md-tabs>
 
       <md-dialog-actions>
@@ -248,7 +260,7 @@
         "q": root.$data.yts.mySearchQuery
       })
         .then((response) => {
-          console.log("Response", response)
+          console.log("Response =>", response)
           this.setNewResponse(response)
         },
         function(err: any) {
@@ -273,16 +285,22 @@
         isAuthorized: false,
         tyfetchVisibility:false,
         ytListVisibilityRowChannelTitle: Boolean(this.$props.arg.options.searchBox.visibilityChannelTitle),
-        ytListVisibilityRowTitle:  Boolean(this.$props.arg.options.searchBox.visibilityTitle),
-        ytListVisibilityRowVideoID:  Boolean(this.$props.arg.options.searchBox.visibilityVideoId),
-        ytListVisibilityRowThumbnails:  Boolean(this.$props.arg.options.searchBox.visibilityThumbnails),
+        ytListVisibilityRowTitle: Boolean(this.$props.arg.options.searchBox.visibilityTitle),
+        ytListVisibilityRowVideoID: Boolean(this.$props.arg.options.searchBox.visibilityVideoId),
+        ytListVisibilityRowThumbnails: Boolean(this.$props.arg.options.searchBox.visibilityThumbnails),
         spaceHForYTComponet: window.innerHeight * 0.9 + 'px',
-        componentWidthOptions: this.$props.arg.options.searchBox.width
+        componentWidthOptions: this.$props.arg.options.searchBox.width,
+        nuiVisibility: Boolean(this.$props.arg.options.nuiVisibility),
       }
     }
 
+    private nuiVisibilityOptionsChanged(): void {
+      this.ls.save("o_nui_visibility", this.$data.nuiVisibility.toString())
+      this.$root.$emit('nuiVisibilityOptionsChanged', { nuiVisibility: this.$data.nuiVisibility })
+    }
+
     private channelTitleOptionsChanged(): void {
-      this.ls.save("o_searchbox_visibility_channel_title", this.$data.ytListVisibilityRowChannelTitle.toString())
+      this.ls.save("o_nui_visibility", this.$data.ytListVisibilityRowChannelTitle.toString())
     }
 
     private titleOptionsChanged(): void {
@@ -307,8 +325,6 @@
     private loginIn(): void {
       this.authenticate().then(this.loadClient)
     }
-
-    // private justItems: {} = {}
 
     private prepareThisVideo(e) {
 
@@ -361,8 +377,8 @@
 
       for ( var x = 0; x < items.length; x++) {
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
-        // this.$set(this.justItems, items[x].id.videoId, items[x].id.videoId)
       }
+
     }
 
     private mounted (): void {

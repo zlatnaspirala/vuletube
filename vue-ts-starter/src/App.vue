@@ -154,6 +154,7 @@
         this.ls.save("o_searchbox_visibility_title", true)
         this.ls.save("o_searchbox_visibility_videoid", false)
         this.ls.save("o_searchbox_visibility_thumbnails", true)
+        this.ls.save("o_nui_visibility", true)
 
         // For threejs
         this.ls.save("o_switch_place", true)
@@ -171,7 +172,8 @@
             visibilityTitle:  this.ls.load("o_searchbox_visibility_title"),
             visibilityVideoId:  this.ls.load("o_searchbox_visibility_videoid"),
             visibilityThumbnails:  this.ls.load("o_searchbox_visibility_thumbnails"),
-          }
+          },
+          nuiVisibility: this.ls.load("o_nui_visibility"),
         };
 
         this.ls.save("first_time", 'storage-loaded')
@@ -186,16 +188,17 @@
             visibilityTitle:  this.ls.load("o_searchbox_visibility_title"),
             visibilityVideoId:  this.ls.load("o_searchbox_visibility_videoid"),
             visibilityThumbnails:  this.ls.load("o_searchbox_visibility_thumbnails"),
-          }
+          },
+          nuiVisibility: this.ls.load("o_nui_visibility"),
         }
       }
 
     }
 
     setupInstance = () => {
-      console.log('Test Application refs mybodycontent => ', this.$refs.mybodycontent)
       this.currentRoute = window.location.pathname
-      console.log('Attach Application event this.currentRoute => ', this.currentRoute)
+      // console.log('Test Application refs mybodycontent => ', this.$refs.mybodycontent)
+      // console.log('Attach Application event this.currentRoute => ', this.currentRoute)
     }
 
     get computedMsg (): string {
