@@ -123,6 +123,9 @@ Note:
  On top lever root folder of git project run =>
  `git submodule update --init --recursive`
 
+ From submodules projects root =>
+ `git pull https://github.com/zlatnaspirala/nui-commander master`
+ 
 
 ### Project structure ###
 
