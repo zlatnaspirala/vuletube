@@ -1,0 +1,22 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+    // "ecmaVersion": 6
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "quotes": ["error", "double"],
+    "semi": ["error", "never", { "beforeStatementContinuationChars": "always"}],
+    "comma-dangle": ["error", "always"],
+    "no-cond-assign": ["error", "always"],
+    "no-console": 0,
+    "linebreak-style": ["error", "windows"],
+     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
+  }
+}
