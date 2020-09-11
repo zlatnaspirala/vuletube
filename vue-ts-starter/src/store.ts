@@ -26,7 +26,7 @@ const mutations = {
     state.count++
   },
   saveResponse(state: ApplicationStateI, { items }) {
-    console.log("Application instance store call saveResponse method.", items) //[0].pageInfo.resultsPerPage)
+    console.log("Application instance store call saveResponse method.", items)
     state.appYtResultItems = items
   }
 }

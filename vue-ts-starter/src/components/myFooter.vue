@@ -1,3 +1,4 @@
+
 <template>
   <div v-bind:style="styleObject" class="md-primary myshadows" >
 
@@ -187,6 +188,18 @@
   }
 </style>
 
+<style lang="scss" scoped>
+  .md-dialog /deep/.md-dialog-container {
+    max-width: 1000px;
+  }
+
+  .md-content {
+    max-width: 1000px;
+    max-height: 520px;
+    overflow: auto;
+  }
+</style>
+
 <script lang="ts">
   import Vue from 'vue'
   import Component from 'vue-class-component'
@@ -234,15 +247,3 @@
 
   }
 </script>
-
-<style lang="scss" scoped>
-  .md-dialog /deep/.md-dialog-container {
-    max-width: 1000px;
-  }
-
-  .md-content {
-    max-width: 1000px;
-    max-height: 520px;
-    overflow: auto;
-  }
-</style>

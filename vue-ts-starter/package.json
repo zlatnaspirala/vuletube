@@ -1,12 +1,13 @@
 {
   "name": "vue-ts-starter",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "eslint-webgl-player": "node_modules/.bin/eslint ./src/components/youtube-3d/webgl-player.vue"
+    "eslint-webgl-player": "node_modules/.bin/eslint ./src/components/youtube-3d/webgl-player.vue",
+    "format": "node_modules/.bin/eslint ./src/**"
   },
   "dependencies": {
     "core-js": "^3.6.5",

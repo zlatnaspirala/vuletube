@@ -35,8 +35,6 @@ Install:
 
 Run:
 ```node
-  serve -s dist
-  // or
   npm run serve
 ```
 
@@ -93,26 +91,29 @@ Note:
   - Adding paypal donate buttons
 
   - test nui webcamer controller [DEV]
-      - voice commander activate   => function0
-      - information/about          => function7
-      - switch theme               => function1
+      - voice commander activate   => block detection 0
+      - information/about          => block detection 7
+      - switch theme               => block detection 3
 
   - test nui/voice controller [DEV]
      Just basic - voice-commander need to be improved.
 
-     Login proccess need mouse or touch event trigger.
+     Login proccess need mouse or touch event trigger (on user request).
      Can't be passed with nui or voice commander.
 
  Screenshot:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.2.png)
 
- <b> version 0.1.3 [NEXT] </b>
+ <b> version 0.1.3 [NEXT][WIP] </b>
 
-  - Prevent raycast click event behind 3d plane video FIX@
-  - test nui/voice controller [DEV]
+  - Added new submodule https://github.com/zlatnaspirala/opencv-starter
+    Basic implementation options for first effect gray. My opencv-starter
+    project is script module type and prepared for this actions.
+  - Prevent raycast click event behind 3d plane video FIX@ [DEV]
+  - test nui/voice controller
      pre-command -> action command =>
-     v-command : `search` or `search for` then listening for `what to search` .
-  - NUI commander visibility option implemented
+     v-command : `search` or `search for` then listening for `what to search` . [DONE]
+  - NUI commander visibility option implemented [DONE]
 
 
 ### Production ###
@@ -126,7 +127,7 @@ Note:
 
  From submodules projects root =>
  `git pull https://github.com/zlatnaspirala/nui-commander master`
-
+ `git pull https://github.com/zlatnaspirala/voice-commander master`
 
 ### Project structure ###
 
@@ -146,6 +147,7 @@ Note:
 |   |   └── submodules/
 |   |   |   └── nui-commander/
 |   |   |   └── voice-commander/
+|   |   |   └── opencv-starter/
 |   ├── thumbnails/
 |   ├── videos/
 |   |   └── list.html
@@ -265,6 +267,14 @@ Note:
 }
 
 ```
+
+### Opencvjs help ###
+
+ After git pull for submodules go to folder :
+ `vue-ts-starter\public\submodules\opencv-starter`
+
+ For windows use powerShell for `npm i` if you have some trouble with cmd.
+
 
 ### VueMaterial help ###
 

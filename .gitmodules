@@ -4,3 +4,6 @@
 [submodule "vue-ts-starter/public/submodules/voice-commander/voice-commander"]
 	path = vue-ts-starter/public/submodules/voice-commander/voice-commander
 	url = https://github.com/zlatnaspirala/voice-commander
+[submodule "vue-ts-starter/public/submodules/opencv-starter"]
+	path = vue-ts-starter/public/submodules/opencv-starter
+	url = https://github.com/zlatnaspirala/opencv-starter

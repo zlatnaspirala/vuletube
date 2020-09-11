@@ -48,6 +48,10 @@
   import myYouTube from '../youtube-3d/myYouTube.vue'
   import App from '../../App.vue';
 
+  // Test
+  import { cvjsLoader } from "../../../public/submodules/opencv-starter/src/ecma6/loader"
+  import CvStarter from '../../../public/submodules/opencv-starter/src/ecma6/main.js'
+
   const CompProps = Vue.extend({
     props: {
       // textContent: String
@@ -68,6 +72,8 @@
 
     declare window : Window | any
     declare operations: {} | any;
+
+    private webcamVideo: HTMLVideoElement;
 
     private vcOptions = {
 
@@ -118,6 +124,7 @@
     }
 
     private vc: VoiceCommander = new VoiceCommander(this.vcOptions)
+    private cvStarter: CvStarter | null = null;
 
     private nuiVisibility: boolean = true
 
@@ -145,12 +152,25 @@
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/system/buffer-load.js")
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
       this.asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
+      this.webcamVideo = document.getElementById("webcam") as HTMLVideoElement
 
     }
 
     mounted(): void {
 
       var root = this as nuiCommander
+
+
+      // Test
+      cvjsLoader(() => {
+        // `opencvjs` is ready for use.
+        const options = {
+          videoProcessing: true,
+          injectVideo: root.webcamVideo
+        }
+        this.cvStarter = new CvStarter(options)
+        console.log("this.cvStarter", this.cvStarter)
+      })
 
       setTimeout(function () {
 
@@ -259,7 +279,7 @@
         root.$root.$emit('googleApiLoginEvent', { start: 'start googleApiLoginEvent' })
       }
 
-      // indicators.text[3] = "SpinPlaces"
+      indicators.text[24] = "SpinPlaces"
       actions.main[3].onAction = function() {
         (root.$root.$children[0] as App).switchPlaceAction()
       }

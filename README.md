@@ -106,6 +106,15 @@ npm i three ->
   - Added threejs lib / my subComponent and preview video and thumbnails.
     Play video in webGL context , control video from status bar buttons UI.
 
+### github submodules ###
+
+[submodule "vue-ts-starter/public/submodules/nui-commander/nui-commander"]
+  url = https://github.com/zlatnaspirala/nui-commander
+[submodule "vue-ts-starter/public/submodules/voice-commander/voice-commander"]
+  url = https://github.com/zlatnaspirala/voice-commander
+[submodule "vue-ts-starter/public/submodules/opencv-starter"]
+  url = https://github.com/zlatnaspirala/opencv-starter
+
 ### Formating ###
 
  ESLINT is present also (not configured).
