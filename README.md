@@ -6,6 +6,15 @@
  #### Code formater vsPrettier ####
  #### Version "Ecstacy of gold" ####
 
+ - In visual Code i use combine PowerShell, windows cmd and git bash terminal.
+  For windows mashine PowerShell looks like best solution in my current
+  local mashine situation.
+
+  Possible fix:
+
+```powershell
+  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
 ## Clone project command: ##
 
@@ -26,6 +35,7 @@
   - Implementing three.js video preview sub component[DONE]
   - Preview thumbnails with threejs component. [DONE]
   - NUI commander and Voice commander [WIP]
+  - OpenCVJS web variant implementation (video processing)[WIP]
   - Implementing custom webGL2 (glmatrix) video preview sub component.
   - Kure Video Chat (kurento) Mixing yt video with camera stream.
   - Visual ts game engine - some kind of implementation
@@ -117,7 +127,7 @@ npm i three ->
 
 ### Formating ###
 
- ESLINT is present also (not configured).
+ config file: `.eslintrc.json`
 
 #### Lints and fixes files ####
 

@@ -160,8 +160,21 @@
 
       var root = this as nuiCommander
 
-
       // Test
+      /*
+    */
+       var cvjsLoader = function (cvjsCallback){
+
+        root.asyncLoad("../../../submodules/opencv-starter/node_modules/webrtc-adapter/out/adapter.js", () => {
+          root.asyncLoad("../../../submodules/opencv-starter/src/lib/stats.js", () => {
+            root.asyncLoad("../../../submodules/opencv-starter/src/lib/data-gui.js", () => {
+              root.asyncLoad("../../../submodules/opencv-starter/src/lib/opencv-3.4.0.js", cvjsCallback)
+            })
+          })
+        })
+
+       }
+
       cvjsLoader(() => {
         // `opencvjs` is ready for use.
         const options = {
@@ -169,8 +182,10 @@
           injectVideo: root.webcamVideo
         }
         this.cvStarter = new CvStarter(options)
-        console.log("this.cvStarter", this.cvStarter)
+        console.log("this.cvStarter >>>>>>>>>> ", this.cvStarter)
       })
+
+
 
       setTimeout(function () {
 
