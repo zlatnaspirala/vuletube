@@ -49,7 +49,7 @@
   import App from '../../App.vue';
 
   // Test
-  import { cvjsLoader } from "../../../public/submodules/opencv-starter/src/ecma6/loader"
+  //import { cvjsLoader } from "../../../public/submodules/opencv-starter/src/ecma6/loader"
   import CvStarter from '../../../public/submodules/opencv-starter/src/ecma6/main.js'
 
   const CompProps = Vue.extend({
@@ -160,18 +160,6 @@
 
       var root = this as nuiCommander
 
-
-      // Test
-      cvjsLoader(() => {
-        // `opencvjs` is ready for use.
-        const options = {
-          videoProcessing: true,
-          injectVideo: root.webcamVideo
-        }
-        this.cvStarter = new CvStarter(options)
-        console.log("this.cvStarter", this.cvStarter)
-      })
-
       setTimeout(function () {
 
         var browser =  new root.window.detectBrowser()
@@ -182,6 +170,31 @@
         root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-msg-box.js",
         function() {
           root.attachMainNuiControls()
+
+        var cvjsLoader = function(cvjsCallback) {
+
+          root.asyncLoad("/submodules/opencv-starter/node_modules/webrtc-adapter/out/adapter.js", () => {
+            root.asyncLoad("/submodules/opencv-starter/src/lib/stats.js", () => {
+              root.asyncLoad("/submodules/opencv-starter/src/lib/data-gui.js", () => {
+                root.asyncLoad("/submodules/opencv-starter/src/lib/opencv-3.4.0.js", cvjsCallback)
+              })
+            })
+          })
+
+        }
+
+          // Test
+          cvjsLoader(() => {
+            // `opencvjs` is ready for use.
+            const options = {
+              videoProcessing: true,
+              injectVideo: root.webcamVideo
+            }
+            root.cvStarter = new CvStarter(options)
+            console.log("this.cvStarter", root.cvStarter)
+          })
+
+
         })
         console.log("Nui commander is constructed.", browser);
 
