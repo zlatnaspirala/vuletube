@@ -70,6 +70,9 @@
     <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
+    <canvas id="testcanvas" v-bind:style="{ display: 'none', position: 'absolute', right : 0 }"
+      width="640" height="480" style="bottom: 0;"></canvas>
+
     <md-field class="menubox">
       <md-button class="md-primary md-raised" @click="showDialog = true">
         <md-icon class="fa fa-cog"></md-icon>
@@ -156,6 +159,8 @@
   import * as THREE from 'three/build/three.module'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import LocalStorageMemory from '../../local-storage/local-storage';
+  import { asyncLoad } from '../../my-common/common-func'
+  import CvStarter from '../../../public/submodules/opencv-starter/src/ecma6/main.js'
 
   import {
     mdTabs,
@@ -218,6 +223,8 @@
 
     private localCurrentTime: any = null
 
+    private cvStarter: CvStarter | null = null;
+
     private styleObject = {
       width: '100%'
     }
@@ -251,6 +258,7 @@
 
     mounted (): void {
 
+      var root = this
       this.optionsVideoCamera = this.ls.load("o_camera")
 
       this.init()
@@ -270,6 +278,31 @@
       )
 
       this.runVideoReactor()
+
+      // test
+       var cvjsLoader = function(cvjsCallback) {
+
+          asyncLoad("/submodules/opencv-starter/node_modules/webrtc-adapter/out/adapter.js", () => {
+            asyncLoad("/submodules/opencv-starter/src/lib/stats.js", () => {
+              asyncLoad("/submodules/opencv-starter/src/lib/data-gui.js", () => {
+                asyncLoad("/submodules/opencv-starter/src/lib/opencv-3.4.0.js", cvjsCallback)
+              })
+            })
+          })
+
+        }
+
+          // Test
+          cvjsLoader(() => {
+            // `opencvjs` is ready for use.
+            const options = {
+              videoProcessing: true,
+              injectVideo: (this.$refs.webcam as HTMLVideoElement),
+              injectCanvas: "testcanvas"
+            }
+            root.cvStarter = new CvStarter(options)
+            console.log("this.cvStarter", root.cvStarter)
+          })
 
     }
 
@@ -424,6 +457,7 @@
       this.camera.position.z = this.ls.load("o_webglbox_camera_z");
 
       // ORIGINAL var texture = new THREE.VideoTexture( this.video )
+      console.log(">>>>>>>>>>>>>>>>", this.video)
       var texture = new THREE.VideoTexture(this.video)
       // var texture = new THREE.TextureLoader().load('assets/vule-logo1.png')
 

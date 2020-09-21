@@ -6,10 +6,17 @@
         <video id="webcam" autoplay width="640" height="480" style="display: none;" ></video>
         <canvas id="canvas-source" width="640" height="480" style="bottom: 0;"></canvas>
         <canvas id="canvas-blended" width="640" height="480" style="display: none;"></canvas>
+
+        <!-- opencvjs starter dom staff start -->
         <div id="vp-debug"></div>
+        <div class="text-center">
+          <span>Current Filter: </span><span id="filterName">Pass Through</span>
+        </div>
         <div id="guiContainer"></div>
+        <!-- opencvjs starter dom staff end-->
+
         <div id="xylo"></div>
-    </div> 
+    </div>
   </div>
 
 </template>
@@ -45,14 +52,10 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { VoiceCommander } from '../../../public/submodules/voice-commander/voice-commander/src/vanilla-javascript-ecma6/voice-commander'
-  import { switchTheme } from '../../my-common/common-func'
+  import { switchTheme, asyncLoad } from '../../my-common/common-func'
   import myHeader from '../myHeader.vue';
   import myYouTube from '../youtube-3d/myYouTube.vue'
   import App from '../../App.vue';
-
-  // Test
-  //import { cvjsLoader } from "../../../public/submodules/opencv-starter/src/ecma6/loader"
-  import CvStarter from '../../../public/submodules/opencv-starter/src/ecma6/main.js'
 
   const CompProps = Vue.extend({
     props: {
@@ -75,7 +78,7 @@
     declare window : Window | any
     declare operations: {} | any;
 
-    private webcamVideo: HTMLVideoElement;
+    private webcamVideo: HTMLVideoElement | null = null;
 
     private vcOptions = {
 
@@ -126,10 +129,7 @@
     }
 
     private vc: VoiceCommander = new VoiceCommander(this.vcOptions)
-    private cvStarter: CvStarter | null = null;
-
     private nuiVisibility: boolean = true
-
     private nuiCommanderStyle = {
       position: "absolute",
       left: 0,
@@ -150,11 +150,10 @@
         // // showAboutDialogClick()
       }
 
-      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
-      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/system/buffer-load.js")
-      this.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
-      this.asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
-      this.webcamVideo = document.getElementById("webcam") as HTMLVideoElement
+      asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
+      asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/system/buffer-load.js")
+      asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
+      asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
 
     }
 
@@ -162,42 +161,18 @@
 
       var root = this as nuiCommander
 
+      this.webcamVideo = document.getElementById("webcam") as HTMLVideoElement
+
       setTimeout(function () {
 
         var browser =  new root.window.detectBrowser()
         root.window.app.drawer = new root.window.canvasEngine(root.window.interActionController)
         root.window.app.drawer.draw()
-        root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
-        root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-button.js")
-        root.asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-msg-box.js",
-        function() {
-          root.attachMainNuiControls()
-
-        var cvjsLoader = function(cvjsCallback) {
-
-          root.asyncLoad("/submodules/opencv-starter/node_modules/webrtc-adapter/out/adapter.js", () => {
-            root.asyncLoad("/submodules/opencv-starter/src/lib/stats.js", () => {
-              root.asyncLoad("/submodules/opencv-starter/src/lib/data-gui.js", () => {
-                root.asyncLoad("/submodules/opencv-starter/src/lib/opencv-3.4.0.js", cvjsCallback)
-              })
-            })
+        asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/main-function-menu.js")
+        asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-button.js")
+        asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/controls/nui-msg-box.js", function() {
+            root.attachMainNuiControls()
           })
-
-        }
-
-          // Test
-          cvjsLoader(() => {
-            // `opencvjs` is ready for use.
-            const options = {
-              videoProcessing: true,
-              injectVideo: root.webcamVideo
-            }
-            root.cvStarter = new CvStarter(options)
-            console.log("this.cvStarter", root.cvStarter)
-          })
-
-
-        })
         console.log("Nui commander is constructed.", browser);
 
         root.$root.$on('nuiVisibilityOptionsChanged',  function(this: typeof Vue, args: any) {
@@ -216,20 +191,6 @@
 
       }, 500)
 
-    }
-
-    asyncLoad(path, callback?) {
-
-      if (typeof callback === "undefined") {
-        callback =  function () {}
-      }
-
-      var nuiScript = document.createElement("script")
-      nuiScript.src = path
-      document.head.appendChild(nuiScript)
-      nuiScript.onload = function () {
-        callback()
-      }
     }
 
     private attachMainNuiControls() {
