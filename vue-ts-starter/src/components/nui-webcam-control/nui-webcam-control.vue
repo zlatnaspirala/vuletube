@@ -6,8 +6,10 @@
         <video id="webcam" autoplay width="640" height="480" style="display: none;" ></video>
         <canvas id="canvas-source" width="640" height="480" style="bottom: 0;"></canvas>
         <canvas id="canvas-blended" width="640" height="480" style="display: none;"></canvas>
+        <div id="vp-debug"></div>
+        <div id="guiContainer"></div>
         <div id="xylo"></div>
-    </div>
+    </div> 
   </div>
 
 </template>

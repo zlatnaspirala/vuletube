@@ -108,6 +108,11 @@ npm i three ->
 
 ### github submodules ###
 
+Update all submodules:
+```bash
+  git pull --recurse-submodules
+```
+
 [submodule "vue-ts-starter/public/submodules/nui-commander/nui-commander"]
   url = https://github.com/zlatnaspirala/nui-commander
 [submodule "vue-ts-starter/public/submodules/voice-commander/voice-commander"]
