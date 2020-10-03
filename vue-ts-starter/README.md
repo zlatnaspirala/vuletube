@@ -104,7 +104,7 @@ Note:
  Screenshot:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.2.png)
 
- <b> version 0.1.3 [NEXT][WIP] </b>
+ <b> version 0.2.0 [NEXT][WIP] </b>
 
   - Added new submodule https://github.com/zlatnaspirala/opencv-starter
     Basic implementation options for first effect gray. My opencv-starter
@@ -114,6 +114,9 @@ Note:
      pre-command -> action command =>
      v-command : `search` or `search for` then listening for `what to search` . [DONE]
   - NUI commander visibility option implemented [DONE]
+  - Make more comfor in component class i created declare ts files for
+    each/individual components.
+    `myYouTube.d.ts` and `webgl-player.d.ts`
 
 
 ### Production ###
@@ -165,7 +168,9 @@ Note:
 |   |   |   ├── nui-webcam-control.vue
 |   |   ├── youtube-3d/
 |   |   |   ├── myYouTube.vue
-|   |   |   └── webgl-player.vue
+|   |   |   ├── myYouTube.d.ts
+|   |   |   ├── webgl-player.vue
+|   |   |   └── webgl-player.d.ts
 |   |   ├── myFooter.vue
 |   |   ├── myHeader.vue
 |   ├── my-common/

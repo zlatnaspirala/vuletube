@@ -153,65 +153,15 @@
           mdField,
           mdContent
   } from 'vue-material'
-
-  import LocalStorageMemory from '../../local-storage/local-storage';
-
-  /**
-   * @description Enumerators:
-   *               YTITEM_ENUM for YTItem
-   *               YTRESULT_ENUM for YTResult
-   */
-
+  import LocalStorageMemory from '../../local-storage/local-storage'
   // eslint-disable-next-line
-  enum YTITEM_ENUM {
-    KIND = "youtube#searchResult",
-    ID_KIND = "youtube#video"
-  }
-
-  // eslint-disable-next-line
-  enum YTRESULT_ENUM {
-    KIND = "youtube#searchListResponse"
-  }
+  import { YTItem } from './myYouTube'
 
   const CompProps = Vue.extend({
     props: {
       arg: Object,
     }
   });
-
-  /**
-   * Best way is to create interface for
-   * youtube api call details.
-   */
-  interface YTItem {
-    etag: string
-    id: {
-      kind: string
-      videoId: string
-    }
-    kind: string
-    snippet: any
-  }
-
-  interface YTResult {
-    etag: string
-    items: YTItem[]
-    kind:  string
-    nextPageToken: string
-    pageInfo: {
-      totalResults: number
-      resultsPerPage: number
-    }
-    regionCode: string
-  }
-
-  interface TYResponse {
-    body: any
-    headers: any
-    result: YTResult
-    status: number
-    statusText: any
-  }
 
   // Register for components
   @Component({
@@ -371,12 +321,12 @@
     private setNewResponse(r: any) {
 
       this.$data.yts.ytResponse = r
-      var items = r.result.items as YTItem[]
+      var items: YTItem[] = r.result.items as YTItem[]
       this.$store.commit('saveResponse', { items: items })
       this.$root.$emit('ytItemsReady', { items: items })
 
       for ( var x = 0; x < items.length; x++) {
-        this.$set(this.$data.yts.ytResponse.result.items, x, items[x])
+        this.$set(this.$data.yts.ytResponse.result.items, x, items[x] as YTItem)
       }
 
     }

@@ -53,6 +53,17 @@
             </md-content>
         </md-tab>
 
+        <md-tab md-label="openCV-webcam">
+          <md-content class="md-scrollbar">
+
+            <md-content v-bind:style="optionsStyle">
+              <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
+                v-model="optionsSearchResultPreview">Enable/Disable openVC component</md-switch>
+            </md-content>
+          </md-content>
+
+        </md-tab>
+
       </md-tabs>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
@@ -70,7 +81,8 @@
     <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
-    <canvas id="testcanvas" v-bind:style="{ display: 'none', position: 'absolute', right : 0 }"
+    <canvas id="testcanvas" ref="testcanvas" v-bind:style="{ display: 'block', position: 'absolute', right : 0 }"
+
       width="640" height="480" style="bottom: 0;"></canvas>
 
     <md-field class="menubox">
@@ -156,12 +168,12 @@
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
+  // import { EFFECT_TYPE } from './webgl-player'
   import * as THREE from 'three/build/three.module'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-  import LocalStorageMemory from '../../local-storage/local-storage';
+  import LocalStorageMemory from '../../local-storage/local-storage'
   import { asyncLoad } from '../../my-common/common-func'
   import CvStarter from '../../../public/submodules/opencv-starter/src/ecma6/main.js'
-
   import {
     mdTabs,
     mdTab,
@@ -172,6 +184,7 @@
     mdContent,
     mdField
   }  from 'vue-material'
+import { EFFECT_TYPE } from './webgl-player'
 
   const CompProps = Vue.extend({
     props: {
@@ -204,10 +217,11 @@
     private renderer = new THREE.WebGLRenderer({ antialias: true })
     private raycaster = new THREE.Raycaster()
     private mouse = new THREE.Vector2()
-    private video
     private container
+    private videoWebCam
     private texvideo
     private webcamMesh
+    private cvEffectCanvas
     private meshGroupSearchResult = new THREE.Object3D()
     private INTERSECTED: any = null
     private preventRaycastClickAction: boolean = false
@@ -245,6 +259,8 @@
       b: 0
     }
 
+    private oCvStarter: boolean = true
+
     // UNRESOLVED VUE LIMITATIONS
     // For audio and video html object cat not be used bind: v-model or any
     // Effect : initialy load value without update, or lag video on @time
@@ -264,6 +280,7 @@
       this.init()
       this.animate()
 
+      this.oCvStarter = this.ls.load("o_webglbox_opencv_starter_for_camera")
       this.oBackground.r = this.ls.load("o_webglbox_background_r")
       this.oBackground.g = this.ls.load("o_webglbox_background_g")
       this.oBackground.b = this.ls.load("o_webglbox_background_b")
@@ -309,6 +326,7 @@
     created(): void {
 
       this.container = this.$refs.container as HTMLElement
+      this.cvEffectCanvas = this.$refs.testcanvas as HTMLCanvasElement
 
       this.$root.$on('reziseCanvas', () => {
        this.setCanvasElementSize()
@@ -389,6 +407,11 @@
         }
     }
 
+    private oCvStarterOptionsChanged(value): void {
+      this.ls.save("o_webglbox_opencv_starter_for_camera", value)
+      console.log(">>>>>oCvStarterOptionsChanged>>>>o_webglbox_opencv_starter_for_camera>>>>", this.$refs)
+    }
+
     private previewPerPageChanged(value): void {
       this.previewPerPage = value
       this.ls.save('o_webglbox_preview_per_page', value)
@@ -441,7 +464,7 @@
         this.$refs.texvideo["style"].display = "block"
 
         setTimeout(() => {
-          this.prepareVideoTexture('plane')
+          this.prepareVideoTexture('plane', EFFECT_TYPE.NOEFFECT)
         }, 3000)
 
         console.info("Please wait 2s ...")
@@ -453,12 +476,12 @@
 
     private init() {
 
-      this.video = this.$refs.webcam;
+      this.videoWebCam = this.$refs.webcam;
       this.camera.position.z = this.ls.load("o_webglbox_camera_z");
 
-      // ORIGINAL var texture = new THREE.VideoTexture( this.video )
-      console.log(">>>>>>>>>>>>>>>>", this.video)
-      var texture = new THREE.VideoTexture(this.video)
+      // ORIGINAL var texture = new THREE.VideoTexture( this.videoWebCam )
+      console.log(">>>>>>>>>>>>>>>>", this.videoWebCam)
+      var texture = new THREE.VideoTexture(this.videoWebCam)
       // var texture = new THREE.TextureLoader().load('assets/vule-logo1.png')
 
       var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
@@ -514,9 +537,9 @@
 
         var constraints = { video: { width: 1280, height: 720, facingMode: 'user' } }
         navigator.mediaDevices.getUserMedia( constraints ).then((stream) => {
-          this.video.srcObject = stream
+          this.videoWebCam.srcObject = stream
           this.videoCameraStream = stream
-          this.video.play();
+          this.videoWebCam.play();
           this.isVideoCameraActive = true
         }).catch((error) => {
           console.error( 'Unable to access the camera/webcam.', error )
@@ -553,27 +576,40 @@
       // console.log('changeCurrentVideoPosition', testValue)
     }
 
-    private prepareVideoTexture = (visualShape: string) => {
+    private prepareVideoTexture = (visualShape: string, effectType: string) => {
 
       if(visualShape === "plane") {
 
         if (this.planeAddedToScene === false) {
 
-          this.texvideo = this.$refs.texvideo
-          var texture = new THREE.VideoTexture(this.texvideo)
+          var mesh
+          var texture
+          var material
           var geometry = new THREE.PlaneBufferGeometry(16, 9)
+
+           console.log(" TESTTEST ", EFFECT_TYPE.NOEFFECT)
+          if (effectType === EFFECT_TYPE.NOEFFECT) {
+           texture = new THREE.VideoTexture(this.texvideo)
+          } else if (effectType === EFFECT_TYPE.CVVIDEOPROCESSING) {
+            texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+          }
+
+          material = new THREE.MeshBasicMaterial({ map: texture })
+
           geometry.scale(1.4, 1, 1)
 
-          var material = new THREE.MeshBasicMaterial({ map: texture })
-          var mesh = new THREE.Mesh(geometry, material)
+          mesh = new THREE.Mesh(geometry, material)
           mesh.position.z = -8
-          // mesh.lookAt(this.camera.position)
           this.scene.add(mesh)
           this.planeAddedToScene = true
 
         }
 
+        /**
+         * Make sure that video plays
+         */
         try {
+          this.texvideo = this.$refs.texvideo
           this.texvideo.play()
         } catch(err) {
           console.log(err)
@@ -708,6 +744,10 @@
         }
       }
 
+
+    }
+
+    private setDefaultWebCamCVstarter() {
 
     }
 

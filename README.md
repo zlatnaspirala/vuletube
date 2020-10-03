@@ -1,19 +1,20 @@
 
-# Project name: vue-ts-starter #
 
- #### Creator: Nikola Lukic 2020 ####
- #### Visual Code editor used ####
- #### Code formater vsPrettier ####
- #### Version "Ecstacy of gold" ####
+# Project name: vue-ts-starter
+
+ #### Creator: Nikola Lukic 2020
+ #### Visual Code editor used
+ #### Code formater vsPrettier
+ #### Version "Ecstacy of gold"
 
 
-## Clone project command: ##
+## Clone project command:
 
 ```js
   git clone --recurse-submodules https://github.com/zlatnaspirala/vue-typescript-starter
 ```
 
-## Project objective ##
+## Project objective
 
  To create perfect modular fit for any type project.
   I will integrate next features:
@@ -25,7 +26,9 @@
   - Calling Youtube API v3. and preview in classic html tags. [DONE]
   - Implementing three.js video preview sub component[DONE]
   - Preview thumbnails with threejs component. [DONE]
-  - NUI commander and Voice commander [WIP]
+  - BASIC NUI commander and Voice commander [DONE]
+  - NUI hands control yt vieo navigation [WIP]
+  - BASIC openCV for web (opencvjs) implementation [DONE]
   - Implementing custom webGL2 (glmatrix) video preview sub component.
   - Kure Video Chat (kurento) Mixing yt video with camera stream.
   - Visual ts game engine - some kind of implementation
@@ -33,8 +36,8 @@
   - Google map API - Not free (maybe for 3d vs maps)
     7$ min cost
 
- ## Go to project folder ##
- ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter) ###
+ ## Go to project folder
+ ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter)
 
 
 Last version sceenshots:
@@ -44,7 +47,7 @@ Last version sceenshots:
 
  See `setup-from-zero-point.md` to make clear who this project was created.
 
- Help links:
+### Help links:
 
  [developers.google.com/youtube/v3](https://developers.google.com/youtube/v3/getting-started)
 
@@ -57,34 +60,7 @@ Last version sceenshots:
 
 For now we need trust this:
 
-[Source](https://blog.logrocket.com/how-to-write-a-vue-js-app-completely-in-typescript)
-
-```javascript
-// Methods in TypeScript, like normal class methods, have an optional access modifier.
-
-export default class HelloWorld extends Vue {
-  public clickMe(): void {
-    console.log('clicked')
-    console.log(this.addNum(4, 2))
-  }
-  public addNum(num1: number, num2: number): number {
-    return num1 + num2
-  }
-}
-
-// The JavaScript-equivalent code is as follows.
-export default {
-  methods: {
-    clickMe() {
-      console.log('clicked')
-      console.log(this.addNum(4, 2))
-    }
-    addNum(num1, num2) {
-      return num1 + num2
-    }
-  }
-}
-```
+[Source https://blog.logrocket.com](https://blog.logrocket.com/how-to-write-a-vue-js-app-completely-in-typescript)
 
 ## About three.js implementation ##
 
@@ -106,33 +82,35 @@ npm i three ->
   - Added threejs lib / my subComponent and preview video and thumbnails.
     Play video in webGL context , control video from status bar buttons UI.
 
-### github submodules ###
+### github submodules
 
 Update all submodules:
-```bash
+```js
   git pull --recurse-submodules
 ```
 
+```js
 [submodule "vue-ts-starter/public/submodules/nui-commander/nui-commander"]
   url = https://github.com/zlatnaspirala/nui-commander
 [submodule "vue-ts-starter/public/submodules/voice-commander/voice-commander"]
   url = https://github.com/zlatnaspirala/voice-commander
 [submodule "vue-ts-starter/public/submodules/opencv-starter"]
   url = https://github.com/zlatnaspirala/opencv-starter
+```
 
-### Formating ###
+### Formating
 
  ESLINT is present also (not configured).
 
-#### Lints and fixes files ####
+#### Lints and fixes files
 
 ```bash
   npm run lint
 ```
 
-## Direct link for dev server ##
+## Direct link for dev server
 
-### VueTube web service 2020 ###
+### VueTube web service 2020
 
 https://maximumroulette.com:3000
 

@@ -9,7 +9,7 @@ var Application = new Vue({
   store,
   render: h => h(App, {
     props: {
-      AppPropVersion: '0.1.2'
+      AppPropVersion: '0.1.3'
     }
   }),
 }).$mount('#app')

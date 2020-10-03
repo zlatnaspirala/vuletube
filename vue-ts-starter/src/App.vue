@@ -135,7 +135,6 @@
         height: '100%',
         width: '100%'
       }
-      // this.ls.save("styleObject", this.styleObject)
 
       /**
        * @description  Check page localStorage
@@ -164,6 +163,7 @@
         this.ls.save("o_webglbox_background_b", "100")
         this.ls.save("o_webglbox_search_results_preview", true)
         this.ls.save("o_webglbox_preview_per_page", 20)
+        this.ls.save("o_webglbox_opencv_starter_for_camera", true)
 
         this.options = {
           searchBox: {
