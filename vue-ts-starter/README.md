@@ -194,6 +194,9 @@ Note:
 
 </pre>
 
+</br>
+
+
 ### Components : ###
 
  <b> - myYouTube.vue </b>
@@ -206,6 +209,17 @@ Note:
    I use quick solution from npm:
    https://www.npmjs.com/package/youtube-dl
 
+</br>
+
+### About video processing
+
+   Role for enabling video processing effects with private webcam
+  - Setting for openCV component must be enabled
+  - Camera must be enabled
+
+   Handled situation with on/off variant.....
+
+</br>
 
 #### Response for youtube api v3 call `search`. ####
 
@@ -257,6 +271,10 @@ Note:
   }
 }
 
+```
+
+Important flags field ->
+```json
 {
   etag: "3nOm8AR0NU4TDlCxh0UCxk1KB38"
   items:
@@ -270,7 +288,6 @@ Note:
       regionCode: "RS"
       }
 }
-
 ```
 
 ### Opencvjs help ###
