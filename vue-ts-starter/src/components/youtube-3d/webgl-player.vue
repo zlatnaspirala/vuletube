@@ -22,7 +22,7 @@
 
             <md-content v-bind:style="optionsStyle">
               <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
-                v-model="optionsSearchResultPreview">Visibility of results in 3d env.</md-switch>
+                v-model="oCvStarter">Visibility of results in 3d env.</md-switch>
             </md-content>
           </md-content>
         </md-tab>
@@ -57,8 +57,8 @@
           <md-content class="md-scrollbar">
 
             <md-content v-bind:style="optionsStyle">
-              <md-switch v-on:change="searchResultPreviewOptionsChanged" class="md-primary md-raised"
-                v-model="optionsSearchResultPreview">Enable/Disable openVC component</md-switch>
+              <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
+                v-model="oCvStarter">Enable/Disable openCV component</md-switch>
             </md-content>
           </md-content>
 
@@ -274,13 +274,18 @@ import { EFFECT_TYPE } from './webgl-player'
 
     mounted (): void {
 
-      var root = this
       this.optionsVideoCamera = this.ls.load("o_camera")
 
       this.init()
       this.animate()
 
       this.oCvStarter = this.ls.load("o_webglbox_opencv_starter_for_camera")
+
+      if (this.oCvStarter === true && this.optionsVideoCamera === true) {
+        this.runCvjsLoader()
+        console.info("CVJS LOADING")
+      }
+
       this.oBackground.r = this.ls.load("o_webglbox_background_r")
       this.oBackground.g = this.ls.load("o_webglbox_background_g")
       this.oBackground.b = this.ls.load("o_webglbox_background_b")
@@ -296,8 +301,13 @@ import { EFFECT_TYPE } from './webgl-player'
 
       this.runVideoReactor()
 
-      // test
-       var cvjsLoader = function(cvjsCallback) {
+    }
+
+    runCvjsLoader() : void {
+
+      if (this.cvStarter === null) {
+
+        var cvjsLoader = function(cvjsCallback) {
 
           asyncLoad("/submodules/opencv-starter/node_modules/webrtc-adapter/out/adapter.js", () => {
             asyncLoad("/submodules/opencv-starter/src/lib/stats.js", () => {
@@ -309,17 +319,18 @@ import { EFFECT_TYPE } from './webgl-player'
 
         }
 
-          // Test
-          cvjsLoader(() => {
-            // `opencvjs` is ready for use.
-            const options = {
-              videoProcessing: true,
-              injectVideo: (this.$refs.webcam as HTMLVideoElement),
-              injectCanvas: "testcanvas"
-            }
-            root.cvStarter = new CvStarter(options)
-            console.log("this.cvStarter", root.cvStarter)
-          })
+      cvjsLoader(() => {
+        var root = this;
+        const options = {
+          videoProcessing: true,
+          injectVideo: (this.$refs.webcam as HTMLVideoElement),
+          injectCanvas: "testcanvas"
+        }
+        root.cvStarter = new CvStarter(options)
+        console.log("this.cvStarter", root.cvStarter)
+      })
+
+    }
 
     }
 
@@ -409,7 +420,13 @@ import { EFFECT_TYPE } from './webgl-player'
 
     private oCvStarterOptionsChanged(value): void {
       this.ls.save("o_webglbox_opencv_starter_for_camera", value)
-      console.log(">>>>>oCvStarterOptionsChanged>>>>o_webglbox_opencv_starter_for_camera>>>>", this.$refs)
+      console.log(">>>>>oCvStarterOptionsChanged>>>>o_webglbox_opencv_starter_for_camera>>>>", value)
+
+      if (value === true && this.optionsVideoCamera === true) {
+        this.runCvjsLoader()
+        console.info("CVJS LOADING")
+      }
+
     }
 
     private previewPerPageChanged(value): void {
@@ -769,13 +786,38 @@ import { EFFECT_TYPE } from './webgl-player'
       this.ls.save("o_camera", this.optionsVideoCamera)
 
       if (this.isVideoCameraActive === true && this.optionsVideoCamera === false) {
+
         // turn off
-        console.log("TURN OFF")
-        this.stopVideoCamera()
+        console.info("Turn off private webcamera...")
+        this.stopVideoCamera();
+        (this.$refs.testcanvas as HTMLElement).style.display = 'none'
+
+        //
+        this.$root.$emit('privateCameraOff', { detail: 'Video webcam stoped on user request.' })
+
+
       } else if (this.isVideoCameraActive === false && this.optionsVideoCamera === true) {
+
         // turn on
-        console.log("TURN ON")
-        this.accessVideoCamera()
+        console.info("Turn on private webcamera...")
+        this.accessVideoCamera();
+
+        if (this.oCvStarter === true) {
+          (this.$refs.testcanvas as HTMLElement).style.display = 'block'
+
+          this.$root.$emit('privateCameraOn', { detail: 'Video webcam stoped on user request.' })
+
+          /**
+           * @description Must be tested in memory aspect ?!?!
+           * This is fo rtest proporse only => `this.runCvjsLoader()`
+           *
+           */
+
+          this.runCvjsLoader()
+
+        }
+
+
       }
 
     }

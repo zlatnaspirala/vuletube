@@ -9,10 +9,10 @@
 
         <!-- opencvjs starter dom staff start -->
         <div id="vp-debug"></div>
-        <div class="text-center">
+        <div ref="videoProcessingStatus" class="text-center">
           <span>Current Filter: </span><span id="filterName">Pass Through</span>
         </div>
-        <div id="guiContainer"></div>
+        <div id="guiContainer" ref="guiContainer"></div>
         <!-- opencvjs starter dom staff end-->
 
         <div id="xylo"></div>
@@ -190,6 +190,35 @@
         })
 
       }, 500)
+
+    }
+
+    created() {
+
+      this.$root.$on('privateCameraOff', (s: typeof Vue, args: any) => {
+        try {
+
+           console.info("Event privateCameraOff => ", args);
+           (this.$refs.videoProcessingStatus as HTMLElement).style.display = 'none';
+           (this.$refs.guiContainer as HTMLElement).style.display = 'none'
+
+        } catch(err) {
+          console.warn(err)
+        }
+      })
+
+      this.$root.$on('privateCameraOn', (s: typeof Vue, args: any) => {
+        try {
+
+           console.info("Event privateCameraOn => ", args);
+           (this.$refs.videoProcessingStatus as HTMLElement).style.display = 'block';
+           (this.$refs.guiContainer as HTMLElement).style.display = 'block'
+
+        } catch(err) {
+          console.warn(err)
+        }
+      })
+
 
     }
 

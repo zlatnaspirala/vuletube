@@ -196,7 +196,6 @@
 
     constructor() {
       super()
-      console.log('construction')
     }
 
     public execute(): void {
@@ -265,7 +264,7 @@
       this.ls.save("o_searchbox_visibility_thumbnails", this.$data.ytListVisibilityRowThumbnails.toString())
     }
 
-    private setupCompWidth() {
+    private setupCompWidth(): void {
       this.$root.$emit('reziseCanvas');
       this.styleObject.width = this.$data.componentWidthOptions + '%'
       this.ls.save("o_searchbox_width", this.$data.componentWidthOptions)
@@ -374,6 +373,11 @@
 
       // this.loadStartUpVideo()
 
+    }
+
+    private created() {
+      // test
+      console.info('MyYouTube created.')
     }
 
     private loadStartUpVideo() {
