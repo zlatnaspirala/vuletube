@@ -8,8 +8,10 @@
 
 ![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png)
 
-Screenshot:
+Screenshot1:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.jpg)
+Screenshot with openCVJS:
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png)
 
 YouTube presentation:
 [youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)

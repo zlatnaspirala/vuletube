@@ -42,7 +42,7 @@
 
 Last version sceenshots:
  Screenshot:
-![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.2.png)
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png)
 
 
  See `setup-from-zero-point.md` to make clear who this project was created.
