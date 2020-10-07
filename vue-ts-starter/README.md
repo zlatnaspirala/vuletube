@@ -106,12 +106,11 @@ Note:
  Screenshot:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.2.png)
 
- <b> version 0.2.0 [NEXT][WIP] </b>
+ <b> version 0.2.0 [MASTER] </b>
 
   - Added new submodule https://github.com/zlatnaspirala/opencv-starter
     Basic implementation options for first effect gray. My opencv-starter
     project is script module type and prepared for this actions.
-  - Prevent raycast click event behind 3d plane video FIX@ [DEV]
   - test nui/voice controller
      pre-command -> action command =>
      v-command : `search` or `search for` then listening for `what to search` . [DONE]
@@ -120,8 +119,19 @@ Note:
     each/individual components.
     `myYouTube.d.ts` and `webgl-player.d.ts`
 
+<b> version 0.2.1 [NEXT][WIP] </b>
+
+  - Make openCV videoProcessing multi source reusable but with one output
+    canvas effect.
+  - Prevent raycast click event behind 3d plane video FIX@ [DEV]
+
 
 ### Production ###
+
+ There is no any kind of build on public mashine just upload
+ files in WEB manir. Plug and play.
+ /var/html/www/ANY_PATH
+
 
  How to upload on production (windows):
   - Build on windows mashine host with `npm run build` then simple upload dist/ with

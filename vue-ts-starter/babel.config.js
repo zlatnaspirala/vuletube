@@ -3,6 +3,7 @@ module.exports = {
     '@vue/cli-plugin-babel/preset'
   ],
   exclude: [
-    "public"
+    "public",
+    "**/node_modules/**/*.*"
   ]
 }

@@ -72,6 +72,7 @@
 
     <!-- Texture video tag  @timeupdate='updateCurrentTime'-->
     <video ref="texvideo"
+           src="default-assets/3dtshirts.mp4"
            v-bind:style="{ display: 'none',
                           position: 'absolute',
                           top: '-1000px' }"
@@ -81,9 +82,9 @@
     <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
-    <canvas id="testcanvas" ref="testcanvas" v-bind:style="{ display: 'block', position: 'absolute', right : 0 }"
-
-      width="640" height="480" style="bottom: 0;"></canvas>
+    <canvas id="testcanvas" ref="testcanvas"
+            v-bind:style="{ display: 'block', position: 'absolute', right : 0 }"
+            width="640" height="480" style="bottom: 0;"></canvas>
 
     <md-field class="menubox">
       <md-button class="md-primary md-raised" @click="showDialog = true">
@@ -219,8 +220,8 @@ import { EFFECT_TYPE } from './webgl-player'
     private mouse = new THREE.Vector2()
     private container
     private videoWebCam
-    private texvideo
     private webcamMesh
+    private mainVideoMesh
     private cvEffectCanvas
     private meshGroupSearchResult = new THREE.Object3D()
     private INTERSECTED: any = null
@@ -282,8 +283,8 @@ import { EFFECT_TYPE } from './webgl-player'
       this.oCvStarter = this.ls.load("o_webglbox_opencv_starter_for_camera")
 
       if (this.oCvStarter === true && this.optionsVideoCamera === true) {
-        this.runCvjsLoader()
-        console.info("CVJS LOADING")
+        this.runCvjsLoader('WEBCAM')
+        console.info("CVJS LOADING WEBCAM")
       }
 
       this.oBackground.r = this.ls.load("o_webglbox_background_r")
@@ -303,7 +304,25 @@ import { EFFECT_TYPE } from './webgl-player'
 
     }
 
-    runCvjsLoader() : void {
+    /**
+     * @description Create enum for input flag
+     * Its not bad place but this also need
+     * to be done on any other action.
+     */
+    runCvjsLoader(injectComponentFlag?: string) : void {
+
+      let current_: HTMLVideoElement;
+
+      if (typeof injectComponentFlag === 'undefined') {
+        injectComponentFlag = 'PLAYED_VIDEO'
+      }
+
+     if (injectComponentFlag === 'PLAYED_VIDEO') {
+       // test
+       current_ = this.$refs.texvideo as HTMLVideoElement
+     } else {
+       current_ = this.$refs.webcam as HTMLVideoElement
+     }
 
       if (this.cvStarter === null) {
 
@@ -319,18 +338,30 @@ import { EFFECT_TYPE } from './webgl-player'
 
         }
 
-      cvjsLoader(() => {
-        var root = this;
+        cvjsLoader(() => {
+          var root = this;
+          const options = {
+            videoProcessing: true,
+            injectVideo: (current_ as HTMLVideoElement),
+            injectCanvas: "testcanvas"
+          }
+          root.cvStarter = new CvStarter(options)
+          console.log("cv inject video is ", current_)
+          console.log("this.cvStarter", root.cvStarter)
+        })
+
+      } else {
+        /**
+         * Run opencv
+         */
         const options = {
           videoProcessing: true,
-          injectVideo: (this.$refs.webcam as HTMLVideoElement),
+          injectVideo: (current_ as HTMLVideoElement),
           injectCanvas: "testcanvas"
         }
-        root.cvStarter = new CvStarter(options)
-        console.log("this.cvStarter", root.cvStarter)
-      })
-
-    }
+        this.cvStarter = new CvStarter(options)
+        console.log("this.cvStarter", this.cvStarter)
+      }
 
     }
 
@@ -401,6 +432,7 @@ import { EFFECT_TYPE } from './webgl-player'
             console.log("Cliked on name ---> " + intersects[0].object.name);
 
             if (!this.preventRaycastClickAction) {
+              console.log(">>  this.cvStarter>>",  this.cvStarter)
               this.prepareThisVideo(intersects[0].object.name.substring(1))
             }
 
@@ -419,12 +451,16 @@ import { EFFECT_TYPE } from './webgl-player'
     }
 
     private oCvStarterOptionsChanged(value): void {
+
       this.ls.save("o_webglbox_opencv_starter_for_camera", value)
-      console.log(">>>>>oCvStarterOptionsChanged>>>>o_webglbox_opencv_starter_for_camera>>>>", value)
+      console.info("oCvStarterOptionsChanged => ", value)
 
       if (value === true && this.optionsVideoCamera === true) {
-        this.runCvjsLoader()
-        console.info("CVJS LOADING")
+        this.runCvjsLoader('WEBCAM')
+        console.info("CVJS LOADING WEBCAM")
+      } else {
+        this.runCvjsLoader('PLAYED_VIDEO')
+        console.info("CVJS LOADING PLAYED_VIDEO")
       }
 
     }
@@ -478,13 +514,27 @@ import { EFFECT_TYPE } from './webgl-player'
       console.log("Try source", args)
       try {
         (this.$refs.texvideo as HTMLVideoElement).src = "https://maximumroulette.com:3000/videos/vule" + args.videoId + ".mp4"
-        this.$refs.texvideo["style"].display = "block"
+        this.$refs.texvideo["style"].display = "block";
+
+        // (this.$refs.texvideo as HTMLVideoElement).addEventListener("canplay", () => { })
+        // Only with prevent double call
+
+        console.log("TEST TRY SOURCE FUNC", this.cvStarter)
+
 
         setTimeout(() => {
-          this.prepareVideoTexture('plane', EFFECT_TYPE.NOEFFECT)
-        }, 3000)
 
-        console.info("Please wait 2s ...")
+            this.runCvjsLoader('PLAYED_VIDEO')
+
+        }, 2000)
+
+        setTimeout(() => {
+
+          this.prepareVideoTexture('plane', EFFECT_TYPE.NOEFFECT)
+
+        }, 4000)
+
+        console.info("Trying source ...")
 
       }catch(err) {
         console.warn("Link is broken...", err)
@@ -595,41 +645,68 @@ import { EFFECT_TYPE } from './webgl-player'
 
     private prepareVideoTexture = (visualShape: string, effectType: string) => {
 
-      if(visualShape === "plane") {
-
-        if (this.planeAddedToScene === false) {
-
-          var mesh
-          var texture
-          var material
-          var geometry = new THREE.PlaneBufferGeometry(16, 9)
-
-           console.log(" TESTTEST ", EFFECT_TYPE.NOEFFECT)
-          if (effectType === EFFECT_TYPE.NOEFFECT) {
-           texture = new THREE.VideoTexture(this.texvideo)
-          } else if (effectType === EFFECT_TYPE.CVVIDEOPROCESSING) {
-            texture = new THREE.CanvasTexture(this.$refs.testcanvas)
-          }
-
-          material = new THREE.MeshBasicMaterial({ map: texture })
-
-          geometry.scale(1.4, 1, 1)
-
-          mesh = new THREE.Mesh(geometry, material)
-          mesh.position.z = -8
-          this.scene.add(mesh)
-          this.planeAddedToScene = true
-
-        }
+      var texture,
+          material,
+          geometry,
+          materialLocal
 
         /**
          * Make sure that video plays
          */
         try {
-          this.texvideo = this.$refs.texvideo
-          this.texvideo.play()
+          (this.$refs.texvideo as HTMLVideoElement).play()
         } catch(err) {
           console.log(err)
+        }
+
+      if(visualShape === "plane") {
+
+        if (this.planeAddedToScene === false) {
+
+          geometry = new THREE.PlaneBufferGeometry(16, 9)
+          if (this.cvStarter) {
+            console.log(" TESTTEST ", EFFECT_TYPE.NOEFFECT)
+          }
+
+          if (effectType === EFFECT_TYPE.NOEFFECT) {
+            // test
+            texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+            texture.needsUpdate = true;
+            // ori texture = new THREE.VideoTexture(this.texvideo)
+            console.log(" CREATE TEXTUTE CANVAS  ", texture)
+
+          } else if (effectType === EFFECT_TYPE.CVVIDEOPROCESSING) {
+            console.log(" NO EFFECT ", EFFECT_TYPE.CVVIDEOPROCESSING)
+            texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+            texture.needsUpdate = true;
+          }
+
+          material = new THREE.MeshBasicMaterial({ map: texture })
+          material.needsUpdate = true;
+          material.map.needsUpdate = true;
+
+          geometry.scale(1.4, 1, 1)
+
+          this.mainVideoMesh = new THREE.Mesh(geometry, material)
+          this.mainVideoMesh.position.z = -8
+          this.scene.add(this.mainVideoMesh)
+          this.planeAddedToScene = true
+
+        } else {
+
+          /**
+           * @description
+           * Update texture.
+           */
+          texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+          texture.needsUpdate = true;
+          materialLocal = new THREE.MeshBasicMaterial({ map: texture })
+          materialLocal.needsUpdate = true;
+          materialLocal.map.needsUpdate = true;
+          this.mainVideoMesh.material = materialLocal
+          this.mainVideoMesh.material.needsUpdate = true;
+
+
         }
 
       }
@@ -651,6 +728,11 @@ import { EFFECT_TYPE } from './webgl-player'
     }
 
     private animate() {
+
+      if (this.scene.children.length > 2) {
+        // this.mainVideoMesh.material.map.needsUpdate = true; !?
+        this.scene.children[2].material.map.needsUpdate = true;
+      }
 
       requestAnimationFrame(this.animate)
 
@@ -810,10 +892,10 @@ import { EFFECT_TYPE } from './webgl-player'
           /**
            * @description Must be tested in memory aspect ?!?!
            * This is fo rtest proporse only => `this.runCvjsLoader()`
-           *
+           * Fixed.
            */
 
-          this.runCvjsLoader()
+          this.runCvjsLoader('WEBCAM')
 
         }
 
