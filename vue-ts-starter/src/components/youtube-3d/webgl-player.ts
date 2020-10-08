@@ -1,5 +1,5 @@
 
-export interface CvStarteroptions {
+export interface CvStarterOptions {
   videoProcessing: any
   injectVideo: any
   injectCanvas: any
