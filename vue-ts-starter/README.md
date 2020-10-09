@@ -123,6 +123,7 @@ Note:
 
   - Make openCV videoProcessing multi source reusable but with one output
     canvas effect.
+  - Create first documentation for VULETUBE Application.
   - Prevent raycast click event behind 3d plane video FIX@ [DEV]
 
 
@@ -148,7 +149,8 @@ Note:
 
 <pre>
 
-├── dist/  (This is auto generated)
+├── dist/  (This is auto generated) Ignore this
+├── docs/  (This is auto generated)
 ├── node_modules/  (This is auto generated)
 ├── public/
 |   ├── assets/
@@ -371,6 +373,8 @@ Not in use at the moment.
     this.scene.add( mesh );
   }
 ```
+
+### API Documentation
 
 #### YT Download module ####
 

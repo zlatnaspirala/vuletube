@@ -100,13 +100,29 @@ Update all submodules:
 
 ### Formating
 
- ESLINT is present also (not configured).
-
-#### Lints and fixes files
+#### Lints and fixes files (eslint)
 
 ```bash
   npm run lint
+  npm run format
 ```
+
+### Documentation
+
+  From experience i want to use typedoc. There is one small problem with vue single file component
+  loading procedure. I try from internet different solution but no one works.
+  Solution =>
+  I will add new pseudo file extension `<nameComp>.docs.ts`.
+  Add to exclude list and define type declaration inside `*.docs.*`
+  They can be active interface/type script or only dev comp.
+
+Generate docs:
+```
+  npm run docs
+```
+
+ [LINK]()
+
 
 ## Direct link for dev server
 

@@ -8,15 +8,16 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "eslint-webgl-player": "node_modules/.bin/eslint ./src/components/youtube-3d/webgl-player.vue",
-    "format": "node_modules/.bin/eslint ./src/**"
+    "format": "node_modules/.bin/eslint ./src/**",
+    "docs": "typedoc --out docs src"
   },
   "dependencies": {
     "core-js": "^3.6.5",
     "node-static": "^0.7.11",
     "three": "^0.118.3",
-    "vue": "^2.6.11",
-    "vue-class-component": "^7.2.3",
-    "vue-material": "^1.0.0-beta-14",
+    "vue": "^2.6.12",
+    "vue-class-component": "^7.2.6",
+    "vue-material": "^1.0.0-beta-15",
     "vue-property-decorator": "^8.4.2",
     "vuex": "^3.5.1"
   },
@@ -25,16 +26,18 @@
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-plugin-typescript": "^4.4.6",
+    "@vue/cli-plugin-typescript": "^4.5.7",
     "@vue/cli-service": "~4.4.0",
-    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/eslint-config-typescript": "^5.1.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.14.1",
+    "path": "^0.12.7",
     "sass-loader": "^8.0.2",
-    "typescript": "^3.9.6",
-    "vue-template-compiler": "^2.6.11"
+    "typedoc": "^0.19.2",
+    "typescript": "^3.9.7",
+    "vue-template-compiler": "^2.6.12"
   },
   "eslintConfig": {
     "root": true,

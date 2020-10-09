@@ -12,6 +12,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
   },
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs"
+  },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
@@ -23,6 +27,7 @@
     "node_modules",
     "server",
     "public",
-    "**/node_modules/**/*.*"
+    "**/node_modules/**/*.*",
+    "docs/**/*"
   ]
 }

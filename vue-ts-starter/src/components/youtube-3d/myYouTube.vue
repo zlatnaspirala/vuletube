@@ -177,7 +177,7 @@
   })
 
   @Component
-  export default class myYouTube extends CompProps {
+  export default class myYouTube extends CompProps implements myYouTube {
 
     private showDialog: boolean = false
     private styleObject: Partial<CSSStyleDeclaration> = {}

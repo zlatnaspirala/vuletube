@@ -169,7 +169,6 @@
 
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  // import { EFFECT_TYPE } from './webgl-player'
   import * as THREE from 'three/build/three.module'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
   import LocalStorageMemory from '../../local-storage/local-storage'
@@ -185,7 +184,7 @@
     mdContent,
     mdField
   }  from 'vue-material'
-import { EFFECT_TYPE } from './webgl-player'
+import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
   const CompProps = Vue.extend({
     props: {
@@ -208,7 +207,7 @@ import { EFFECT_TYPE } from './webgl-player'
   })
 
   @Component
-  export default class threejsYoutubePlayer extends CompProps {
+  export default class threejsYoutubePlayer extends CompProps implements threejsYoutubePlayer {
 
     declare YT;
 
@@ -340,7 +339,7 @@ import { EFFECT_TYPE } from './webgl-player'
 
         cvjsLoader(() => {
           var root = this;
-          const options = {
+          const options: CvStarterOptions = {
             videoProcessing: true,
             injectVideo: (current_ as HTMLVideoElement),
             injectCanvas: "testcanvas"
