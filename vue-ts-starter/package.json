@@ -1,5 +1,5 @@
 {
-  "name": "vue-ts-starter",
+  "name": "vuletube-youtube-alternative",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -52,7 +52,9 @@
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",

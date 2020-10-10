@@ -8,7 +8,7 @@
         <canvas id="canvas-blended" width="640" height="480" style="display: none;"></canvas>
 
         <!-- opencvjs starter dom staff start -->
-        <div id="vp-debug" v-bind:style="{ 'display': none}" ></div>
+        <div id="vp-debug" v-bind:style="{ 'display': 'none'}" ></div>
         <div ref="videoProcessingStatus" class="text-center">
           <span>Current Filter: </span><span id="filterName">Pass Through</span>
         </div>

@@ -25,17 +25,15 @@
   import myFooter from './components/myFooter.vue'
   import nuiCommander from './components/nui-webcam-control/nui-webcam-control.vue'
   import { mapState, mapMutations } from 'vuex'
+  // eslint-disable-line no-unused-vars
+  import IApp from './IApp'
+  import myYouTube from './components/youtube-3d/myYouTube.vue'
+  import threejsYoutubePlayer from './components/youtube-3d/webgl-player.vue'
+  import LocalStorageMemory from './local-storage/local-storage'
+
   import VueMaterial from 'vue-material'
   import 'vue-material/dist/vue-material.min.css'
   import './styles/style.scss'
-
-  // Current component dev => myYouTube
-  import myYouTube from './components/youtube-3d/myYouTube.vue'
-  import threejsYoutubePlayer from './components/youtube-3d/webgl-player.vue'
-
-  // Test import custom class
-  import LocalStorageMemory from './local-storage/local-storage'
-
   Vue.use(VueMaterial as any)
 
   /**
@@ -90,7 +88,7 @@
      * I will use it like singletone for injection in places
      * where is needed.
      */
-    private ls: LocalStorageMemory = new LocalStorageMemory()
+    public ls: LocalStorageMemory = new LocalStorageMemory()
 
     /**
      * @description Additional declaration is needed.
@@ -102,7 +100,7 @@
      increment!: () => void
      saveResponse!: () => void
 
-    private styleObject;
+    public styleObject;
 
     /**
      * @description options are main object
@@ -110,16 +108,15 @@
      * cache memory(localStorege) everything
      * goes back to the default values.
      */
-    private options: Object = {}
+    public options: Object = {}
 
     /**
      * Switch place of two main components.
      * Youtube & webGLPlayer
      * Better to remove from here ...
      */
-    private switchPlace: boolean = false
-
-    private currentRoute
+    public switchPlace: boolean = false
+    public currentRoute
 
     /**
      * @description Initial method construct.

@@ -65,7 +65,7 @@ export interface myYouTube {
   ytListVisibilityRowVideoID: Boolean;
   ytListVisibilityRowThumbnails: Boolean;
   spaceHForYTComponet: string;
-  componentWidthOptions: any;
+  componentWidthOptions: number;
   nuiVisibility: boolean;
   nuiVisibilityOptionsChanged(): void;
   channelTitleOptionsChanged(): void;
@@ -74,18 +74,14 @@ export interface myYouTube {
   thumbnailsOptionsChanged(): void;
   setupCompWidth(): void;
   loginIn(): void;
-  prepareThisVideo(e);
+  prepareThisVideo(e): void;
   setNewResponse(r: any);
   mounted(): void;
-  // this.$root.$on('googleApiLoginEvent', function (this: typeof Vue, args: any) {
-  // window.addEventListener('resize', ()
-  // this.$set(this, "spaceHForYTComponet", window.innerHeight * 0.85);
-  created();
-  loadStartUpVideo();
-  player
-  // (window as any).onYouTubeIframeAPIReady();
-  authenticate();
-  loadClient();
+  created(): void;
+  loadStartUpVideo(): void;
+  player: any;
+  authenticate(): void;
+  loadClient(): void;
   start(gapi: any): void;
 
 }

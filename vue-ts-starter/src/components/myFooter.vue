@@ -201,6 +201,9 @@
 </style>
 
 <script lang="ts">
+
+  /*global IFooter*/
+
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import {
@@ -210,6 +213,10 @@
     mdDialogActions,
     mdContent
    }  from 'vue-material'
+
+
+  // eslint-disable-line no-unused-vars
+  import IFooter from './IFooter';
 
   const CompProps = Vue.extend({
     props: {
@@ -229,16 +236,16 @@
   })
 
   @Component
-  export default class myFooter extends CompProps {
+  export default class myFooter extends CompProps implements IFooter {
 
     showDialog = false
 
-    styleObject = {
+    styleObject: Partial<CSSStyleDeclaration> | any = {
       position: 'absolute',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      bottom: 0,
+      bottom: '0',
       textAlign: 'center',
       itemsAlign: 'center',
       height: '40px',

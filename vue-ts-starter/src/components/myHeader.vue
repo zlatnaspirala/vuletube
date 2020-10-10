@@ -136,9 +136,9 @@
            mdIcon,
            mdContent,
            mdProgressSpinner } from 'vue-material'
-
-  // test
   import { switchTheme } from './../my-common/common-func'
+  import IHeader from './IHeader'
+
   const CompProps = Vue.extend({
     props: {
       slogan: String,
@@ -158,14 +158,14 @@
   })
 
   @Component
-  export default class myHeader extends CompProps {
+  export default class myHeader extends CompProps implements IHeader{
 
     declare windowGlobal: Window | any
     declare paypal: any
 
     private showAboutDialog: boolean = false
 
-    private optionsStyle = {
+    public optionsStyle = {
       display: 'flex',
       flexDirection: 'column',
       width: '100%',

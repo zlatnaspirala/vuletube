@@ -21,7 +21,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx", "src/components/IHeader.ts"
   ],
   "exclude": [
     "node_modules",
