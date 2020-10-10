@@ -376,6 +376,10 @@ Not in use at the moment.
 
 ### API Documentation
 
+    Link ->
+  - https://maximumroulette.com/applications/vue-project/vue-typescript-starter/vue-ts-starter/docs/
+
+
 #### YT Download module ####
 
  Download from:
