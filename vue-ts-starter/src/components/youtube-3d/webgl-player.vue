@@ -220,9 +220,11 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
     private container
     private videoWebCam
     private webcamMesh
+    private hudHidePlayer
     private mainVideoMesh
     private cvEffectCanvas
     private meshGroupSearchResult = new THREE.Object3D()
+    private meshGroupHudControls = new THREE.Object3D()
     private INTERSECTED: any = null
     private preventRaycastClickAction: boolean = false
     private lastHoveredElement: any
@@ -529,7 +531,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
         setTimeout(() => {
 
-          this.prepareVideoTexture('plane', EFFECT_TYPE.NOEFFECT)
+          this.prepareVideoTexture('plane', EFFECT_TYPE.CVVIDEOPROCESSING)
 
         }, 4000)
 
@@ -540,13 +542,15 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
       }
     }
 
+    /**
+     * @description Space for classic three.js
+     * initial instancing work.
+     */
     private init() {
 
       this.videoWebCam = this.$refs.webcam;
       this.camera.position.z = this.ls.load("o_webglbox_camera_z");
 
-      // ORIGINAL var texture = new THREE.VideoTexture( this.videoWebCam )
-      console.log(">>>>>>>>>>>>>>>>", this.videoWebCam)
       var texture = new THREE.VideoTexture(this.videoWebCam)
       // var texture = new THREE.TextureLoader().load('assets/vule-logo1.png')
 
@@ -561,10 +565,30 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
       // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ))
       geometry.scale(0.3, 0.3, 0.3);
 
+      /**
+       * @description HUD 3d buttons:
+       *  - Hide 3d player
+       */
+      material = new THREE.MeshBasicMaterial({ color: 0x003344 })
+
+      this.hudHidePlayer = new THREE.Mesh(geometry, material)
+      this.hudHidePlayer.position.z = -10
+      this.hudHidePlayer.position.x = 7
+      this.hudHidePlayer.position.y = 4.5
+      this.meshGroupHudControls.add(this.hudHidePlayer)
+
       // ask
       this.scene.add(this.webcamMesh)
       // ask
       this.scene.add(this.meshGroupSearchResult)
+
+      console.log("test>>>>>>>>>>>>")
+      this.scene.add(this.meshGroupHudControls)
+
+      /**
+       * @description 3d button
+       * hide 3d video mesh (player).
+       */
 
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.setSize(window.innerWidth / 2, window.innerHeight * 0.858);
@@ -668,16 +692,13 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
           }
 
           if (effectType === EFFECT_TYPE.NOEFFECT) {
-            // test
             texture = new THREE.CanvasTexture(this.$refs.cvcanvas)
             texture.needsUpdate = true;
             // ori texture = new THREE.VideoTexture(this.texvideo)
-            console.log(" CREATE TEXTUTE CANVAS  ", texture)
-
           } else if (effectType === EFFECT_TYPE.CVVIDEOPROCESSING) {
-            console.log(" NO EFFECT ", EFFECT_TYPE.CVVIDEOPROCESSING)
             texture = new THREE.CanvasTexture(this.$refs.cvcanvas)
             texture.needsUpdate = true;
+            // potencial activation for video processing here...
           }
 
           material = new THREE.MeshBasicMaterial({ map: texture })
@@ -728,9 +749,8 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
     private animate() {
 
-      if (this.scene.children.length > 2) {
-        // this.mainVideoMesh.material.map.needsUpdate = true; !?
-        this.scene.children[2].material.map.needsUpdate = true;
+      if (this.scene.children.length > 3) {
+        this.scene.children[3].material.map.needsUpdate = true;
       }
 
       requestAnimationFrame(this.animate)
@@ -884,7 +904,12 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
         this.accessVideoCamera();
 
         if (this.oCvStarter === true) {
-          (this.$refs.cvcanvas as HTMLElement).style.display = 'block'
+
+          /**
+           * @description No need for now but interest
+           * like extra canvas 2d work.
+           */
+          // (this.$refs.cvcanvas as HTMLElement).style.display = 'block'
 
           this.$root.$emit('privateCameraOn', { detail: 'Video webcam stoped on user request.' })
 

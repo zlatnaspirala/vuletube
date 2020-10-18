@@ -1,11 +1,8 @@
 
+# Project name: vue-ts-starter - `vuletube`
 
-# Project name: vue-ts-starter
-
- #### Creator: Nikola Lukic 2020
- #### Visual Code editor used
- #### Code formater vsPrettier
- #### Version "Ecstacy of gold"
+#### Creator: Nikola Lukic 2020 - Visual Code editor used
+#### Version "Ecstacy of gold"
 
 
 ## Clone project command:
@@ -39,9 +36,13 @@
  ## Go to project folder
  ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter)
 
+## Credits
+
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/ytlogo.png)
+
 
 Last version sceenshots:
- Screenshot:
+
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png)
 
 
