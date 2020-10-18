@@ -122,7 +122,7 @@ Generate docs:
   npm run docs
 ```
 
- [LINK]()
+ [Vuletube API documentation](https://maximumroulette.com/applications/vue-project/vue-typescript-starter/vue-ts-starter/docs/globals.html)
 
 
 ## Direct link for dev server
