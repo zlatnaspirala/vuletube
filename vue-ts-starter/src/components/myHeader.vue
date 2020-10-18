@@ -54,6 +54,7 @@
 
               <h4> youtube.com API Services </h4>
               <img style="width:300px" src="/assets/ytlogolight.png" />
+              <img style="width:300px" src="/assets/ytlogo.png" />
               <a target="_blank" href="https://youtube.com/">https://youtube.com/</a>
 
               <h4>Project structural/methodology </h4>

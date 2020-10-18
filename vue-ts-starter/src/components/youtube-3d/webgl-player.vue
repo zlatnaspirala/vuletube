@@ -82,7 +82,7 @@
     <!-- WebCam texture video tag -->
     <video ref="webcam" v-bind:style="{ display: 'none' }" autoplay playsinline></video>
 
-    <canvas id="testcanvas" ref="testcanvas"
+    <canvas id="cvcanvas" ref="cvcanvas"
             v-bind:style="{ display: 'block', position: 'absolute', right : 0 }"
             width="640" height="480" style="bottom: 0;"></canvas>
 
@@ -342,7 +342,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
           const options: CvStarterOptions = {
             videoProcessing: true,
             injectVideo: (current_ as HTMLVideoElement),
-            injectCanvas: "testcanvas"
+            injectCanvas: "cvcanvas"
           }
           root.cvStarter = new CvStarter(options)
           console.log("cv inject video is ", current_)
@@ -356,7 +356,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
         const options = {
           videoProcessing: true,
           injectVideo: (current_ as HTMLVideoElement),
-          injectCanvas: "testcanvas"
+          injectCanvas: "cvcanvas"
         }
         this.cvStarter = new CvStarter(options)
         console.log("this.cvStarter", this.cvStarter)
@@ -367,7 +367,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
     created(): void {
 
       this.container = this.$refs.container as HTMLElement
-      this.cvEffectCanvas = this.$refs.testcanvas as HTMLCanvasElement
+      this.cvEffectCanvas = this.$refs.cvcanvas as HTMLCanvasElement
 
       this.$root.$on('reziseCanvas', () => {
        this.setCanvasElementSize()
@@ -669,14 +669,14 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
           if (effectType === EFFECT_TYPE.NOEFFECT) {
             // test
-            texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+            texture = new THREE.CanvasTexture(this.$refs.cvcanvas)
             texture.needsUpdate = true;
             // ori texture = new THREE.VideoTexture(this.texvideo)
             console.log(" CREATE TEXTUTE CANVAS  ", texture)
 
           } else if (effectType === EFFECT_TYPE.CVVIDEOPROCESSING) {
             console.log(" NO EFFECT ", EFFECT_TYPE.CVVIDEOPROCESSING)
-            texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+            texture = new THREE.CanvasTexture(this.$refs.cvcanvas)
             texture.needsUpdate = true;
           }
 
@@ -697,7 +697,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
            * @description
            * Update texture.
            */
-          texture = new THREE.CanvasTexture(this.$refs.testcanvas)
+          texture = new THREE.CanvasTexture(this.$refs.cvcanvas)
           texture.needsUpdate = true;
           materialLocal = new THREE.MeshBasicMaterial({ map: texture })
           materialLocal.needsUpdate = true;
@@ -871,7 +871,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
         // turn off
         console.info("Turn off private webcamera...")
         this.stopVideoCamera();
-        (this.$refs.testcanvas as HTMLElement).style.display = 'none'
+        (this.$refs.cvcanvas as HTMLElement).style.display = 'none'
 
         //
         this.$root.$emit('privateCameraOff', { detail: 'Video webcam stoped on user request.' })
@@ -884,7 +884,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
         this.accessVideoCamera();
 
         if (this.oCvStarter === true) {
-          (this.$refs.testcanvas as HTMLElement).style.display = 'block'
+          (this.$refs.cvcanvas as HTMLElement).style.display = 'block'
 
           this.$root.$emit('privateCameraOn', { detail: 'Video webcam stoped on user request.' })
 
