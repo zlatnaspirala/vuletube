@@ -33,7 +33,7 @@
         </md-menu-item>
         <md-menu-item>
           <md-button @click="window.open('https://maximumroulette.com:2020', '_blank')"
-                     class="md-primary md-raised" md-menu-trigger>KURE Service</md-button>
+                     class="md-primary md-raised" md-menu-trigger>Try video chat</md-button>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
@@ -52,11 +52,12 @@
             <h3> Used in my project: </h3>
             <md-content v-bind:style="optionsStyle">
 
+              <h4> youtube.com API Services </h4>
+              <img style="width:300px" src="/assets/ytlogolight.png" />
+              <a target="_blank" href="https://youtube.com/">https://youtube.com/</a>
+
               <h4>Project structural/methodology </h4>
               <a target="_blank" href="https://vuejs.org/">https://vuejs.org/</a>
-
-              <h4> youtube.com services </h4>
-              <a target="_blank" href="https://youtube.com/">https://youtube.com/</a>
 
               <h4>JavaScript 3D library. </h4>
               <a target="_blank" href="https://threejs.org/">https://threejs.org/</a>
