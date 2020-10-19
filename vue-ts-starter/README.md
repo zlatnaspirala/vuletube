@@ -119,11 +119,14 @@ Note:
     each/individual components.
     `myYouTube.d.ts` and `webgl-player.d.ts`
 
-<b> version 0.2.1 [NEXT][WIP] </b>
+<b> version 0.2.1 [master] </b>
 
   - Make openCV videoProcessing multi source reusable but with one output
-    canvas effect.
-  - Create first documentation for VULETUBE Application.
+    canvas effect. [DONE]
+  - Create first documentation for VULETUBE Application. [DONE]
+
+<b> version 0.2.2 [NEXT][WIP] </b>
+
   - Prevent raycast click event behind 3d plane video FIX@ [DEV]
 
 

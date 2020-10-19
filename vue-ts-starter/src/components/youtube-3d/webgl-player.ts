@@ -45,6 +45,11 @@ type ThreeJSCamera = any;
  * for typedocs - also can be active
  */
 
+export enum IPreviewMode {
+  classic = "classic",
+  firstPerson = "firstPerson"
+}
+
 export interface threejsYoutubePlayer {
   ls: LocalStorageMemory
   camera: ThreeJSCamera
@@ -57,6 +62,7 @@ export interface threejsYoutubePlayer {
   webcamMesh: any
   mainVideoMesh: any
   cvEffectCanvas: any
+  previewMode: IPreviewMode
   meshGroupSearchResult: any
   INTERSECTED: any
   preventRaycastClickAction: boolean

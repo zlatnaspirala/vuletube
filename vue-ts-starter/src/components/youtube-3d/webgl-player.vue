@@ -90,6 +90,22 @@
       <md-button class="md-primary md-raised" @click="showDialog = true">
         <md-icon class="fa fa-cog"></md-icon>
       </md-button>
+
+      <md-menu class="menuModeMenu" >
+        <md-button class="md-primary md-raised" md-menu-trigger>Mode</md-button>
+        <md-menu-content>
+          <md-menu-item >
+            <md-button @click="setClassicPreviewMode()"
+                       class="md-primary md-raised" v-bind:style="{ padding: 0 , margin: 0, width: '100%' }"
+                       md-menu-trigger>Classic - plane</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button @click="setFirstPersonPreviewMode()" v-bind:style="{ padding: 0 , margin: 0}"
+                      class="md-primary md-raised" md-menu-trigger>First person gallery</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+
       <md-button class="md-primary md-raised"
                  @click="videoCameraOptionsChanged"
                  v-model="optionsVideoCamera">
@@ -139,6 +155,14 @@
     margin: 4px 0 0;
   }
 
+  .menuModeMenu {
+    padding-top: 6px;
+  }
+
+  .menuModeMenuContent {
+    padding: 1px 1px 1px 1px !important;
+  }
+
 </style>
 
 <style lang="scss" scoped>
@@ -171,6 +195,7 @@
   import Component from 'vue-class-component'
   import * as THREE from 'three/build/three.module'
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+  import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
   import LocalStorageMemory from '../../local-storage/local-storage'
   import { asyncLoad } from '../../my-common/common-func'
   import CvStarter from '../../../public/submodules/opencv-starter/src/ecma6/main.js'
@@ -184,7 +209,7 @@
     mdContent,
     mdField
   }  from 'vue-material'
-import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
+import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
   const CompProps = Vue.extend({
     props: {
@@ -217,11 +242,14 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
     private renderer = new THREE.WebGLRenderer({ antialias: true })
     private raycaster = new THREE.Raycaster()
     private mouse = new THREE.Vector2()
+    private orbitControls: OrbitControls
     private container
     private videoWebCam
     private webcamMesh
     private hudHidePlayer
     private mainVideoMesh
+    private previewMode: string = IPreviewMode.classic
+    private firstPersonControls: any = null
     private cvEffectCanvas
     private meshGroupSearchResult = new THREE.Object3D()
     private meshGroupHudControls = new THREE.Object3D()
@@ -231,6 +259,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
     private showDialog: boolean = false
     private optionsSearchResultPreview: boolean = false
+    private itemsLength: number = 0;
     private planeAddedToScene: boolean = false
     private previewPerPage: number = 25
     private optionsVideoCamera: boolean = false
@@ -263,6 +292,9 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
     private oCvStarter: boolean = true
 
+    private on3dKeyDown = (event: any) => {}
+    private on3dKeyUp = (event: any) => {}
+
     // UNRESOLVED VUE LIMITATIONS
     // For audio and video html object cat not be used bind: v-model or any
     // Effect : initialy load value without update, or lag video on @time
@@ -276,6 +308,7 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
     mounted (): void {
 
+      console.log(this.previewMode + "<<<<<<<<<<<")
       this.optionsVideoCamera = this.ls.load("o_camera")
 
       this.init()
@@ -385,6 +418,8 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
           testString += ',' + element.id.videoId
           thumbPaths.push(element.id.videoId)
         });
+
+        this.itemsLength = args.items.length;
 
         var testLogic = true
 
@@ -593,10 +628,23 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.setSize(window.innerWidth / 2, window.innerHeight * 0.858);
       (this.$refs.container as HTMLElement).appendChild(this.renderer.domElement);
-      var controls = new OrbitControls(this.camera, this.renderer.domElement);
-      // controls.enableZoom = false;
-      controls.enablePan = false;
 
+      /**
+       * @description branch here..
+       */
+      this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+      // controls.enableZoom = false;
+      this.orbitControls.enablePan = true;
+
+      // this.firstPersonControls = new PointerLockControls( this.camera, document.body )
+      this.firstPersonControls = {
+        controls: null,
+        velocity: new THREE.Vector3(),
+        direction: new THREE.Vector3(),
+        vertex: new THREE.Vector3(),
+      }
+
+      // Attached to window
       window.addEventListener('resize', this.onWindowResize, false)
       window.addEventListener('click', this.rayClickHandler, false)
       window.addEventListener('mouseup', this.onMouseUp, false)
@@ -814,6 +862,8 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
     private addSearchResult3dObjects(currentIdItems) {
 
       this.clearSearchResultFromScene()
+
+      // Block code
       var counter = 0, correctX = 0, correctY = 0
       var kx = 5
       var ky = 2 // 10 20 30 40 50
@@ -925,6 +975,245 @@ import { CvStarterOptions, EFFECT_TYPE } from './webgl-player'
 
 
       }
+
+    }
+
+    /**
+     * @description optimized, no need for removing element
+     * and theres loaded textures. `Block code` can be optimized.
+     * @return void
+     */
+    private setClassicPreviewMode(): void {
+
+      // Block code
+      var counter = 0, correctX = 0, correctY = 0
+      var kx = 5
+      var ky = 2 // 10 20 30 40 50
+
+      var local = this.itemsLength / 10
+      ky = 2 * local
+
+      if (local == 2) {
+        correctY = -2
+      }
+
+      if (local == 3) {
+        correctY = -5
+      }
+
+      if (local == 4) {
+        // 4 * 2
+        kx = 10
+        ky = 4
+        correctY = -5
+        correctX = -15
+      } else if (local == 5) {
+        kx = 10
+        ky = 5
+        correctY = -6
+        correctX = -15
+      }
+
+      console.log("Classic plane preview mode ...")
+
+      for (var x = 0;x < kx;x++) {
+        for (var y = 0;y < ky;y++) {
+
+          // geometry.scale(0.35, 0.35, 0.35)
+          // meshPlaneSmall.name = '_' + currentIdItems[counter]
+          this.meshGroupSearchResult.children[counter].position.z = -9
+          this.meshGroupSearchResult.children[counter].position.x = correctX -12 + x * 5.9
+          this.meshGroupSearchResult.children[counter].position.y = correctY -2 + y * 3.3
+          // this.meshGroupSearchResult.add(meshPlaneSmall)
+
+          counter++
+
+        }
+      }
+
+
+    }
+
+    private deactivateFirspPerson() {
+
+    }
+
+    private setFirstPersonPreviewMode() {
+
+      console.log("FP preview mode ...")
+
+      this.orbitControls.enabled = false;
+
+      this.firstPersonControls.moveForward = false
+      this.firstPersonControls.moveLeft = false
+      this.firstPersonControls.moveBackward = false
+      this.firstPersonControls.moveRight = false
+      this.firstPersonControls.canJump = false
+      this.firstPersonControls.prevTime = performance.now()
+
+      let floorGeometry = new THREE.PlaneBufferGeometry( 2000, 2000, 100, 100 );
+      floorGeometry.rotateX( - Math.PI / 2 );
+      const floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: true } )
+      const floor = new THREE.Mesh( floorGeometry, floorMaterial )
+      this.scene.add( floor )
+
+      this.firstPersonControls.floorObjects = []
+
+      this.firstPersonControls.update = () => {
+
+        const time = performance.now()
+
+        if (this.firstPersonControls.controls.isLocked === true ) {
+
+          this.raycaster.ray.origin.copy(this.firstPersonControls.controls.getObject().position)
+          this.raycaster.ray.origin.y -= 10
+
+          const intersections = this.raycaster.intersectObjects( this.firstPersonControls.floorObjects )
+
+          const onObject = intersections.length > 0;
+
+          const delta = ( time - this.firstPersonControls.prevTime ) / 1000;
+
+          this.firstPersonControls.velocity.x -= this.firstPersonControls.velocity.x * 10.0 * delta;
+          this.firstPersonControls.velocity.z -= this.firstPersonControls.velocity.z * 10.0 * delta;
+
+          this.firstPersonControls.velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+          this.firstPersonControls.direction.z = Number(this.firstPersonControls.moveForward) - Number(this.firstPersonControls.moveBackward)
+          this.firstPersonControls.direction.x = Number(this.firstPersonControls.moveRight) - Number(this.firstPersonControls.moveLeft)
+          this.firstPersonControls.direction.normalize();
+
+          if (this.firstPersonControls.moveForward ||  this.firstPersonControls.moveBackward )  this.firstPersonControls.velocity.z -=  this.firstPersonControls.direction.z * 400.0 * delta;
+          if (this.firstPersonControls.moveLeft ||  this.firstPersonControls.moveRight)  this.firstPersonControls.velocity.x -=  this.firstPersonControls.direction.x * 400.0 * delta;
+
+          if (onObject === true ) {
+            this.firstPersonControls.velocity.y = Math.max(0, this.firstPersonControls.velocity.y)
+            this.firstPersonControls.canJump = true
+          }
+
+          this.firstPersonControls.controls.moveRight( -  this.firstPersonControls.velocity.x * delta )
+          this.firstPersonControls.controls.moveForward( -  this.firstPersonControls.velocity.z * delta )
+
+          this.firstPersonControls.controls.getObject().position.y += ( this.firstPersonControls.velocity.y * delta )
+
+          if (this.firstPersonControls.controls.getObject().position.y < 10) {
+
+            this.firstPersonControls.velocity.y = 0
+            this.firstPersonControls.controls.getObject().position.y = 10
+            this.firstPersonControls.canJump = true
+
+          }
+
+        }
+
+        this.firstPersonControls.prevTime = time
+
+      }
+
+      this.firstPersonControls.controls = new PointerLockControls(this.camera, document.body)
+      this.firstPersonControls.controls.lock();
+
+      // test
+      this.scene.add(this.firstPersonControls.controls.getObject())
+
+      this.on3dKeyUp = function(event) {
+
+        switch (event.keyCode) {
+
+          case 38: // up
+          case 87: // w
+            this.firstPersonControls.moveForward = false
+            break;
+
+          case 37: // left
+          case 65: // a
+            this.firstPersonControls.moveLeft = false
+            break;
+
+          case 40: // down
+          case 83: // s
+            this.firstPersonControls.moveBackward = false
+            break;
+
+          case 39: // right
+          case 68: // d
+            this.firstPersonControls.moveRight = false
+            break;
+
+        }
+
+      }
+
+      this.on3dKeyDown = function(event) {
+
+        switch ( event.keyCode ) {
+
+          case 38: // up
+          case 87: // w
+            this.firstPersonControls.moveForward = true
+            break;
+
+          case 37: // left
+          case 65: // a
+            this.firstPersonControls.moveLeft = true
+            break;
+
+          case 40: // down
+          case 83: // s
+            this.firstPersonControls.moveBackward = true
+            break;
+
+          case 39: // right
+          case 68: // d
+            this.firstPersonControls.moveRight = true
+            break;
+
+          case 32: // space
+            if ( this.firstPersonControls.canJump === true ) this.firstPersonControls.velocity.y += 350;
+            this.firstPersonControls.canJump = false;
+            break;
+
+        }
+
+      }
+
+      this.renderer.domElement.addEventListener('keydown', this.on3dKeyDown, false)
+      this.renderer.domElement.addEventListener('keyup', this.on3dKeyUp, false)
+
+      // reposition
+      // Block code
+      var counter = 0, correctX = 1, correctY = 1
+      var kx = 5
+      var ky = 2 // 10 20 30 40 50
+
+      var local = this.itemsLength / 10
+      ky = 2 * local
+
+      console.log("Classic plane preview mode ...")
+
+      var localNeg = -1
+
+      for (var x = 0;x < this.meshGroupSearchResult.children.length;x++) {
+
+          // geometry.scale(0.35, 0.35, 0.35)
+          // meshPlaneSmall.name = '_' + currentIdItems[counter]
+          this.meshGroupSearchResult.children[x].position.z = -9 - x * 8
+
+          // this.meshGroupSearchResult.children[x].rotation.set(new THREE.Vector3( 0, 0, -Math.PI / 2));
+
+          this.meshGroupSearchResult.children[x].position.x = x * 4 * localNeg
+          if (localNeg === -1) {
+            localNeg = 1
+          } else {
+            localNeg = -1
+          }
+          // this.meshGroupSearchResult.children[x].position.y = correctY * 4
+          // this.meshGroupSearchResult.add(meshPlaneSmall)
+          correctY++
+          counter++
+
+      }
+
 
     }
 

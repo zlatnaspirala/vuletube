@@ -10,7 +10,7 @@
         <!-- opencvjs starter dom staff start -->
         <div id="vp-debug" v-bind:style="{ 'display': 'none'}" ></div>
         <div ref="videoProcessingStatus" class="text-center">
-          <span>Current Filter: </span><span id="filterName">Pass Through</span>
+        <span id="filterName">no effect</span>
         </div>
         <div id="guiContainer" ref="guiContainer"></div>
         <!-- opencvjs starter dom staff end-->

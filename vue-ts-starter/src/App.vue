@@ -78,11 +78,6 @@
       mybodycontent: HTMLDivElement
     }
 
-    public switchPlaceAction() {
-      this.switchPlace = !this.switchPlace
-      this.ls.save("o_switch_place", this.switchPlace)
-    }
-
     /**
      * @description `ls` is instance for localstorage operation
      * I will use it like singletone for injection in places
@@ -196,6 +191,11 @@
       this.currentRoute = window.location.pathname
       // console.log('Test Application refs mybodycontent => ', this.$refs.mybodycontent)
       // console.log('Attach Application event this.currentRoute => ', this.currentRoute)
+    }
+
+    public switchPlaceAction() {
+      this.switchPlace = !this.switchPlace
+      this.ls.save("o_switch_place", this.switchPlace)
     }
 
     get computedMsg (): string {
