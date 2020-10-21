@@ -84,7 +84,7 @@
 
     <canvas id="cvcanvas" ref="cvcanvas"
             v-bind:style="{ display: 'block', position: 'absolute', right : 0 }"
-            width="640" height="480" style="bottom: 0;"></canvas>
+            width="320" height="240" style="bottom: 0;"></canvas>
 
     <md-field class="menubox">
       <md-button class="md-primary md-raised" @click="showDialog = true">
@@ -237,12 +237,12 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     declare YT;
 
     private ls: LocalStorageMemory = new LocalStorageMemory()
-    private camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100)
+    private camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
     private scene = new THREE.Scene()
     private renderer = new THREE.WebGLRenderer({ antialias: true })
     private raycaster = new THREE.Raycaster()
     private mouse = new THREE.Vector2()
-    private orbitControls: OrbitControls
+    private orbitControls: OrbitControls | any = {}
     private container
     private videoWebCam
     private webcamMesh
@@ -308,7 +308,6 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
     mounted (): void {
 
-      console.log(this.previewMode + "<<<<<<<<<<<")
       this.optionsVideoCamera = this.ls.load("o_camera")
 
       this.init()
@@ -638,6 +637,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       // this.firstPersonControls = new PointerLockControls( this.camera, document.body )
       this.firstPersonControls = {
+        update: () => {},
         controls: null,
         velocity: new THREE.Vector3(),
         direction: new THREE.Vector3(),
@@ -756,6 +756,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           geometry.scale(1.4, 1, 1)
 
           this.mainVideoMesh = new THREE.Mesh(geometry, material)
+          this.mainVideoMesh.name = "mainVideoMesh"
           this.mainVideoMesh.position.z = -8
           this.scene.add(this.mainVideoMesh)
           this.planeAddedToScene = true
@@ -798,8 +799,18 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     private animate() {
 
       if (this.scene.children.length > 3) {
-        this.scene.children[3].material.map.needsUpdate = true;
+
+        var testVideomesh = this.scene.getObjectByName("mainVideoMesh")
+
+        if(typeof testVideomesh !== 'undefined' &&
+           typeof testVideomesh.material !== 'undefined') {
+          // this.scene.children[3].material.map.needsUpdate = true
+          testVideomesh.material.map.needsUpdate = true
+        }
+
       }
+
+      this.firstPersonControls.update()
 
       requestAnimationFrame(this.animate)
 
@@ -902,6 +913,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           geometry.scale(0.35, 0.35, 0.35)
           var material = new THREE.MeshBasicMaterial({ map: texture , transparent: true,  opacity: 1})
           var meshPlaneSmall = new THREE.Mesh(geometry, material)
+          meshPlaneSmall.material.side = THREE.DoubleSide
           meshPlaneSmall.name = '_' + currentIdItems[counter]
           meshPlaneSmall.position.z = -9
           meshPlaneSmall.position.x = correctX -12 + x * 5.9
@@ -953,6 +965,8 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
         console.info("Turn on private webcamera...")
         this.accessVideoCamera();
 
+        (this.$refs.cvcanvas as HTMLElement).style.display = 'block'
+
         if (this.oCvStarter === true) {
 
           /**
@@ -984,6 +998,11 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
      * @return void
      */
     private setClassicPreviewMode(): void {
+
+      console.log("exist >>>>", typeof this.firstPersonControls.controls.unlock)
+
+      this.deactivateFirstPerson("fpFloor")
+      this.orbitControls.enabled = true;
 
       // Block code
       var counter = 0, correctX = 0, correctY = 0
@@ -1019,23 +1038,21 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       for (var x = 0;x < kx;x++) {
         for (var y = 0;y < ky;y++) {
 
-          // geometry.scale(0.35, 0.35, 0.35)
-          // meshPlaneSmall.name = '_' + currentIdItems[counter]
+          this.meshGroupSearchResult.children[counter].geometry.scale(1/2.5, 1/2.5, 1/2.5)
+
           this.meshGroupSearchResult.children[counter].position.z = -9
           this.meshGroupSearchResult.children[counter].position.x = correctX -12 + x * 5.9
           this.meshGroupSearchResult.children[counter].position.y = correctY -2 + y * 3.3
-          // this.meshGroupSearchResult.add(meshPlaneSmall)
-
           counter++
-
         }
       }
 
-
     }
 
-    private deactivateFirspPerson() {
-
+    private deactivateFirstPerson(name) {
+      var selectedObject = this.meshGroupHudControls.getObjectByName(name)
+      console.log("DEACTIVATE >>", selectedObject)
+      this.meshGroupHudControls.remove(selectedObject)
     }
 
     private setFirstPersonPreviewMode() {
@@ -1051,12 +1068,14 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       this.firstPersonControls.canJump = false
       this.firstPersonControls.prevTime = performance.now()
 
-      let floorGeometry = new THREE.PlaneBufferGeometry( 2000, 2000, 100, 100 );
-      floorGeometry.rotateX( - Math.PI / 2 );
-      const floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: true } )
+      let floorGeometry = new THREE.PlaneBufferGeometry(2000, 2000, 100, 100)
+      floorGeometry.rotateX(-Math.PI / 2)
+      const floorMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 })
       const floor = new THREE.Mesh( floorGeometry, floorMaterial )
-      this.scene.add( floor )
-
+      floor.name = "fpFloor"
+      // fix later floor is not hud nature description.
+      this.meshGroupHudControls.add(floor)
+      // ?
       this.firstPersonControls.floorObjects = []
 
       this.firstPersonControls.update = () => {
@@ -1111,12 +1130,22 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       }
 
       this.firstPersonControls.controls = new PointerLockControls(this.camera, document.body)
+
+      this.firstPersonControls.controls.addEventListener('lock', function() {
+        console.log("screen fp lock")
+      })
+
+      this.firstPersonControls.controls.addEventListener('unlock', () => {
+        console.log("screen fp unlock")
+        this.deactivateFirstPerson("fpFloor")
+      })
+
       this.firstPersonControls.controls.lock();
 
       // test
       this.scene.add(this.firstPersonControls.controls.getObject())
 
-      this.on3dKeyUp = function(event) {
+      this.on3dKeyUp = (event) => {
 
         switch (event.keyCode) {
 
@@ -1144,7 +1173,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       }
 
-      this.on3dKeyDown = function(event) {
+      this.on3dKeyDown = (event) => {
 
         switch ( event.keyCode ) {
 
@@ -1177,8 +1206,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       }
 
-      this.renderer.domElement.addEventListener('keydown', this.on3dKeyDown, false)
-      this.renderer.domElement.addEventListener('keyup', this.on3dKeyUp, false)
+      // this.renderer.domElement.addEventListener('keydown', this.on3dKeyDown, false)
+      // this.renderer.domElement.addEventListener('keyup', this.on3dKeyUp, false)
+      window.addEventListener('keydown', this.on3dKeyDown, false)
+      window.addEventListener('keyup', this.on3dKeyUp, false)
 
       // reposition
       // Block code
@@ -1195,13 +1226,12 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       for (var x = 0;x < this.meshGroupSearchResult.children.length;x++) {
 
-          // geometry.scale(0.35, 0.35, 0.35)
+          this.meshGroupSearchResult.children[x].geometry.scale(2.5, 2.5, 2.5)
           // meshPlaneSmall.name = '_' + currentIdItems[counter]
           this.meshGroupSearchResult.children[x].position.z = -9 - x * 8
-
+          this.meshGroupSearchResult.children[x].position.y = 10
           // this.meshGroupSearchResult.children[x].rotation.set(new THREE.Vector3( 0, 0, -Math.PI / 2));
-
-          this.meshGroupSearchResult.children[x].position.x = x * 4 * localNeg
+          this.meshGroupSearchResult.children[x].position.x = 8 * localNeg
           if (localNeg === -1) {
             localNeg = 1
           } else {

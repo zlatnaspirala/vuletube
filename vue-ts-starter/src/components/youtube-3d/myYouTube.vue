@@ -53,7 +53,7 @@
             <md-card>
               <md-card-media>
                 <div @click="prepareThisVideo" :data-videoid="value.id.videoId">
-                  <img :src="value.snippet.thumbnails.medium.url" alt="medium size">
+                  <img :src="value.snippet.thumbnails.high.url" alt="medium size">
                 </div>
               </md-card-media>
             </md-card>

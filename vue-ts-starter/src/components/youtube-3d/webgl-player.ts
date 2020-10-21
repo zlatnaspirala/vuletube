@@ -84,6 +84,13 @@ export interface threejsYoutubePlayer {
     b: number
   }
   oCvStarter: boolean
+  firstPersonControls: {
+    update: () => void,
+    controls: any,
+    velocity: any,
+    direction: any,
+    vertex: any
+  } | any
   runVideoReactor()
   mounted(): void
   runCvjsLoader(injectComponentFlag ?: string) : void
