@@ -593,11 +593,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       var material = new THREE.MeshBasicMaterial({ map: texture })
 
       this.webcamMesh = new THREE.Mesh(geometry, material)
-      this.webcamMesh.position.z = -10
+      this.webcamMesh.position.z = -6
       this.webcamMesh.position.x = -7
       this.webcamMesh.position.y = 4.5
       // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ))
-      geometry.scale(0.3, 0.3, 0.3);
 
       /**
        * @description HUD 3d buttons:
@@ -999,8 +998,6 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
      */
     private setClassicPreviewMode(): void {
 
-      console.log("exist >>>>", typeof this.firstPersonControls.controls.unlock)
-
       this.deactivateFirstPerson("fpFloor")
       this.orbitControls.enabled = true;
 
@@ -1037,9 +1034,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       for (var x = 0;x < kx;x++) {
         for (var y = 0;y < ky;y++) {
-
-          this.meshGroupSearchResult.children[counter].geometry.scale(1/2.5, 1/2.5, 1/2.5)
-
+          this.meshGroupSearchResult.children[counter].geometry.scale(0.35, 0.35, 0.35)
           this.meshGroupSearchResult.children[counter].position.z = -9
           this.meshGroupSearchResult.children[counter].position.x = correctX -12 + x * 5.9
           this.meshGroupSearchResult.children[counter].position.y = correctY -2 + y * 3.3
@@ -1198,7 +1193,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
             break;
 
           case 32: // space
-            if ( this.firstPersonControls.canJump === true ) this.firstPersonControls.velocity.y += 350;
+            if ( this.firstPersonControls.canJump === true ) this.firstPersonControls.velocity.y += 150;
             this.firstPersonControls.canJump = false;
             break;
 
@@ -1227,11 +1222,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       for (var x = 0;x < this.meshGroupSearchResult.children.length;x++) {
 
           this.meshGroupSearchResult.children[x].geometry.scale(2.5, 2.5, 2.5)
-          // meshPlaneSmall.name = '_' + currentIdItems[counter]
-          this.meshGroupSearchResult.children[x].position.z = -9 - x * 8
+          this.meshGroupSearchResult.children[x].position.z = -10 - x * 15
           this.meshGroupSearchResult.children[x].position.y = 10
+          this.meshGroupSearchResult.children[x].position.x = 25 * localNeg
           // this.meshGroupSearchResult.children[x].rotation.set(new THREE.Vector3( 0, 0, -Math.PI / 2));
-          this.meshGroupSearchResult.children[x].position.x = 8 * localNeg
           if (localNeg === -1) {
             localNeg = 1
           } else {
