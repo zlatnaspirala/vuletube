@@ -159,6 +159,10 @@
     padding-top: 6px;
   }
 
+  .md-button {
+    font-weight: 400;
+  }
+
   .menuModeMenuContent {
     padding: 1px 1px 1px 1px !important;
   }
@@ -256,6 +260,13 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     private INTERSECTED: any = null
     private preventRaycastClickAction: boolean = false
     private lastHoveredElement: any
+
+    /**
+     * @description Can be =>
+     * first-person || classic
+     * @default classic
+     */
+    private currentViewMode : string = 'classic'
 
     private showDialog: boolean = false
     private optionsSearchResultPreview: boolean = false
@@ -505,12 +516,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       this.ls.save('o_webglbox_preview_per_page', value)
     }
 
-    private searchResultPreviewOptionsChanged(value): void {
-      this.ls.save("o_webglbox_search_results_preview", value)
-      this.meshGroupSearchResult.visible = value
-
-      console.log(">>>>>this.$refs.menuOptionsSearchResultPreviewIcon>>>>>>>>", this.$refs.menuOptionsSearchResultPreviewIcon)
-
+    private searchResultPreviewOptionsChanged(): void {
+      this.optionsSearchResultPreview = !this.optionsSearchResultPreview
+      this.ls.save("o_webglbox_search_results_preview", this.optionsSearchResultPreview)
+      this.meshGroupSearchResult.visible = this.optionsSearchResultPreview
     }
 
     private setCameraDeepByZ(currValue: any): void {
@@ -582,19 +591,19 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
      */
     private init() {
 
-      this.videoWebCam = this.$refs.webcam;
-      this.camera.position.z = this.ls.load("o_webglbox_camera_z");
+      this.videoWebCam = this.$refs.webcam
+      this.camera.position.z = this.ls.load("o_webglbox_camera_z")
 
       var texture = new THREE.VideoTexture(this.videoWebCam)
       // var texture = new THREE.TextureLoader().load('assets/vule-logo1.png')
 
-      var geometry = new THREE.PlaneBufferGeometry( 16, 9 );
+      var geometry = new THREE.PlaneBufferGeometry(16, 9)
       geometry.scale(0.5, 0.5, 0.5)
       var material = new THREE.MeshBasicMaterial({ map: texture })
 
       this.webcamMesh = new THREE.Mesh(geometry, material)
-      this.webcamMesh.position.z = -6
-      this.webcamMesh.position.x = -7
+      this.webcamMesh.position.z = -11
+      this.webcamMesh.position.x = -11
       this.webcamMesh.position.y = 4.5
       // mesh.lookAt(new THREE.Vector3( 0, 0, 0 ))
 
@@ -615,7 +624,6 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       // ask
       this.scene.add(this.meshGroupSearchResult)
 
-      console.log("test>>>>>>>>>>>>")
       this.scene.add(this.meshGroupHudControls)
 
       /**
@@ -998,8 +1006,13 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
      */
     private setClassicPreviewMode(): void {
 
+      this.currentViewMode = 'first-person'
       this.deactivateFirstPerson("fpFloor")
       this.orbitControls.enabled = true;
+
+      if (typeof this.mainVideoMesh !== 'undefined') {
+        this.mainVideoMesh.position.z = -8
+      }
 
       // Block code
       var counter = 0, correctX = 0, correctY = 0
@@ -1052,9 +1065,14 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
     private setFirstPersonPreviewMode() {
 
+      this.currentViewMode = 'first-person'
       console.log("FP preview mode ...")
 
-      this.orbitControls.enabled = false;
+      if (typeof this.mainVideoMesh !== 'undefined') {
+        this.mainVideoMesh.position.z = -15
+      }
+
+      this.orbitControls.enabled = false
 
       this.firstPersonControls.moveForward = false
       this.firstPersonControls.moveLeft = false
@@ -1131,8 +1149,8 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       })
 
       this.firstPersonControls.controls.addEventListener('unlock', () => {
-        console.log("screen fp unlock")
-        this.deactivateFirstPerson("fpFloor")
+        console.log("screen fp unlock - setup classic view.")
+        this.setClassicPreviewMode()
       })
 
       this.firstPersonControls.controls.lock();

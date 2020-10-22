@@ -26,9 +26,11 @@
   - BASIC NUI commander and Voice commander [DONE]
   - NUI hands control yt vieo navigation [WIP]
   - BASIC openCV for web (opencvjs) implementation [DONE]
+  - Implementing different view modes (OrbitControl, First person control)[DONE]
   - Implementing custom webGL2 (glmatrix) video preview sub component.
   - Kure Video Chat (kurento) Mixing yt video with camera stream.
   - Visual ts game engine - some kind of implementation
+    Adding 2d/3d games intro 3d view.
   - Implementing AR (commercial)
   - Google map API - Not free (maybe for 3d vs maps)
     7$ min cost
@@ -82,6 +84,14 @@ npm i three ->
     preview images in list
   - Added threejs lib / my subComponent and preview video and thumbnails.
     Play video in webGL context , control video from status bar buttons UI.
+  - nuiCommander implemented also Voice commande.
+
+    Voice commands:
+```js
+     Say 'search' + 'what to search'
+     or
+     Say 'search for' + 'what to search'
+```
 
 ### github submodules
 

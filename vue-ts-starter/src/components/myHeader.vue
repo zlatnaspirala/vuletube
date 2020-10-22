@@ -114,6 +114,10 @@
     margin: 1px;
   }
 
+  .md-button {
+    font-weight: 400;
+  }
+
   .myHeader {
     width:100%;
     height: 41px;

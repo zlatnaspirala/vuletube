@@ -127,7 +127,9 @@ Note:
 
 <b> version 0.2.2 [NEXT][WIP] </b>
 
-  - Implementing First person controller for 3d part.
+  - New feature `mode`:
+    Classic view mode (Orbit controls)
+    Implementing First person controller for 3d part.(point lock)
   - Prevent raycast click event behind 3d plane video FIX@ [DEV]
 
 

@@ -49,7 +49,7 @@
                  PLAY VIDEO
               </md-button>
           </md-table-cell>
-        <md-table-cell v-show="ytListVisibilityRowThumbnails" md-label="Thumbnails" md-sort-by="thumbnails" >
+        <md-table-cell style="cursor: pointer;" v-show="ytListVisibilityRowThumbnails" md-label="Thumbnails" md-sort-by="thumbnails" >
             <md-card>
               <md-card-media>
                 <div @click="prepareThisVideo" :data-videoid="value.id.videoId">
