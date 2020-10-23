@@ -1006,7 +1006,6 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
      */
     private setClassicPreviewMode(): void {
 
-      this.currentViewMode = 'first-person'
       this.deactivateFirstPerson("fpFloor")
       this.orbitControls.enabled = true;
 
@@ -1047,13 +1046,19 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       for (var x = 0;x < kx;x++) {
         for (var y = 0;y < ky;y++) {
-          this.meshGroupSearchResult.children[counter].geometry.scale(0.35, 0.35, 0.35)
+
+          if (this.currentViewMode == 'first-person') {
+            this.meshGroupSearchResult.children[counter].geometry.scale(0.5, 0.5, 0.5)
+          }
+
           this.meshGroupSearchResult.children[counter].position.z = -9
           this.meshGroupSearchResult.children[counter].position.x = correctX -12 + x * 5.9
           this.meshGroupSearchResult.children[counter].position.y = correctY -2 + y * 3.3
           counter++
         }
       }
+
+      this.currentViewMode = 'classic'
 
     }
 
@@ -1065,7 +1070,6 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
     private setFirstPersonPreviewMode() {
 
-      this.currentViewMode = 'first-person'
       console.log("FP preview mode ...")
 
       if (typeof this.mainVideoMesh !== 'undefined') {
@@ -1238,24 +1242,26 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       var localNeg = -1
 
       for (var x = 0;x < this.meshGroupSearchResult.children.length;x++) {
-
-          this.meshGroupSearchResult.children[x].geometry.scale(2.5, 2.5, 2.5)
-          this.meshGroupSearchResult.children[x].position.z = -10 - x * 15
-          this.meshGroupSearchResult.children[x].position.y = 10
-          this.meshGroupSearchResult.children[x].position.x = 25 * localNeg
-          // this.meshGroupSearchResult.children[x].rotation.set(new THREE.Vector3( 0, 0, -Math.PI / 2));
-          if (localNeg === -1) {
-            localNeg = 1
-          } else {
-            localNeg = -1
-          }
-          // this.meshGroupSearchResult.children[x].position.y = correctY * 4
-          // this.meshGroupSearchResult.add(meshPlaneSmall)
-          correctY++
-          counter++
+        if (this.currentViewMode == 'classic') {
+          this.meshGroupSearchResult.children[x].geometry.scale(2, 2, 2)
+        }
+        this.meshGroupSearchResult.children[x].position.z = -10 - x * 15
+        this.meshGroupSearchResult.children[x].position.y = 10
+        this.meshGroupSearchResult.children[x].position.x = 25 * localNeg
+        // this.meshGroupSearchResult.children[x].rotation.set(new THREE.Vector3( 0, 0, -Math.PI / 2));
+        if (localNeg === -1) {
+          localNeg = 1
+        } else {
+          localNeg = -1
+        }
+        // this.meshGroupSearchResult.children[x].position.y = correctY * 4
+        // this.meshGroupSearchResult.add(meshPlaneSmall)
+        correctY++
+        counter++
 
       }
 
+       this.currentViewMode = 'first-person'
 
     }
 
