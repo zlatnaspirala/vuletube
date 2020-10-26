@@ -125,12 +125,19 @@ Note:
     canvas effect. [DONE]
   - Create first documentation for VULETUBE Application. [DONE]
 
-<b> version 0.2.2 [NEXT][WIP] </b>
+<b> version 0.2.2 [DEV] </b>
 
   - New feature `mode`:
     Classic view mode (Orbit controls)
     Implementing First person controller for 3d part.(point lock)
-  - Prevent raycast click event behind 3d plane video FIX@ [DEV]
+
+<b> version 0.3.0 [NEXT][WIP] </b>
+
+   - Added zoom on hover
+   - Prevent raycast click event on drag up FIX@ [DEV]
+   - Add more buffered results search.
+     User can buffer not limit in theory
+     Add basic mode preview for classic orbit and first person look.
 
 
 ### Production ###

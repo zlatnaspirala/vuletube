@@ -474,6 +474,16 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
      if (intersects.length > 0) {
 
             this.INTERSECTED = intersects[0].object;
+
+            if (this.INTERSECTED.parent.visible === false) {
+              return;
+            }
+
+            if (this.INTERSECTED.material.opacity !== 1) {
+              this.INTERSECTED.geometry.scale(0.5,0.5,0.5)
+              this.INTERSECTED.position.setZ((this.INTERSECTED.position.z - 0.5))
+            }
+
             this.INTERSECTED.material.opacity = 1;
             console.log("Cliked on name ---> " + intersects[0].object.name);
 
@@ -486,6 +496,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
           if (this.INTERSECTED !== null && this.INTERSECTED.material && this.INTERSECTED.material.opacity) {
             try {
+
               this.INTERSECTED.material.opacity = 1;
             } catch(err) {
               console.log(err)
@@ -829,20 +840,36 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           if (this.INTERSECTED != intersects[0].object) {
 
             if (typeof this.lastHoveredElement !== 'undefined') {
-              this.lastHoveredElement.material.opacity = 1;
+
+              if (this.lastHoveredElement.material.opacity !== 1) {
+                this.lastHoveredElement.geometry.scale(0.5,0.5,0.5)
+                this.lastHoveredElement.position.setZ((this.lastHoveredElement.position.z - 0.5))
+              }
+              this.lastHoveredElement.material.opacity = 1
             }
 
-            this.INTERSECTED = intersects[0].object;
-            this.INTERSECTED.material.opacity = 0.75;
+            this.INTERSECTED = intersects[0].object
+            this.INTERSECTED.material.opacity = 0.9
+            this.INTERSECTED.geometry.scale(2 ,2 ,2)
+            this.INTERSECTED.position.setZ((this.INTERSECTED.position.z + 0.5))
+
             this.lastHoveredElement = intersects[0].object;
 
           }
 
         } else {
 
-          if (typeof this.lastHoveredElement !== 'undefined' && this.lastHoveredElement.material && this.lastHoveredElement.material.opacity) {
+          if (typeof this.lastHoveredElement !== 'undefined' &&
+              this.lastHoveredElement.material &&
+              this.lastHoveredElement.material.opacity) {
             try {
+
+              if (this.lastHoveredElement.material.opacity !== 1) {
+                this.lastHoveredElement.geometry.scale(0.5,0.5,0.5)
+                this.lastHoveredElement.position.setZ((this.lastHoveredElement.position.z - 0.5))
+              }
               this.lastHoveredElement.material.opacity = 1
+
             } catch(err) {
               console.log(err)
             }

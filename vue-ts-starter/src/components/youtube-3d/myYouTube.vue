@@ -21,6 +21,12 @@
                v-show='tyfetchVisibility'>
                  SEARCH
     </md-button>
+    <md-button class="md-primary md-raised"
+               ref="ytfetch"
+               @click="executeNext"
+               v-show='tyfetchVisibility'>
+                 NEXT
+    </md-button>
     <md-table v-bind:style="styleTableObject" md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
         <h2 class="md-title">YouTube results:</h2>
@@ -196,6 +202,26 @@
 
     constructor() {
       super()
+    }
+
+    public executeNext() : void {
+
+      var root = this
+      return (gapi as any).client.youtube.search.list({
+        "part": [
+          "snippet"
+        ],
+        "maxResults": root.ls.load("o_webglbox_preview_per_page"),
+        "nextPageToken": root.$data.yts.ytResponse.result.nextPageToken
+      })
+        .then((response) => {
+          console.log("Response nextPageToken =>", response)
+          //  this.setNewResponse(response)
+        },
+        function(err: any) {
+          console.error("Execute error for client.youtube.search.list => ", err)
+        })
+
     }
 
     public execute(): void {
