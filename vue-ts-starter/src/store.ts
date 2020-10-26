@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 interface ApplicationStateI {
   count: number
   appYtResultItems: Object
+  permission: Object
 }
 
 Vue.use(Vuex)
@@ -18,7 +19,11 @@ Vue.use(Vuex)
  */
 const state = {
   count: 0,
-  appYtResultItems: {}
+  appYtResultItems: {},
+  permission: {
+    read: "https://www.googleapis.com/auth/youtube.readonly",
+    write: "https://www.googleapis.com/auth/youtube.force-ssl"
+  }
 }
 
 const mutations = {

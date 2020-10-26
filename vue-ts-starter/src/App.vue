@@ -1,13 +1,17 @@
 
 <template>
   <div id="app">
-    <myHeader slogan='vuletube 0.4 local storage support added.' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
+    <myHeader slogan='VuleTube application' v-bind:switchPlaceA="this.switchPlaceAction" ></myHeader>
     <div ref="mybodycontent" v-bind:style="styleObject">
 
-      <myYouTube v-if="switchPlace" ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
-      <threejsYoutubePlayer v-else ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
+      <div class="loader" ref="loader" style="display: block;">
+        <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+      </div>
 
-      <threejsYoutubePlayer v-if="switchPlace" ref="myYouTubeThreejs" :arg="{ options: 'nikola' }" ></threejsYoutubePlayer>
+      <myYouTube v-if="switchPlace" ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
+      <threejsYoutubePlayer v-else ref="myYouTubeThreejs" :arg="{ options: 'optimal' }" ></threejsYoutubePlayer>
+
+      <threejsYoutubePlayer v-if="switchPlace" ref="myYouTubeThreejs" :arg="{ options: 'optimal' }" ></threejsYoutubePlayer>
       <myYouTube v-else ref="myYouTube" :arg="{ options: this.options }" ></myYouTube>
 
       <nuiCommander></nuiCommander>
@@ -58,7 +62,8 @@
     // Vuex's component binding helper can use here
     computed: mapState([
       'count',
-      'appYtResultItems'
+      'appYtResultItems',
+      'permission'
     ]),
     methods: mapMutations([
       'increment',
@@ -75,7 +80,8 @@
     $refs!: {
       myHeader: myHeader,
       myYouTube: myYouTube,
-      mybodycontent: HTMLDivElement
+      mybodycontent: HTMLDivElement,
+      loader: HTMLDivElement
     }
 
     /**
@@ -91,9 +97,10 @@
      * count!: number
      * increment!: () => void
      */
-     count!: number
-     increment!: () => void
-     saveResponse!: () => void
+    count!: number
+    increment!: () => void
+    saveResponse!: () => void
+    permission!: Object
 
     public styleObject;
 
@@ -147,6 +154,12 @@
         this.ls.save("o_searchbox_visibility_thumbnails", true)
         this.ls.save("o_nui_visibility", true)
 
+        /**
+         * @description Permission staff
+         * Cant be read or write
+         */
+        this.ls.save("permission_level", "read")
+
         // For threejs
         this.ls.save("o_switch_place", true)
         this.ls.save("o_webglbox_camera_z", 5.5)
@@ -158,6 +171,7 @@
         this.ls.save("o_webglbox_opencv_starter_for_camera", true)
 
         this.options = {
+          permissionLevel: this.ls.load("permission_level"),
           searchBox: {
             width: this.ls.load("o_searchbox_width"),
             visibilityChannelTitle:  this.ls.load("o_searchbox_visibility_channel_title"),
@@ -174,6 +188,7 @@
 
         console.info("App loading storage data...")
         this.options = {
+          permissionLevel: this.ls.load("permission_level"),
           searchBox: {
             width: this.ls.load("o_searchbox_width"),
             visibilityChannelTitle:  this.ls.load("o_searchbox_visibility_channel_title"),
@@ -184,6 +199,18 @@
           nuiVisibility: this.ls.load("o_nui_visibility"),
         }
       }
+
+
+      this.$root.$on('gapiReady', (args: any) => {
+
+        try {
+          console.info("Event gapiReady => ", args)
+          this.$refs.loader.style.display = 'none'
+        } catch(err) {
+          console.warn(err)
+        }
+
+      })
 
     }
 
@@ -221,6 +248,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+  }
+
+  .loader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 99999;
+    text-align: center;
+    /* justify-items: center; */
+    /* align-items: center; */
+    /* align-self: center; */
+    /* vertical-align: middle; */
+    margin: 0;
+    padding: 10%;
   }
 
 </style>

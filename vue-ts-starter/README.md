@@ -133,8 +133,10 @@ Note:
 
 <b> version 0.3.0 [NEXT][WIP] </b>
 
-   - Added zoom on hover
+   - Added zoom on hover [DONE]
    - Prevent raycast click event on drag up FIX@ [DEV]
+   - Added loader gapiReady app global event. [DONE]
+   - Basic next button. [DONE]
    - Add more buffered results search.
      User can buffer not limit in theory
      Add basic mode preview for classic orbit and first person look.

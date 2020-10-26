@@ -15,18 +15,20 @@
               maxlength="1200">
       </md-input>
     </md-field>
-    <md-button class="md-primary md-raised"
-               ref="ytfetch"
-               @click="execute"
-               v-show='tyfetchVisibility'>
-                 SEARCH
-    </md-button>
-    <md-button class="md-primary md-raised"
-               ref="ytfetch"
-               @click="executeNext"
-               v-show='tyfetchVisibility'>
-                 NEXT
-    </md-button>
+    <md-field class="searchBtns">
+      <md-button class="md-primary md-raised"
+                ref="ytfetch"
+                @click="execute"
+                v-show='tyfetchVisibility'>
+                  SEARCH
+      </md-button>
+      <md-button class="md-primary md-raised"
+                ref="ytfetch"
+                @click="executeNext"
+                v-show='tyfetchVisibility'>
+                  >
+      </md-button>
+    </md-field>
     <md-table v-bind:style="styleTableObject" md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
         <h2 class="md-title">YouTube results:</h2>
@@ -137,6 +139,12 @@
     box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.75);
   }
 
+  .searchBtns {
+    padding: 0px 0px 0px 0px;
+    padding-top: 0;
+    margin: 0px;
+  }
+
   .labelText {
     padding-top: 5px;
     padding-left: 5px;
@@ -211,12 +219,13 @@
         "part": [
           "snippet"
         ],
+        "pageToken": root.$data.yts.ytResponse.result.nextPageToken,
         "maxResults": root.ls.load("o_webglbox_preview_per_page"),
-        "nextPageToken": root.$data.yts.ytResponse.result.nextPageToken
+        "q": root.$data.yts.mySearchQuery
       })
         .then((response) => {
-          console.log("Response nextPageToken =>", response)
-          //  this.setNewResponse(response)
+          console.log(">>>>  Response nextPageToken =>", response)
+          this.setNewResponse(response)
         },
         function(err: any) {
           console.error("Execute error for client.youtube.search.list => ", err)
@@ -442,16 +451,22 @@
     }
 
     private authenticate(): any {
+
+      var defaultPermissionLevel = this.$root.$store.state.permission.read
+      if (this.$props.arg.options.permissionLevel == null) {
+        console.log('catch update moment')
+      }
       return gapi.auth2.getAuthInstance()
-          .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
+         .signIn({scope: defaultPermissionLevel})
           .then(() => {
             this.$data.tyfetchVisibility = true
             this.$data.isAuthorized = true
-            console.info("Sign-in successful");
+            console.info("Sign-in successful.");
           },
           function(err) {
             console.error("Error signing in => ", err);
           });
+
     }
 
     private loadClient = () => {
@@ -471,6 +486,7 @@
         gapi.auth2.init({
           client_id: "556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com"
         }).then (() => {
+          this.$root.$emit('gapiReady', {})
           console.info("Gapi is ready => " + gapi.auth2.init)
         }).catch((err) => {
           console.warn("Error in start func.", err)
