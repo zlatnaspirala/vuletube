@@ -106,6 +106,27 @@
         </md-menu-content>
       </md-menu>
 
+      <md-menu class="menuModeMenu" >
+        <md-button class="md-primary md-raised" md-menu-trigger>
+              <md-icon class="fa fa-filter"></md-icon>
+        </md-button>
+        <md-menu-content>
+          <md-menu-item >
+            <md-button @click="showHideFilterWindow()"
+                       class="md-primary md-raised" v-bind:style="{ padding: 0 , margin: 0, width: '100%' }"
+                       md-menu-trigger>Show - Hide filter window</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button v-bind:style="{ padding: 0 , margin: 0}"
+                      class="md-primary md-raised" md-menu-trigger>----------------------------------</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button @click="showHideFilterWindow()" v-bind:style="{ padding: 0 , margin: 0}"
+                      class="md-primary md-raised" md-menu-trigger>Gray</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+
       <md-button class="md-primary md-raised"
                  @click="videoCameraOptionsChanged"
                  v-model="optionsVideoCamera">
@@ -419,6 +440,38 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       });
 
       this.$root.$on('ytItemsReady', (args) => {
+
+        var testString: string = ''
+        var thumbPaths: string[] = []
+        // args.items
+        args.items.forEach(element => {
+          console.log(".....", element.id.videoId)
+          testString += ',' + element.id.videoId
+          thumbPaths.push(element.id.videoId)
+        });
+
+        this.itemsLength = args.items.length;
+
+        var testLogic = true
+
+        fetch('/saveThumbnails?imgs=' + testString)
+          .then((response) => {
+
+            console.log("saveThumbnails => ", args)
+            if (this.optionsSearchResultPreview && testLogic == true) {
+               testLogic = false
+               this.addSearchResult3dObjects(thumbPaths)
+            }
+
+            console.log("response => " + response)
+          }).catch(function(err) {
+            console.log('Fetch in webgl component: ', err)
+        });
+
+
+      })
+
+      this.$root.$on('ytItemsReadyForBuffer', (args) => {
 
         var testString: string = ''
         var thumbPaths: string[] = []
@@ -1023,6 +1076,16 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
 
       }
+
+    }
+
+    private showHideFilterWindow() {
+
+        if ((this.$refs.cvcanvas as HTMLElement).style.display === 'block') {
+          (this.$refs.cvcanvas as HTMLElement).style.display = 'none'
+        } else {
+          (this.$refs.cvcanvas as HTMLElement).style.display = 'block'
+        }
 
     }
 

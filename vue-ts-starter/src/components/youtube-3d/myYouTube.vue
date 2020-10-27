@@ -22,12 +22,31 @@
                 v-show='tyfetchVisibility'>
                   SEARCH
       </md-button>
-      <md-button class="md-primary md-raised"
-                ref="ytfetch"
+
+      <md-button class="md-primary md-accent"
+                ref="ytfetchPrev"
+                v-bind:style="styleNextPrevBtns"
+                @click="executePrev"
+                v-show='tyfetchVisibility'>
+        <md-icon class="fa fa-arrow-left"></md-icon>
+      </md-button>
+
+      <md-button class="md-primary md-accent"
+                ref="ytfetchNext"
+                v-bind:style="styleNextPrevBtns"
                 @click="executeNext"
                 v-show='tyfetchVisibility'>
-                  >
+                <md-icon class="fa fa-arrow-right"></md-icon>
       </md-button>
+
+      <md-button class="md-primary md-accent"
+                ref="ytfetchNextBuffer"
+                v-bind:style="styleNextPrevBtns"
+                @click="executeNextBuffer"
+                v-show='tyfetchVisibility'>
+                <md-icon class="fa fa-database" aria-hidden="true"></md-icon>
+      </md-button>
+
     </md-field>
     <md-table v-bind:style="styleTableObject" md-card v-show='tyfetchVisibility' >
       <md-table-toolbar>
@@ -57,7 +76,7 @@
                  PLAY VIDEO
               </md-button>
           </md-table-cell>
-        <md-table-cell style="cursor: pointer;" v-show="ytListVisibilityRowThumbnails" md-label="Thumbnails" md-sort-by="thumbnails" >
+        <md-table-cell class="minPadd" style="cursor: pointer;" v-show="ytListVisibilityRowThumbnails" md-label="Thumbnails" md-sort-by="thumbnails" >
             <md-card>
               <md-card-media>
                 <div @click="prepareThisVideo" :data-videoid="value.id.videoId">
@@ -126,6 +145,10 @@
 
   .md-menu {
     margin: 24px;
+  }
+
+  .minPadd {
+    padding: 1px 1px 1px 1px;
   }
 
   .md-content {
@@ -206,15 +229,53 @@
       width: '100%',
       height: '76%'
     }
+
+    private styleNextPrevBtns: Partial<CSSStyleDeclaration> = {
+      width: '30px',
+    }
+
     private ls: LocalStorageMemory = new LocalStorageMemory()
 
     constructor() {
       super()
     }
 
+    public executeNextBuffer() : void {
+
+      var root = this
+
+      if (typeof root.$data.yts.ytResponse.result.nextPageToken === 'undefined') {
+        console.warn("btn must be disabled.")
+        return;
+      }
+
+      return (gapi as any).client.youtube.search.list({
+        "part": [
+          "snippet"
+        ],
+        "pageToken": root.$data.yts.ytResponse.result.nextPageToken,
+        "maxResults": root.ls.load("o_webglbox_preview_per_page"),
+        "q": root.$data.yts.mySearchQuery
+      })
+        .then((response) => {
+          console.log(">>>>  Response executeNextBuffer =>", response)
+          this.setNewResponse(response, true)
+        },
+        function(err: any) {
+          console.error("Execute error for client.youtube.search.list => ", err)
+        })
+
+    }
+
     public executeNext() : void {
 
       var root = this
+
+      if (typeof root.$data.yts.ytResponse.result.nextPageToken === 'undefined') {
+        console.warn("btn must be disabled.")
+        return;
+      }
+
       return (gapi as any).client.youtube.search.list({
         "part": [
           "snippet"
@@ -225,6 +286,33 @@
       })
         .then((response) => {
           console.log(">>>>  Response nextPageToken =>", response)
+          this.setNewResponse(response)
+        },
+        function(err: any) {
+          console.error("Execute error for client.youtube.search.list => ", err)
+        })
+
+    }
+
+    public executePrev() : void {
+
+      var root = this
+
+      if (typeof root.$data.yts.ytResponse.result.prevPageToken === 'undefined') {
+        console.warn("btn must be disabled.")
+        return;
+      }
+
+      return (gapi as any).client.youtube.search.list({
+        "part": [
+          "snippet"
+        ],
+        "pageToken": root.$data.yts.ytResponse.result.prevPageToken,
+        "maxResults": root.ls.load("o_webglbox_preview_per_page"),
+        "q": root.$data.yts.mySearchQuery
+      })
+        .then((response) => {
+          console.log(">>>>  Response prevPageToken =>", response)
           this.setNewResponse(response)
         },
         function(err: any) {
@@ -352,12 +440,29 @@
       });
     }
 
-    private setNewResponse(r: any) {
+    private setNewResponse(r: any, bufferFlag?: boolean) {
+
+      if (typeof r.result.nextPageToken !== 'undefined') {
+        (this.$refs.ytfetchNextBuffer as any).$el.classList.remove("md-accent");
+        (this.$refs.ytfetchNextBuffer as any).$el.classList.add("md-raised");
+        (this.$refs.ytfetchNext as any).$el.classList.remove("md-accent");
+        (this.$refs.ytfetchNext as any).$el.classList.add("md-raised");
+      }
+
+      if (typeof r.result.prevPageToken !== 'undefined') {
+        (this.$refs.ytfetchPrev as any).$el.classList.remove("md-accent");
+        (this.$refs.ytfetchPrev as any).$el.classList.add("md-raised");
+      }
 
       this.$data.yts.ytResponse = r
       var items: YTItem[] = r.result.items as YTItem[]
       this.$store.commit('saveResponse', { items: items })
-      this.$root.$emit('ytItemsReady', { items: items })
+
+      if (typeof bufferFlag !== 'undefined' && bufferFlag === true) {
+        this.$root.$emit('ytItemsReadyForBuffer', { items: items })
+      } else {
+         this.$root.$emit('ytItemsReady', { items: items })
+      }
 
       for ( var x = 0; x < items.length; x++) {
         this.$set(this.$data.yts.ytResponse.result.items, x, items[x] as YTItem)

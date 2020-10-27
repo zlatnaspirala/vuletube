@@ -264,7 +264,7 @@
     /* align-self: center; */
     /* vertical-align: middle; */
     margin: 0;
-    padding: 10%;
+    padding-top: 21%;
   }
 
 </style>
