@@ -106,24 +106,42 @@
         </md-menu-content>
       </md-menu>
 
-      <md-menu class="menuModeMenu" >
+      <md-menu class="menuModeMenu" v-bind:style="{ marginLeft: '8px'}">
         <md-button class="md-primary md-raised" md-menu-trigger>
               <md-icon class="fa fa-filter"></md-icon>
         </md-button>
         <md-menu-content>
           <md-menu-item >
             <md-button @click="showHideFilterWindow()"
-                       class="md-primary md-raised" v-bind:style="{ padding: 0 , margin: 0, width: '100%' }"
-                       md-menu-trigger>Show - Hide filter window</md-button>
+                       class="md-primary md-raised" v-bind:style="{ padding: 0, margin: 0, width: '100%' }"
+                       md-menu-trigger>Filter</md-button>
           </md-menu-item>
+            <md-divider></md-divider>
+             select filter
+            <md-divider></md-divider>
           <md-menu-item>
-            <md-button v-bind:style="{ padding: 0 , margin: 0}"
-                      class="md-primary md-raised" md-menu-trigger>----------------------------------</md-button>
-          </md-menu-item>
-          <md-menu-item>
-            <md-button @click="showHideFilterWindow()" v-bind:style="{ padding: 0 , margin: 0}"
+            <md-button @click="cvFilterGray()" v-bind:style="{ padding: 0, margin: 0 }"
                       class="md-primary md-raised" md-menu-trigger>Gray</md-button>
           </md-menu-item>
+          <md-menu-item>
+            <md-button @click="cvFilterHsv()" v-bind:style="{ padding: 0, margin: 0 }"
+                      class="md-primary md-raised" md-menu-trigger>HSV</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button @click="cvFilterThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
+                      class="md-primary md-raised" md-menu-trigger>threshold</md-button>
+            <md-field v-bind:style="{ padding: '5px', margin: '10px' }">
+              <label  v-if="this.cvStarter && this.cvStarter != null && this.cvStarter.cv && this.cvStarter.cv.controls" >
+                    thresholdValue : 150
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    v-bind:value="150"
+                    v-on:input="onFilterThresholdValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item>
+
         </md-menu-content>
       </md-menu>
 
@@ -260,6 +278,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
   export default class threejsYoutubePlayer extends CompProps implements threejsYoutubePlayer {
 
     declare YT;
+    declare vp;
 
     private ls: LocalStorageMemory = new LocalStorageMemory()
     private camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
@@ -558,6 +577,26 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           this.INTERSECTED = null;
 
         }
+    }
+
+    private onFilterThresholdValueChanged(currValue: any) {
+      if ((window as any).vp.controls.filter !== 'threshold') {
+        (window as any).vp.controls.filter = 'threshold';
+      }
+      (window as any).vp.controls.thresholdValue = parseInt(currValue);
+    }
+
+    private cvFilterThreshold(): void {
+      (window as any).vp.controls.filter = 'threshold';
+      (window as any).vp.controls.thresholdValue = 150;
+    }
+
+    private cvFilterGray(): void {
+      (window as any).vp.controls.filter = 'gray'
+    }
+
+    private cvFilterHsv(): void {
+      (window as any).vp.controls.filter = 'hsv'
     }
 
     private oCvStarterOptionsChanged(value): void {
