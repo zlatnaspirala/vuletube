@@ -824,7 +824,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       // console.log('changeCurrentVideoPosition', testValue)
     }
 
-    private prepareVideoTexture = (visualShape: string, effectType: string) => {
+    private prepareVideoTexture (visualShape: string, effectType: string) {
 
       var texture,
           material,
@@ -868,7 +868,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           this.mainVideoMesh = new THREE.Mesh(geometry, material)
           this.mainVideoMesh.name = "mainVideoMesh"
           this.mainVideoMesh.position.z = -8
+
+
           this.scene.add(this.mainVideoMesh)
+
           this.planeAddedToScene = true
 
         } else {
@@ -1139,7 +1142,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       this.orbitControls.enabled = true;
 
       if (typeof this.mainVideoMesh !== 'undefined') {
-        this.mainVideoMesh.position.z = -8
+        this.mainVideoMesh.position.y = 0
       }
 
       // Block code
@@ -1202,7 +1205,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       console.log("FP preview mode ...")
 
       if (typeof this.mainVideoMesh !== 'undefined') {
-        this.mainVideoMesh.position.z = -15
+        this.mainVideoMesh.position.y = 15
       }
 
       this.orbitControls.enabled = false
