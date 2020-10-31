@@ -111,24 +111,32 @@
               <md-icon class="fa fa-filter"></md-icon>
         </md-button>
         <md-menu-content>
+
           <md-menu-item>
-            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', height: '135px', padding: '1px', margin: '1px' }">
-            <md-field v-bind:style="{ padding: '1px', margin: '1px' , width: '100%' }">
-            <md-button @click="showHideFilterWindow()"
-                       class="md-primary md-raised" v-bind:style="{ padding: 0, margin: 0, width: '100%' }"
-                       md-menu-trigger>Filter</md-button>
-            </md-field>
-            <md-field v-bind:style="{ margin: '0' , width: '100%' }">
-              <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
-                  v-model="oCvStarter">Enable/Disable filters</md-switch>
-            </md-field>
+            <md-content v-bind:style="{ padding: '1px', margin: '1px' , width: '100%' }">
+              <md-button @click="showHideFilterWindow()"
+                        class="md-primary md-raised" v-bind:style="{ padding: 0, margin: 0, width: '100%' }"
+                        md-menu-trigger>Filter</md-button>
+              </md-content>
+          </md-menu-item>
+
+          <md-menu-item>
+            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }">
+              <md-content v-bind:style="{ margin: '1px' , width: '100%' }">
+                <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
+                    v-model="oCvStarter">Enable/Disable filters</md-switch>
+              </md-content>
             </md-content>
           </md-menu-item>
+
             <md-divider></md-divider>
+
             <md-menu-item>
                select filter
             </md-menu-item>
+
             <md-divider></md-divider>
+
           <md-menu-item>
             <md-button :disabled="this.cvStarter != null ? false : true"
                        @click="cvFilterGray()" v-bind:style="{ padding: 0, margin: 0 }"
