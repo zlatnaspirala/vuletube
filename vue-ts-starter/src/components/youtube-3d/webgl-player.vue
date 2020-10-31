@@ -58,7 +58,7 @@
 
             <md-content v-bind:style="optionsStyle">
               <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
-                v-model="oCvStarter">Enable/Disable openCV component</md-switch>
+                v-model="oCvStarter">Enable/Disable openCV component - Cost CPU usage</md-switch>
             </md-content>
           </md-content>
 
@@ -101,42 +101,106 @@
           </md-menu-item>
           <md-menu-item>
             <md-button @click="setFirstPersonPreviewMode()" v-bind:style="{ padding: 0 , margin: 0}"
-                      class="md-primary md-raised" md-menu-trigger>First person gallery</md-button>
+                      class="md-primary md-raised" md-menu-trigger>First person esccape for exit</md-button>
           </md-menu-item>
         </md-menu-content>
       </md-menu>
 
-      <md-menu class="menuModeMenu" v-bind:style="{ marginLeft: '8px'}">
+      <md-menu class="menuModeMenu dp" v-bind:style="{ marginLeft: '8px'}">
         <md-button class="md-primary md-raised" md-menu-trigger>
               <md-icon class="fa fa-filter"></md-icon>
         </md-button>
         <md-menu-content>
-          <md-menu-item >
+          <md-menu-item>
+            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', height: '135px', padding: '1px', margin: '1px' }">
+            <md-field v-bind:style="{ padding: '1px', margin: '1px' , width: '100%' }">
             <md-button @click="showHideFilterWindow()"
                        class="md-primary md-raised" v-bind:style="{ padding: 0, margin: 0, width: '100%' }"
                        md-menu-trigger>Filter</md-button>
+            </md-field>
+            <md-field v-bind:style="{ margin: '0' , width: '100%' }">
+              <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
+                  v-model="oCvStarter">Enable/Disable filters</md-switch>
+            </md-field>
+            </md-content>
           </md-menu-item>
             <md-divider></md-divider>
-             select filter
+            <md-menu-item>
+               select filter
+            </md-menu-item>
             <md-divider></md-divider>
           <md-menu-item>
-            <md-button @click="cvFilterGray()" v-bind:style="{ padding: 0, margin: 0 }"
-                      class="md-primary md-raised" md-menu-trigger>Gray</md-button>
+            <md-button :disabled="this.cvStarter != null ? false : true"
+                       @click="cvFilterGray()" v-bind:style="{ padding: 0, margin: 0 }"
+                       class="md-primary md-raised" md-menu-trigger>Gray</md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button @click="cvFilterHsv()" v-bind:style="{ padding: 0, margin: 0 }"
-                      class="md-primary md-raised" md-menu-trigger>HSV</md-button>
+            <md-button :disabled="this.cvStarter != null ? false : true"
+                       @click="cvFilterHsv()" v-bind:style="{ padding: 0, margin: 0 }"
+                       class="md-primary md-raised" md-menu-trigger>HSV</md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button @click="cvFilterThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
-                      class="md-primary md-raised" md-menu-trigger>threshold</md-button>
-            <md-field v-bind:style="{ padding: '5px', margin: '10px' }">
-              <label  v-if="this.cvStarter && this.cvStarter != null && this.cvStarter.cv && this.cvStarter.cv.controls" >
-                    thresholdValue : 150
+            <md-button :disabled="this.cvStarter != null ? false : true"
+                       @click="cvFilterThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
+                       class="md-primary md-raised" md-menu-trigger>threshold</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    threshold value
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
                     v-bind:value="150"
                     v-on:input="onFilterThresholdValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button  :disabled="this.cvStarter != null ? false : true"
+                        @click="cvFilterAdaptiveThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
+                        class="md-primary md-raised" md-menu-trigger>Adaptive threshold</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    Adaptive threshold value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    v-bind:value="3"
+                    v-bind:min = 1
+                    v-bind:max = 10
+                    v-on:input="onFilterAdaptiveThresholdValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button  :disabled="this.cvStarter != null ? false : true"
+                        @click="cvFilterGaussianBlur()" v-bind:style="{ padding: 0, margin: 0 }"
+                        class="md-primary md-raised" md-menu-trigger>Gaussian Blur</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    Gaussian Blur value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    v-bind:value="3"
+                    v-bind:min = 1
+                    v-bind:max = 10
+                    v-on:input="onFiltercvFilterGaussianBlurValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button  :disabled="this.cvStarter != null ? false : true"
+                        @click="cvFilterMedianBlur" v-bind:style="{ padding: 0, margin: 0 }"
+                        class="md-primary md-raised" md-menu-trigger>Median Blur</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    Median Blur value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    v-bind:value="3"
+                    v-bind:min = 1
+                    v-bind:max = 10
+                    v-on:input="onFilterMedianBlurValueChanged"
                     type="range">
               </md-input>
             </md-field>
@@ -203,7 +267,13 @@
   }
 
   .menuModeMenuContent {
+    max-height: 88vh;
     padding: 1px 1px 1px 1px !important;
+  }
+
+  .md-menu-content {
+    max-height: 88vh;
+    overflow: visible;
   }
 
 </style>
@@ -579,23 +649,81 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
         }
     }
 
+    /**
+     * @description CV Filters handlers
+     */
+
+    private onFilterMedianBlurValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'medianBlur') {
+        (window as any).vp.controls.filter = 'medianBlur';
+      }
+      (window as any).vp.controls.medianBlurSize = parseInt(currValue);
+    }
+
     private onFilterThresholdValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
       if ((window as any).vp.controls.filter !== 'threshold') {
         (window as any).vp.controls.filter = 'threshold';
       }
       (window as any).vp.controls.thresholdValue = parseInt(currValue);
     }
 
+    private onFilterAdaptiveThresholdValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'adaptiveThreshold') {
+        (window as any).vp.controls.filter = 'adaptiveThreshold';
+      }
+      (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue);
+    }
+
+    private onFiltercvFilterGaussianBlurValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'gaussianBlur') {
+        (window as any).vp.controls.filter = 'gaussianBlur';
+      }
+      (window as any).vp.controls.gaussianBlurSize = parseInt(currValue);
+    }
+
+    private preventFilterAction(): boolean {
+      if (typeof (window as any).vp === 'undefined' ||
+          typeof (window as any).vp.controls === 'undefined') {
+        return true;
+      }
+      return false;
+    }
+
+    private cvFilterMedianBlur() {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'medianBlur';
+      (window as any).vp.controls.medianBlurSize = 7;
+    }
+
+    private cvFilterGaussianBlur() {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'gaussianBlur';
+      (window as any).vp.controls.gaussianBlurSize = 7;
+    }
+
+    private cvFilterAdaptiveThreshold() {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'adaptiveThreshold';
+      (window as any).vp.controls.adaptiveBlockSize = 3;
+    }
+
     private cvFilterThreshold(): void {
+      if (this.preventFilterAction()) { return }
       (window as any).vp.controls.filter = 'threshold';
       (window as any).vp.controls.thresholdValue = 150;
     }
 
     private cvFilterGray(): void {
+      if (this.preventFilterAction()) { return }
       (window as any).vp.controls.filter = 'gray'
     }
 
     private cvFilterHsv(): void {
+      if (this.preventFilterAction()) { return }
       (window as any).vp.controls.filter = 'hsv'
     }
 
