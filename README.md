@@ -4,7 +4,11 @@
 #### Creator: Nikola Lukic 2020 - Visual Code editor used
 #### Version "Ecstacy of gold"
 
+#### maximumroulette.com:3000 is unstable at the moment.
 
+Switch to the master branch .
+Dev wip removing guidata and implementing new menu filters drop....
+0.3.1
 ## Clone project command:
 
 ```js
