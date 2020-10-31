@@ -425,13 +425,19 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     private on3dKeyUp = (event: any) => {}
 
     // UNRESOLVED VUE LIMITATIONS
-    // For audio and video html object cat not be used bind: v-model or any
+    // For audio and video html object can not be used bind: v-model or any
     // Effect : initialy load value without update, or lag video on @time
-    // I will use classic native js interval call
-    // Works perfect
+    // I will use classic native js interval call - works perfect.
     private runVideoReactor() {
       setInterval(() => {
-        this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
+        try {
+          if (typeof (this.$refs.texvideo as HTMLVideoElement).currentTime !== 'undefined') {
+            return;
+          }
+          this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
+        } catch(err) {
+          console.warn("No this.$refs.texvideo .")
+        }
       }, 500)
     }
 
