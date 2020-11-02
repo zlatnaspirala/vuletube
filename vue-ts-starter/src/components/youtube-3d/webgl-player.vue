@@ -116,7 +116,7 @@
             <md-content v-bind:style="{ padding: '1px', margin: '1px' , width: '100%' }">
               <md-button @click="showHideFilterWindow()"
                         class="md-primary md-raised" v-bind:style="{ padding: 0, margin: 0, width: '100%' }"
-                        md-menu-trigger>Filter</md-button>
+                        md-menu-trigger>Effect canvas visibility</md-button>
               </md-content>
           </md-menu-item>
 
@@ -156,7 +156,9 @@
                     threshold value
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
-                    v-bind:value="150"
+                    v-bind:value="100"
+                    v-bind:max="200"
+                    v-bind:min="0"
                     v-on:input="onFilterThresholdValueChanged"
                     type="range">
               </md-input>
@@ -172,8 +174,8 @@
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
                     v-bind:value="3"
-                    v-bind:min = 1
-                    v-bind:max = 10
+                    v-bind:min="3"
+                    v-bind:max="99"
                     v-on:input="onFilterAdaptiveThresholdValueChanged"
                     type="range">
               </md-input>
@@ -188,15 +190,15 @@
                     Gaussian Blur value
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
-                    v-bind:value="3"
-                    v-bind:min = 1
-                    v-bind:max = 10
+                    value="7"
+                    v-bind:min = 7
+                    v-bind:max = 99
                     v-on:input="onFiltercvFilterGaussianBlurValueChanged"
                     type="range">
               </md-input>
             </md-field>
           </md-menu-item>
-          <md-menu-item>
+          <!-- md-menu-item>
             <md-button  :disabled="this.cvStarter != null ? false : true"
                         @click="cvFilterMedianBlur" v-bind:style="{ padding: 0, margin: 0 }"
                         class="md-primary md-raised" md-menu-trigger>Median Blur</md-button>
@@ -205,14 +207,14 @@
                     Median Blur value
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
-                    v-bind:value="3"
-                    v-bind:min = 1
-                    v-bind:max = 10
+                    value="3"
+                    v-bind:min = 3
+                    v-bind:max = 99
                     v-on:input="onFilterMedianBlurValueChanged"
                     type="range">
               </md-input>
             </md-field>
-          </md-menu-item>
+          </md-menu-item-->
 
         </md-menu-content>
       </md-menu>
@@ -430,14 +432,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     // I will use classic native js interval call - works perfect.
     private runVideoReactor() {
       setInterval(() => {
-        try {
-          if (typeof (this.$refs.texvideo as HTMLVideoElement).currentTime !== 'undefined') {
+          if (typeof (this.$refs.texvideo as HTMLVideoElement).currentTime === 'undefined') {
             return;
           }
           this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
-        } catch(err) {
-          console.warn("No this.$refs.texvideo .")
-        }
       }, 500)
     }
 
@@ -519,16 +517,22 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
         })
 
       } else {
+
+        console.log(" >>>>>>>>>>>>>>  ???????  ", this.cvStarter)
+        return;
+
         /**
          * Run opencv
+         * const options = {
+              videoProcessing: true,
+              injectVideo: (current_ as HTMLVideoElement),
+              injectCanvas: "cvcanvas"
+            }
+            this.cvStarter = new CvStarter(options)
+            console.log("this.cvStarter", this.cvStarter)
          */
-        const options = {
-          videoProcessing: true,
-          injectVideo: (current_ as HTMLVideoElement),
-          injectCanvas: "cvcanvas"
-        }
-        this.cvStarter = new CvStarter(options)
-        console.log("this.cvStarter", this.cvStarter)
+
+
       }
 
     }
@@ -673,6 +677,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
         (window as any).vp.controls.filter = 'medianBlur';
       }
       (window as any).vp.controls.medianBlurSize = parseInt(currValue);
+      console.log((window as any).vp.controls.medianBlurSize);
     }
 
     private onFilterThresholdValueChanged(currValue: any) {
@@ -749,9 +754,12 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       if (value === true && this.optionsVideoCamera === true) {
         this.runCvjsLoader('WEBCAM')
         console.info("CVJS LOADING WEBCAM")
-      } else {
+      } else if(value === true) {
+        // Optimisation
         this.runCvjsLoader('PLAYED_VIDEO')
         console.info("CVJS LOADING PLAYED_VIDEO")
+      } else {
+        console.info("CVJS escaped =>", value)
       }
 
     }

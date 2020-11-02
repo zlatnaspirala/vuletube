@@ -159,6 +159,7 @@ Note:
  From submodules projects root =>
  `git pull https://github.com/zlatnaspirala/nui-commander master`
  `git pull https://github.com/zlatnaspirala/voice-commander master`
+ `git pull https://github.com/zlatnaspirala/opencv-starter master`
 
 ### Project structure ###
 
