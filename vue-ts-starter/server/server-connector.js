@@ -61,37 +61,32 @@ var https = require('https').createServer(options, function(request, response) {
             // file exists
             console.log("skip...")
             response.writeHead(200, {'Content-Type': 'text/plain'});
-            response.end(`Not bad \n Man \n
-                      Nikada nisam
-                      Ja bio lud k'o sad \
-                      Jer igru vule
-                      Voli
-                      svako mlad n\ "Tomi Sovilj i Njegove Siluete" `);
+            response.end('[video-exist]');
              return;
           }
         } catch(err) {
           console.error(err)
         }
 
-          const myPromise = new Promise((resolve, reject) => {
+        const myPromise = new Promise((resolve, reject) => {
 
-            var test = youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
-            resolve(test)
+          var test = youtubedl(addressLink, ['--format=18'], { cwd: __dirname })
+          resolve(test)
 
-          }).then((video) => {
+        }).then((video) => {
 
-            video.on('info', function(info) {
-              console.log('Download started')
-              console.log('filename: ' + info._filename)
-              console.log('size: ' + info.size)
-            })
+          video.on('info', function(info) {
+            console.log('Download started')
+            console.log('filename: ' + info._filename)
+            console.log('size: ' + info.size)
+          })
 
-            const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
-            video.pipe(fs.createWriteStream(videoName, {
-              flag: "w+"
-            }))
+          const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
+          video.pipe(fs.createWriteStream(videoName, {
+            flag: "w+"
+          }))
 
-          }
+        }
         ).catch(function(err) {
           reject()
           console.log("Error in promise", err)

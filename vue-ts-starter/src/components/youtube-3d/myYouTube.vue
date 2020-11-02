@@ -416,7 +416,13 @@
             return;
           }
 
-          console.log("I am look at response", response)
+          console.log("I am look at response text 1", response.text)
+
+          response.text().then(function (text) {
+            // do something with the text response
+            console.log("I am look at response text on then", response.text)
+          });
+
           /**
            * body: ReadableStream
            * bodyUsed: false

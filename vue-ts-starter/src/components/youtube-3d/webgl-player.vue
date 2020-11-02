@@ -793,6 +793,13 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
             return;
           }
 
+          console.log("I am look at response text 1")
+
+          response.text().then(function (text) {
+            // do something with the text response
+            console.log("I am look at response text on then", text)
+          });
+
           console.log("I am look at response", response)
           var handler = response.url.split("?vid=")
           const passArgs = {
