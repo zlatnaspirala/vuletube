@@ -93,8 +93,7 @@ var https = require('https').createServer(options, function(request, response) {
         });
 
         response.writeHead(200, {'Content-Type': 'text/plain'})
-        response.end(`VuleTube service \n
-                      version 0.3.1 \n
+        response.end(`VuleTube service version 0.3.1 \n
                       https://maximumroulette.com:3000 `)
 
       } else  if (request.url.search(/.saveThumbnails/g) != -1) {
@@ -117,10 +116,8 @@ var https = require('https').createServer(options, function(request, response) {
             download(trumbPath, dest, () =>  {
               console.log('thumbnails downloaded.')
               if (oneTimeLocalFlag == true) {
-                //
                 response.writeHead(200, {'Content-Type': 'text/plain'})
-                response.end(`VuleTube service \n
-                              version 0.3.1 \n
+                response.end(`VuleTube service version 0.3.1 \n
                               https://maximumroulette.com:3000 `)
                }
             });
@@ -134,4 +131,4 @@ var https = require('https').createServer(options, function(request, response) {
 
     }).resume()
 
-  }).listen(3000)
+  }).listen(port)

@@ -793,19 +793,24 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
             return;
           }
 
-          console.log("I am look at response text 1")
+          response.text().then((text) => {
 
-          response.text().then(function (text) {
-            // do something with the text response
             console.log("I am look at response text on then", text)
-          });
 
-          console.log("I am look at response", response)
-          var handler = response.url.split("?vid=")
-          const passArgs = {
-            videoId: handler[1]
-          }
-          this.$root.$emit('videoInProgress', passArgs)
+            if (text === '[video-exist]') {
+
+              console.info("Good create fast call.")
+            } else {
+              console.info("Good create late call.")
+            }
+
+            var handler = response.url.split("?vid=")
+            const passArgs = {
+              videoId: handler[1]
+            }
+            this.$root.$emit('videoInProgress', passArgs)
+
+          });
         }
       )
       .catch(function(err) {
