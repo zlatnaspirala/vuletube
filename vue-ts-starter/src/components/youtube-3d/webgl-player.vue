@@ -175,7 +175,7 @@
               <md-input v-if="this.cvStarter && this.cvStarter != null"
                     v-bind:value="3"
                     v-bind:min="3"
-                    v-bind:max="99"
+                    v-bind:max="50"
                     v-on:input="onFilterAdaptiveThresholdValueChanged"
                     type="range">
               </md-input>
@@ -695,19 +695,35 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     }
 
     private onFilterAdaptiveThresholdValueChanged(currValue: any) {
+
       if (this.preventFilterAction()) { return }
+
       if ((window as any).vp.controls.filter !== 'adaptiveThreshold') {
         (window as any).vp.controls.filter = 'adaptiveThreshold';
       }
-      (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue);
+
+      if (currValue % 2 === 0) {
+         (window as any).vp.controls.adaptiveBlockSize = currValue + 1
+      } else {
+        (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue);
+      }
+
     }
 
     private onFiltercvFilterGaussianBlurValueChanged(currValue: any) {
+
       if (this.preventFilterAction()) { return }
+
       if ((window as any).vp.controls.filter !== 'gaussianBlur') {
         (window as any).vp.controls.filter = 'gaussianBlur';
       }
-      (window as any).vp.controls.gaussianBlurSize = parseInt(currValue);
+
+      if (currValue % 2 === 0) {
+         (window as any).vp.controls.gaussianBlurSize = currValue + 1
+      } else {
+        (window as any).vp.controls.gaussianBlurSize = parseInt(currValue);
+      }
+
     }
 
     private preventFilterAction(): boolean {
