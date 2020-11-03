@@ -695,35 +695,27 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     }
 
     private onFilterAdaptiveThresholdValueChanged(currValue: any) {
-
       if (this.preventFilterAction()) { return }
-
       if ((window as any).vp.controls.filter !== 'adaptiveThreshold') {
         (window as any).vp.controls.filter = 'adaptiveThreshold';
       }
-
       if (currValue % 2 === 0) {
          (window as any).vp.controls.adaptiveBlockSize = currValue + 1
       } else {
         (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue);
       }
-
     }
 
     private onFiltercvFilterGaussianBlurValueChanged(currValue: any) {
-
       if (this.preventFilterAction()) { return }
-
       if ((window as any).vp.controls.filter !== 'gaussianBlur') {
         (window as any).vp.controls.filter = 'gaussianBlur';
       }
-
       if (currValue % 2 === 0) {
          (window as any).vp.controls.gaussianBlurSize = currValue + 1
       } else {
         (window as any).vp.controls.gaussianBlurSize = parseInt(currValue);
       }
-
     }
 
     private preventFilterAction(): boolean {
@@ -1177,7 +1169,11 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     }
 
     private onMouseUp = () => {
-      this.preventRaycastClickAction = false
+
+      setTimeout(() => {
+        this.preventRaycastClickAction = false
+      }, 200)
+
     }
 
     private onMouseMove = (event) => {

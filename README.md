@@ -39,16 +39,20 @@ Dev wip removing guidata and implementing new menu filters drop....
   - Google map API - Not free (maybe for 3d vs maps)
     7$ min cost
 
- ## Go to project folder
- ### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter)
+
+#### Screenshot 0.3.1 :
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.3.1.png)
+
+
+## Go to project folder
+### [Starter readme more details](https://github.com/zlatnaspirala/vue-typescript-starter/tree/master/vue-ts-starter)
 
 ## Credits
 
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/ytlogo.png)
 
 
-Last version sceenshots:
-
+Screenshot webcam example:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png)
 
 
