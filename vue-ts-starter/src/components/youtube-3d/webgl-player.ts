@@ -50,6 +50,11 @@ export enum IPreviewMode {
   firstPerson = "firstPerson"
 }
 
+interface videoInProgressArgsI {
+  videoId: string
+  call: string
+}
+
 export interface threejsYoutubePlayer {
   ls: LocalStorageMemory
   camera: ThreeJSCamera
@@ -103,11 +108,13 @@ export interface threejsYoutubePlayer {
 
   /**
    * @description This function emits
-   * `videoInProgress` event.
+   * `videoInProgress` event. Its is similar to
+   * native CustomEvents just build in vue root
+   * of instance.
    * @examples
    * this.$root.$emit('videoInProgress', passArgs);
    */
-  prepareThisVideo(arg)
+  prepareThisVideo(arg: videoInProgressArgsI)
 
   trySource(args: any)
   init()

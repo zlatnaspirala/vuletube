@@ -416,13 +416,6 @@
             return;
           }
 
-          console.log("I am look at response text 1", response.text)
-
-          response.text().then(function (text) {
-            // do something with the text response
-            console.log("I am look at response text on then", response.text)
-          });
-
           /**
            * body: ReadableStream
            * bodyUsed: false
@@ -434,11 +427,26 @@
            * type: "basic"
            * url: "https://maximumroulette.com:3000/dzoni?vid=YPhJOC9-M_M"
            */
-          var handler = response.url.split("?vid=")
-          const passArgs = {
-            videoId: handler[1]
-          }
-          this.$root.$emit('videoInProgress', passArgs)
+
+          response.text().then((text) => {
+
+            var handler = response.url.split("?vid=")
+            const passArgs = {
+              videoId: handler[1],
+              call: 'timeout'
+            }
+
+            if (text === '[video-exist]') {
+              passArgs.call = "direct"
+            } else {
+              passArgs.call = 'timeout'
+            }
+
+            console.info("Type of vuletube request = ", passArgs.call)
+            this.$root.$emit('videoInProgress', passArgs)
+
+          });
+
         }
       )
       .catch(function(err) {

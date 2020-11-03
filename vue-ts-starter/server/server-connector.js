@@ -1,7 +1,10 @@
 
 /**
  * Server part
- * @description Server based on nodejs.
+ * @description
+ *  Server based on nodejs.
+ *
+ *  Future feature:
  * - Protocol http2 - spdy
  * - Hosted on maximumroulette.com:3000
  */
@@ -125,8 +128,10 @@ var https = require('https').createServer(options, function(request, response) {
       }
 
       } else {
-        console.info("request.url => ", request.url)
+
+        // console.info("request.url => ", request.url)
         file.serve(request, response)
+
       }
 
     }).resume()

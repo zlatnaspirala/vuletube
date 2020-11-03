@@ -106,12 +106,13 @@
         </md-menu-content>
       </md-menu>
 
-      <md-menu class="menuModeMenu dp" v-bind:style="{ marginLeft: '8px'}">
+      <md-menu class="menuModeMenu dp" v-bind:style="{ marginLeft: '8px' }">
+
         <md-button class="md-primary md-raised" md-menu-trigger>
               <md-icon class="fa fa-filter"></md-icon>
         </md-button>
-        <md-menu-content>
 
+        <md-menu-content v-bind:style="{ minWidth: '19%' }">
           <md-menu-item>
             <md-content v-bind:style="{ padding: '1px', margin: '1px' , width: '100%' }">
               <md-button @click="showHideFilterWindow()"
@@ -123,18 +124,16 @@
           <md-menu-item>
             <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }">
               <md-content v-bind:style="{ margin: '1px' , width: '100%' }">
-                <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
-                    v-model="oCvStarter">Enable/Disable filters</md-switch>
+                <md-button v-on:change="clearFilter()" class="md-primary md-raised"
+                    v-model="oCvStarter">Disable filters</md-button>
               </md-content>
             </md-content>
           </md-menu-item>
 
             <md-divider></md-divider>
-
             <md-menu-item>
-               select filter
+               Select filter
             </md-menu-item>
-
             <md-divider></md-divider>
 
           <md-menu-item>
@@ -151,26 +150,26 @@
             <md-button :disabled="this.cvStarter != null ? false : true"
                        @click="cvFilterThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
                        class="md-primary md-raised" md-menu-trigger>threshold</md-button>
-            <md-field v-bind:style="{ padding: '0', margin: '0' }">
-              <label>
-                    threshold value
+            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', paddingLeft: '16px' }">
+              <label v-bind:style="{ textAlign: 'center' }">
+                    Threshold value
               </label>
-              <md-input v-if="this.cvStarter && this.cvStarter != null"
+              <md-input v-if="this.cvStarter && this.cvStarter !== null"
                     v-bind:value="100"
                     v-bind:max="200"
                     v-bind:min="0"
                     v-on:input="onFilterThresholdValueChanged"
                     type="range">
               </md-input>
-            </md-field>
+            </md-content>
           </md-menu-item>
           <md-menu-item>
             <md-button  :disabled="this.cvStarter != null ? false : true"
                         @click="cvFilterAdaptiveThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
                         class="md-primary md-raised" md-menu-trigger>Adaptive threshold</md-button>
-            <md-field v-bind:style="{ padding: '0', margin: '0' }">
-              <label>
-                    Adaptive threshold value
+            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', paddingLeft: '16px' }">
+              <label v-bind:style="{ textAlign: 'center' }">
+                    Adaptive value
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
                     v-bind:value="3"
@@ -179,15 +178,15 @@
                     v-on:input="onFilterAdaptiveThresholdValueChanged"
                     type="range">
               </md-input>
-            </md-field>
+            </md-content>
           </md-menu-item>
           <md-menu-item>
             <md-button  :disabled="this.cvStarter != null ? false : true"
                         @click="cvFilterGaussianBlur()" v-bind:style="{ padding: 0, margin: 0 }"
                         class="md-primary md-raised" md-menu-trigger>Gaussian Blur</md-button>
-            <md-field v-bind:style="{ padding: '0', margin: '0' }">
-              <label>
-                    Gaussian Blur value
+            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', paddingLeft: '16px' }">
+              <label v-bind:style="{ textAlign: 'center' }">
+                  Gaussian value
               </label>
               <md-input v-if="this.cvStarter && this.cvStarter != null"
                     value="7"
@@ -196,26 +195,8 @@
                     v-on:input="onFiltercvFilterGaussianBlurValueChanged"
                     type="range">
               </md-input>
-            </md-field>
+            </md-content>
           </md-menu-item>
-          <!-- md-menu-item>
-            <md-button  :disabled="this.cvStarter != null ? false : true"
-                        @click="cvFilterMedianBlur" v-bind:style="{ padding: 0, margin: 0 }"
-                        class="md-primary md-raised" md-menu-trigger>Median Blur</md-button>
-            <md-field v-bind:style="{ padding: '0', margin: '0' }">
-              <label>
-                    Median Blur value
-              </label>
-              <md-input v-if="this.cvStarter && this.cvStarter != null"
-                    value="3"
-                    v-bind:min = 3
-                    v-bind:max = 99
-                    v-on:input="onFilterMedianBlurValueChanged"
-                    type="range">
-              </md-input>
-            </md-field>
-          </md-menu-item-->
-
         </md-menu-content>
       </md-menu>
 
@@ -277,6 +258,7 @@
   }
 
   .menuModeMenuContent {
+    min-width: 30vw;
     max-height: 88vh;
     padding: 1px 1px 1px 1px !important;
   }
@@ -610,16 +592,26 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       })
 
+      /**
+       * @event videoInProgress
+       */
       this.$root.$on('videoInProgress', (args: any) => {
 
-        try {
-           console.info("Event videoInProgress => ", args)
-           setTimeout(() => {
-             this.trySource(args)
-           }, 5000)
+        console.info("Event videoInProgress => ", args)
+        if (args.call === 'direct') {
 
-        } catch(err) {
-          console.warn(err)
+          console.info("Event videoInProgress Direct link => ")
+          this.trySource(args)
+
+        } else {
+
+          try {
+            console.info("Event videoInProgress Timeout 5 sec link => ")
+            setTimeout(() => {
+              this.trySource(args)
+            }, 5000)
+          } catch(err) { console.warn(err) }
+
         }
 
       })
@@ -746,6 +738,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       (window as any).vp.controls.filter = 'hsv'
     }
 
+    private clearFilter() {
+      (window as any).vp.controls.filter = 'passThrough'
+    }
+
     private oCvStarterOptionsChanged(value): void {
 
       this.ls.save("o_webglbox_opencv_starter_for_camera", value)
@@ -795,19 +791,19 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
           response.text().then((text) => {
 
-            console.log("I am look at response text on then", text)
-
-            if (text === '[video-exist]') {
-
-              console.info("Good create fast call.")
-            } else {
-              console.info("Good create late call.")
-            }
-
             var handler = response.url.split("?vid=")
             const passArgs = {
-              videoId: handler[1]
+              videoId: handler[1],
+              call: 'timeout'
             }
+
+            if (text === '[video-exist]') {
+              passArgs.call = "direct"
+            } else {
+              passArgs.call = 'timeout'
+            }
+
+            console.info("Type of vuletube request = ", passArgs.call)
             this.$root.$emit('videoInProgress', passArgs)
 
           });
