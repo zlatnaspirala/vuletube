@@ -8,12 +8,13 @@
 
 ![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png)
 
-Screenshot1:
+#### Last main page screenshot:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.jpg)
-Screenshot with openCVJS:
-![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png)
 
-YouTube presentation:
+#### Screenshot openCVJS vs webcam:
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.3.1.png)
+
+#### YouTube presentation:
 [youtube link](https://www.youtube.com/watch?v=-lwkKzFLzk0)
 
 Production use `https` node application for web server.
