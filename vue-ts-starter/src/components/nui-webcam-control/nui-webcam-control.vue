@@ -155,9 +155,13 @@
       asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
       asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
 
+      console.log("CHECK CIKLUS NUI CONSTRUCTOR ")
+
     }
 
     mounted(): void {
+
+      console.log("CHECK CIKLUS NUI mounted ")
 
       var root = this as nuiCommander
 
@@ -194,6 +198,8 @@
     }
 
     created() {
+
+      console.log("CHECK CIKLUS NUI created ")
 
       this.$root.$on('privateCameraOff', (s: typeof Vue, args: any) => {
         try {

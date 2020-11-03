@@ -124,8 +124,9 @@
           <md-menu-item>
             <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }">
               <md-content v-bind:style="{ margin: '1px' , width: '100%' }">
-                <md-button v-on:change="clearFilter()" class="md-primary md-raised"
-                    v-model="oCvStarter">Disable filters</md-button>
+                <md-button @click="clearFilter()" class="md-primary md-raised">
+                  Disable filters
+                </md-button>
               </md-content>
             </md-content>
           </md-menu-item>
@@ -408,17 +409,30 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     private on3dKeyDown = (event: any) => {}
     private on3dKeyUp = (event: any) => {}
 
+    private internalDeltaClock: any = null
+
     // UNRESOLVED VUE LIMITATIONS
     // For audio and video html object can not be used bind: v-model or any
     // Effect : initialy load value without update, or lag video on @time
     // I will use classic native js interval call - works perfect.
     private runVideoReactor() {
-      setInterval(() => {
-          if (typeof (this.$refs.texvideo as HTMLVideoElement).currentTime === 'undefined') {
+
+      if (this.internalDeltaClock === null) {
+
+        this.internalDeltaClock = setInterval(() => {
+          if (typeof this === 'undefined' ||
+              typeof this.$refs === 'undefined' ||
+              typeof (this.$refs.texvideo as HTMLVideoElement).currentTime === 'undefined') {
+                console.warn('Something wrong with runVideoReactor method.')
             return;
           }
           this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
-      }, 500)
+        }, 500)
+
+      } else {
+        console.info('Prevented runVideoReactor!')
+      }
+
     }
 
     mounted (): void {
@@ -739,7 +753,9 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     }
 
     private clearFilter() {
-      (window as any).vp.controls.filter = 'passThrough'
+      if (typeof (window as any).vp !== 'undefined' && typeof (window as any).vp.controls !== 'undefined') {
+        (window as any).vp.controls.filter = 'passThrough'
+      }
     }
 
     private oCvStarterOptionsChanged(value): void {

@@ -89,6 +89,7 @@ export interface threejsYoutubePlayer {
     b: number
   }
   oCvStarter: boolean
+  internalDeltaClock: any
   firstPersonControls: {
     update: () => void,
     controls: any,
