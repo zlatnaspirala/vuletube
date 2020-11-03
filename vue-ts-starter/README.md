@@ -2,7 +2,7 @@
 # VULETUBE web application #
 ### Project name: Vue project generator ###
 ##### First feature: YouTube vs Threejs #####
-##### version 0.0.5 #####
+##### version 0.3.1 #####
 ##### Public access for VuleTube service: #####
 ##### https://maximumroulette.com:3000 #####
 
@@ -159,6 +159,7 @@ Note:
  From submodules projects root =>
  `git pull https://github.com/zlatnaspirala/nui-commander master`
  `git pull https://github.com/zlatnaspirala/voice-commander master`
+ `git pull https://github.com/zlatnaspirala/opencv-starter master`
 
 ### Project structure ###
 

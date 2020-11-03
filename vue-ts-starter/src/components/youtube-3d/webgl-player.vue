@@ -58,7 +58,7 @@
 
             <md-content v-bind:style="optionsStyle">
               <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
-                v-model="oCvStarter">Enable/Disable openCV component</md-switch>
+                v-model="oCvStarter">Enable/Disable openCV component - Cost CPU usage</md-switch>
             </md-content>
           </md-content>
 
@@ -101,29 +101,121 @@
           </md-menu-item>
           <md-menu-item>
             <md-button @click="setFirstPersonPreviewMode()" v-bind:style="{ padding: 0 , margin: 0}"
-                      class="md-primary md-raised" md-menu-trigger>First person gallery</md-button>
+                      class="md-primary md-raised" md-menu-trigger>First person esccape for exit</md-button>
           </md-menu-item>
         </md-menu-content>
       </md-menu>
 
-      <md-menu class="menuModeMenu" >
+      <md-menu class="menuModeMenu dp" v-bind:style="{ marginLeft: '8px'}">
         <md-button class="md-primary md-raised" md-menu-trigger>
               <md-icon class="fa fa-filter"></md-icon>
         </md-button>
         <md-menu-content>
-          <md-menu-item >
-            <md-button @click="showHideFilterWindow()"
-                       class="md-primary md-raised" v-bind:style="{ padding: 0 , margin: 0, width: '100%' }"
-                       md-menu-trigger>Show - Hide filter window</md-button>
+
+          <md-menu-item>
+            <md-content v-bind:style="{ padding: '1px', margin: '1px' , width: '100%' }">
+              <md-button @click="showHideFilterWindow()"
+                        class="md-primary md-raised" v-bind:style="{ padding: 0, margin: 0, width: '100%' }"
+                        md-menu-trigger>Effect canvas visibility</md-button>
+              </md-content>
+          </md-menu-item>
+
+          <md-menu-item>
+            <md-content v-bind:style="{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }">
+              <md-content v-bind:style="{ margin: '1px' , width: '100%' }">
+                <md-switch v-on:change="oCvStarterOptionsChanged" class="md-primary md-raised"
+                    v-model="oCvStarter">Enable/Disable filters</md-switch>
+              </md-content>
+            </md-content>
+          </md-menu-item>
+
+            <md-divider></md-divider>
+
+            <md-menu-item>
+               select filter
+            </md-menu-item>
+
+            <md-divider></md-divider>
+
+          <md-menu-item>
+            <md-button :disabled="this.cvStarter != null ? false : true"
+                       @click="cvFilterGray()" v-bind:style="{ padding: 0, margin: 0 }"
+                       class="md-primary md-raised" md-menu-trigger>Gray</md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button v-bind:style="{ padding: 0 , margin: 0}"
-                      class="md-primary md-raised" md-menu-trigger>----------------------------------</md-button>
+            <md-button :disabled="this.cvStarter != null ? false : true"
+                       @click="cvFilterHsv()" v-bind:style="{ padding: 0, margin: 0 }"
+                       class="md-primary md-raised" md-menu-trigger>HSV</md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button @click="showHideFilterWindow()" v-bind:style="{ padding: 0 , margin: 0}"
-                      class="md-primary md-raised" md-menu-trigger>Gray</md-button>
+            <md-button :disabled="this.cvStarter != null ? false : true"
+                       @click="cvFilterThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
+                       class="md-primary md-raised" md-menu-trigger>threshold</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    threshold value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    v-bind:value="100"
+                    v-bind:max="200"
+                    v-bind:min="0"
+                    v-on:input="onFilterThresholdValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
           </md-menu-item>
+          <md-menu-item>
+            <md-button  :disabled="this.cvStarter != null ? false : true"
+                        @click="cvFilterAdaptiveThreshold()" v-bind:style="{ padding: 0, margin: 0 }"
+                        class="md-primary md-raised" md-menu-trigger>Adaptive threshold</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    Adaptive threshold value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    v-bind:value="3"
+                    v-bind:min="3"
+                    v-bind:max="99"
+                    v-on:input="onFilterAdaptiveThresholdValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button  :disabled="this.cvStarter != null ? false : true"
+                        @click="cvFilterGaussianBlur()" v-bind:style="{ padding: 0, margin: 0 }"
+                        class="md-primary md-raised" md-menu-trigger>Gaussian Blur</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    Gaussian Blur value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    value="7"
+                    v-bind:min = 7
+                    v-bind:max = 99
+                    v-on:input="onFiltercvFilterGaussianBlurValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item>
+          <!-- md-menu-item>
+            <md-button  :disabled="this.cvStarter != null ? false : true"
+                        @click="cvFilterMedianBlur" v-bind:style="{ padding: 0, margin: 0 }"
+                        class="md-primary md-raised" md-menu-trigger>Median Blur</md-button>
+            <md-field v-bind:style="{ padding: '0', margin: '0' }">
+              <label>
+                    Median Blur value
+              </label>
+              <md-input v-if="this.cvStarter && this.cvStarter != null"
+                    value="3"
+                    v-bind:min = 3
+                    v-bind:max = 99
+                    v-on:input="onFilterMedianBlurValueChanged"
+                    type="range">
+              </md-input>
+            </md-field>
+          </md-menu-item-->
+
         </md-menu-content>
       </md-menu>
 
@@ -185,7 +277,13 @@
   }
 
   .menuModeMenuContent {
+    max-height: 88vh;
     padding: 1px 1px 1px 1px !important;
+  }
+
+  .md-menu-content {
+    max-height: 88vh;
+    overflow: visible;
   }
 
 </style>
@@ -260,6 +358,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
   export default class threejsYoutubePlayer extends CompProps implements threejsYoutubePlayer {
 
     declare YT;
+    declare vp;
 
     private ls: LocalStorageMemory = new LocalStorageMemory()
     private camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
@@ -328,13 +427,15 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     private on3dKeyUp = (event: any) => {}
 
     // UNRESOLVED VUE LIMITATIONS
-    // For audio and video html object cat not be used bind: v-model or any
+    // For audio and video html object can not be used bind: v-model or any
     // Effect : initialy load value without update, or lag video on @time
-    // I will use classic native js interval call
-    // Works perfect
+    // I will use classic native js interval call - works perfect.
     private runVideoReactor() {
       setInterval(() => {
-        this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
+          if (typeof (this.$refs.texvideo as HTMLVideoElement).currentTime === 'undefined') {
+            return;
+          }
+          this.localCurrentTime = (this.$refs.texvideo as HTMLVideoElement).currentTime.toFixed(2)
       }, 500)
     }
 
@@ -416,16 +517,22 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
         })
 
       } else {
+
+        console.log(" >>>>>>>>>>>>>>  ???????  ", this.cvStarter)
+        return;
+
         /**
          * Run opencv
+         * const options = {
+              videoProcessing: true,
+              injectVideo: (current_ as HTMLVideoElement),
+              injectCanvas: "cvcanvas"
+            }
+            this.cvStarter = new CvStarter(options)
+            console.log("this.cvStarter", this.cvStarter)
          */
-        const options = {
-          videoProcessing: true,
-          injectVideo: (current_ as HTMLVideoElement),
-          injectCanvas: "cvcanvas"
-        }
-        this.cvStarter = new CvStarter(options)
-        console.log("this.cvStarter", this.cvStarter)
+
+
       }
 
     }
@@ -560,6 +667,85 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
         }
     }
 
+    /**
+     * @description CV Filters handlers
+     */
+
+    private onFilterMedianBlurValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'medianBlur') {
+        (window as any).vp.controls.filter = 'medianBlur';
+      }
+      (window as any).vp.controls.medianBlurSize = parseInt(currValue);
+      console.log((window as any).vp.controls.medianBlurSize);
+    }
+
+    private onFilterThresholdValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'threshold') {
+        (window as any).vp.controls.filter = 'threshold';
+      }
+      (window as any).vp.controls.thresholdValue = parseInt(currValue);
+    }
+
+    private onFilterAdaptiveThresholdValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'adaptiveThreshold') {
+        (window as any).vp.controls.filter = 'adaptiveThreshold';
+      }
+      (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue);
+    }
+
+    private onFiltercvFilterGaussianBlurValueChanged(currValue: any) {
+      if (this.preventFilterAction()) { return }
+      if ((window as any).vp.controls.filter !== 'gaussianBlur') {
+        (window as any).vp.controls.filter = 'gaussianBlur';
+      }
+      (window as any).vp.controls.gaussianBlurSize = parseInt(currValue);
+    }
+
+    private preventFilterAction(): boolean {
+      if (typeof (window as any).vp === 'undefined' ||
+          typeof (window as any).vp.controls === 'undefined') {
+        return true;
+      }
+      return false;
+    }
+
+    private cvFilterMedianBlur() {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'medianBlur';
+      (window as any).vp.controls.medianBlurSize = 7;
+    }
+
+    private cvFilterGaussianBlur() {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'gaussianBlur';
+      (window as any).vp.controls.gaussianBlurSize = 7;
+    }
+
+    private cvFilterAdaptiveThreshold() {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'adaptiveThreshold';
+      (window as any).vp.controls.adaptiveBlockSize = 3;
+    }
+
+    private cvFilterThreshold(): void {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'threshold';
+      (window as any).vp.controls.thresholdValue = 150;
+    }
+
+    private cvFilterGray(): void {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'gray'
+    }
+
+    private cvFilterHsv(): void {
+      if (this.preventFilterAction()) { return }
+      (window as any).vp.controls.filter = 'hsv'
+    }
+
     private oCvStarterOptionsChanged(value): void {
 
       this.ls.save("o_webglbox_opencv_starter_for_camera", value)
@@ -568,9 +754,12 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       if (value === true && this.optionsVideoCamera === true) {
         this.runCvjsLoader('WEBCAM')
         console.info("CVJS LOADING WEBCAM")
-      } else {
+      } else if(value === true) {
+        // Optimisation
         this.runCvjsLoader('PLAYED_VIDEO')
         console.info("CVJS LOADING PLAYED_VIDEO")
+      } else {
+        console.info("CVJS escaped =>", value)
       }
 
     }
@@ -604,12 +793,24 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
             return;
           }
 
-          console.log("I am look at response", response)
-          var handler = response.url.split("?vid=")
-          const passArgs = {
-            videoId: handler[1]
-          }
-          this.$root.$emit('videoInProgress', passArgs)
+          response.text().then((text) => {
+
+            console.log("I am look at response text on then", text)
+
+            if (text === '[video-exist]') {
+
+              console.info("Good create fast call.")
+            } else {
+              console.info("Good create late call.")
+            }
+
+            var handler = response.url.split("?vid=")
+            const passArgs = {
+              videoId: handler[1]
+            }
+            this.$root.$emit('videoInProgress', passArgs)
+
+          });
         }
       )
       .catch(function(err) {
@@ -785,7 +986,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       // console.log('changeCurrentVideoPosition', testValue)
     }
 
-    private prepareVideoTexture = (visualShape: string, effectType: string) => {
+    private prepareVideoTexture (visualShape: string, effectType: string) {
 
       var texture,
           material,
@@ -829,7 +1030,10 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           this.mainVideoMesh = new THREE.Mesh(geometry, material)
           this.mainVideoMesh.name = "mainVideoMesh"
           this.mainVideoMesh.position.z = -8
+
+
           this.scene.add(this.mainVideoMesh)
+
           this.planeAddedToScene = true
 
         } else {
@@ -1100,7 +1304,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       this.orbitControls.enabled = true;
 
       if (typeof this.mainVideoMesh !== 'undefined') {
-        this.mainVideoMesh.position.z = -8
+        this.mainVideoMesh.position.y = 0
       }
 
       // Block code
@@ -1163,7 +1367,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       console.log("FP preview mode ...")
 
       if (typeof this.mainVideoMesh !== 'undefined') {
-        this.mainVideoMesh.position.z = -15
+        this.mainVideoMesh.position.y = 15
       }
 
       this.orbitControls.enabled = false

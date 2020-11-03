@@ -416,7 +416,13 @@
             return;
           }
 
-          console.log("I am look at response", response)
+          console.log("I am look at response text 1", response.text)
+
+          response.text().then(function (text) {
+            // do something with the text response
+            console.log("I am look at response text on then", response.text)
+          });
+
           /**
            * body: ReadableStream
            * bodyUsed: false
@@ -470,7 +476,25 @@
 
     }
 
+    private gapiTry() {
+
+      var root = this
+      setTimeout(() => {
+        if (typeof gapi !== 'undefined') {
+        root.start(gapi)
+        } else {
+          root.gapiTry()
+        }
+      }, 2500)
+
+    }
+
     private mounted (): void {
+
+      var root = this
+      let g = document.createElement('script')
+      g.setAttribute('src', 'https://apis.google.com/js/api.js')
+      document.head.appendChild(g)
 
       this.styleObject = {
         display: 'flex',
@@ -480,20 +504,6 @@
         paddingLeft: '6px',
         paddingRight: '6px',
         width: '50%'
-      }
-
-      var root = this
-      let g = document.createElement('script')
-      g.setAttribute('src', 'https://apis.google.com/js/api.js')
-      document.head.appendChild(g)
-
-      if (typeof gapi === 'undefined') {
-        setTimeout( () => {
-          // console.log('Object gapi:', gapi)
-          root.start(gapi)
-        } , 2500)
-      } else {
-        root.start(gapi)
       }
 
       this.$root.$on('googleApiLoginEvent',  function(this: typeof Vue, args: any) {
@@ -511,6 +521,11 @@
         this.$set(this, "spaceHForYTComponet", window.innerHeight * 0.85)
       })
 
+      if (typeof gapi === 'undefined') {
+        root.gapiTry()
+      } else {
+        root.start(gapi)
+      }
       // this.loadStartUpVideo()
 
     }
