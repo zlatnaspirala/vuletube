@@ -930,7 +930,16 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       // Attached to window
       window.addEventListener('resize', this.onWindowResize, false)
-      window.addEventListener('click', this.rayClickHandler, false)
+
+      /**
+       * @description
+       * Must be attached on canvas dom element.
+       */
+
+      // window.addEventListener('click', this.rayClickHandler, false)
+      this.renderer.domElement.addEventListener('click', this.rayClickHandler, false)
+      console.log("this.renderer.domElement.addEventListener('click', this.rayClickHandler, false)")
+
       window.addEventListener('mouseup', this.onMouseUp, false)
 
       this.renderer.domElement.addEventListener('mousemove', this.onMouseMove, false)
@@ -1037,15 +1046,13 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           material.needsUpdate = true;
           material.map.needsUpdate = true;
 
-          geometry.scale(1.4, 1, 1)
+          geometry.scale(1.33, 1.1, 1)
 
           this.mainVideoMesh = new THREE.Mesh(geometry, material)
           this.mainVideoMesh.name = "mainVideoMesh"
           this.mainVideoMesh.position.z = -8
 
-
           this.scene.add(this.mainVideoMesh)
-
           this.planeAddedToScene = true
 
         } else {
@@ -1053,6 +1060,8 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
           /**
            * @description
            * Update texture.
+           *
+           * `Must be tested` for optimisation...
            */
           texture = new THREE.CanvasTexture(this.$refs.cvcanvas)
           texture.needsUpdate = true;
@@ -1231,7 +1240,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
     }
 
     private setDefaultWebCamCVstarter() {
-
+      // ?
     }
 
     private set3dBackground(): void {
@@ -1253,18 +1262,16 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
       if (this.isVideoCameraActive === true && this.optionsVideoCamera === false) {
 
-        // turn off
+        // Turn off
         console.info("Turn off private webcamera...")
         this.stopVideoCamera();
         (this.$refs.cvcanvas as HTMLElement).style.display = 'none'
 
-        //
         this.$root.$emit('privateCameraOff', { detail: 'Video webcam stoped on user request.' })
-
 
       } else if (this.isVideoCameraActive === false && this.optionsVideoCamera === true) {
 
-        // turn on
+        // Turn on
         console.info("Turn on private webcamera...")
         this.accessVideoCamera();
 
