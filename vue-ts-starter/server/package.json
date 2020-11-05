@@ -1,11 +1,12 @@
 {
-  "name": "server-side-vue-project-generator",
+  "name": "vuletube-server",
   "version": "1.0.0",
-  "description": "Google API integration etc...",
-  "main": "index.js",
+  "description": "VuleTube webserver based on nodejs. It is a server part of VuleTube with port `3000`.",
+  "main": "server-connector.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "app": "node server-connector.js",
+    "winTest1": "node_modules\\youtube-dl\\bin\\youtube-dl.exe -F https://www.youtube.com/watch?v=18c3MTX0PK0",
+    "unixTest1": "node_modules/youtube-dl/bin/youtube-dl -F http://www.youtube.com/watch?v=P9pzm5b6FFY"
   },
   "engines": {
     "node": ">=10.0.0"

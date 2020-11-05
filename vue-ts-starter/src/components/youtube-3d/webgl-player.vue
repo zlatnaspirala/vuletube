@@ -211,11 +211,12 @@
                  v-model="optionsSearchResultPreview">
         <md-icon ref="menuOptionsSearchResultPreviewIcon" class="fa fa-th"></md-icon>
       </md-button>
-      <md-button class="md-primary md-raised" @click="$refs.texvideo.play()">
-        <md-icon class="fa fa-play"></md-icon>
+      <md-button class="md-primary md-raised" @click="togglePlayPause()">
+        <md-icon v-show="btnPlayOrPause()" class="fa fa-play"></md-icon>
+        <md-icon v-show="!btnPlayOrPause()" class="fa fa-pause"></md-icon>
       </md-button>
-      <md-button class="md-primary md-raised" @click="$refs.texvideo.pause()">
-        <md-icon class="fa fa-pause"></md-icon>
+      <md-button class="md-primary md-raised" @click="toggleMainVideo()">
+        <md-icon class="fa fa-eye-slash">video</md-icon>
       </md-button>
       <md-field class="currentTimeField" >
         <label>Duration {{ getDuration() }} currentTime {{ localCurrentTime }} </label>
@@ -408,6 +409,41 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
     private on3dKeyDown = (event: any) => {}
     private on3dKeyUp = (event: any) => {}
+
+    // Can be override in optimisation manir
+    // to remove checking because vue v-show
+    // work on interval call...
+    private btnPlayOrPause() {
+
+      if (typeof this.$refs === 'undefined' ||
+           typeof this.$refs.texvideo === 'undefined')
+      {
+        return false
+      } else {
+         return (this.$refs.texvideo as HTMLVideoElement).paused
+      }
+
+    }
+
+    private togglePlayPause() {
+
+      if (typeof this.$refs === 'undefined' ||
+          typeof this.$refs.texvideo === 'undefined') {
+        return
+      }
+
+      if ((this.$refs.texvideo as HTMLVideoElement).paused) {
+        (this.$refs.texvideo as HTMLVideoElement).play()
+      } else {
+        (this.$refs.texvideo as HTMLVideoElement).pause()
+      }
+
+    }
+
+    private toggleMainVideo() {
+      // hide/show mesh main video
+      this.mainVideoMesh.visible = !this.mainVideoMesh.visible
+    }
 
     private internalDeltaClock: any = null
 
@@ -713,8 +749,6 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       }
       if (currValue % 2 === 0) {
          (window as any).vp.controls.gaussianBlurSize = currValue + 1
-      } else {
-        (window as any).vp.controls.gaussianBlurSize = parseInt(currValue);
       }
     }
 
@@ -1050,7 +1084,11 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
             // potencial activation for video processing here...
           }
 
-          material = new THREE.MeshBasicMaterial({ map: texture })
+          material = new THREE.MeshBasicMaterial({
+             map: texture,
+             transparent: true,
+             opacity: 1
+          })
           material.needsUpdate = true;
           material.map.needsUpdate = true;
 
