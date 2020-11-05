@@ -442,6 +442,7 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
 
     private toggleMainVideo() {
       // hide/show mesh main video
+      if (typeof this.mainVideoMesh === 'undefined') { return }
       this.mainVideoMesh.visible = !this.mainVideoMesh.visible
     }
 
