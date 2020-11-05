@@ -212,11 +212,11 @@
         <md-icon ref="menuOptionsSearchResultPreviewIcon" class="fa fa-th"></md-icon>
       </md-button>
       <md-button class="md-primary md-raised" @click="togglePlayPause()">
-        <md-icon v-show="btnPlayOrPause()" class="fa fa-play"></md-icon>
-        <md-icon v-show="!btnPlayOrPause()" class="fa fa-pause"></md-icon>
+        <md-icon v-show="btnPlayOrPause()" class="fa fa-play-circle"></md-icon>
+        <md-icon v-show="!btnPlayOrPause()" class="fa fa-pause-circle"></md-icon>
       </md-button>
       <md-button class="md-primary md-raised" @click="toggleMainVideo()">
-        <md-icon class="fa fa-eye-slash">video</md-icon>
+        vid<md-icon class="fa fa-eye-slash"></md-icon>
       </md-button>
       <md-field class="currentTimeField" >
         <label>Duration {{ getDuration() }} currentTime {{ localCurrentTime }} </label>
@@ -718,8 +718,9 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       if ((window as any).vp.controls.filter !== 'medianBlur') {
         (window as any).vp.controls.filter = 'medianBlur';
       }
-      (window as any).vp.controls.medianBlurSize = parseInt(currValue);
-      console.log((window as any).vp.controls.medianBlurSize);
+      if (parseInt(currValue) % 2 === 0) {
+        (window as any).vp.controls.medianBlurSize = parseInt(currValue) + 1;
+      }
     }
 
     private onFilterThresholdValueChanged(currValue: any) {
@@ -735,10 +736,8 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       if ((window as any).vp.controls.filter !== 'adaptiveThreshold') {
         (window as any).vp.controls.filter = 'adaptiveThreshold';
       }
-      if (currValue % 2 === 0) {
-         (window as any).vp.controls.adaptiveBlockSize = currValue + 1
-      } else {
-        (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue);
+      if (parseInt(currValue) % 2 === 0) {
+         (window as any).vp.controls.adaptiveBlockSize = parseInt(currValue) + 1
       }
     }
 
@@ -747,8 +746,8 @@ import { CvStarterOptions, EFFECT_TYPE, IPreviewMode } from './webgl-player'
       if ((window as any).vp.controls.filter !== 'gaussianBlur') {
         (window as any).vp.controls.filter = 'gaussianBlur';
       }
-      if (currValue % 2 === 0) {
-         (window as any).vp.controls.gaussianBlurSize = currValue + 1
+      if (parseInt(currValue) % 2 === 0) {
+         (window as any).vp.controls.gaussianBlurSize = parseInt(currValue) + 1
       }
     }
 

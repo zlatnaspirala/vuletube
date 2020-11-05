@@ -132,7 +132,7 @@ Note:
     Classic view mode (Orbit controls)
     Implementing First person controller for 3d part.(point lock)
 
-<b> version 0.3.0 [NEXT][WIP] </b>
+<b> version 0.3.1 [MASTER] </b>
 
    - Added zoom on hover [DONE]
    - Prevent raycast click event on drag up FIX@ [DEV]
@@ -142,6 +142,12 @@ Note:
      User can buffer not limit in theory
      Add basic mode preview for classic orbit and first person look.
 
+<b> version 0.3.2 [NEXT][WIP] </b>
+
+   - Optimised version also stable.
+   - Add origin youtube link opener.
+   - Adding more video processing effect
+   - Adding more themes
 
 ### Production ###
 
