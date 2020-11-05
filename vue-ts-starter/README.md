@@ -135,11 +135,8 @@ Note:
 <b> version 0.3.1 [MASTER] </b>
 
    - Added zoom on hover [DONE]
-   - Prevent raycast click event on drag up FIX@ [DEV]
    - Added loader gapiReady app global event. [DONE]
-   - Basic next button. [DONE]
-   - Add more buffered results search.
-     User can buffer not limit in theory
+   - Basic next/prev button. [DONE]
      Add basic mode preview for classic orbit and first person look.
 
 <b> version 0.3.2 [NEXT][WIP] </b>
@@ -148,6 +145,9 @@ Note:
    - Add origin youtube link opener.
    - Adding more video processing effect
    - Adding more themes
+   - Add more buffered results search.
+     User can buffer not limit in theory
+   - Prevent raycast click event on drag up FIX@ [DEV]
 
 ### Production ###
 
