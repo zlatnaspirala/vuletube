@@ -149,7 +149,12 @@ Note:
      User can buffer not limit in theory
    - Prevent raycast click event on drag up FIX@ [DEV]
 
-### Production ###
+### Bugs
+
+ - Not every youtube clip is available with current
+   server code status.
+
+### Production
 
  There is no any kind of build on public mashine just upload
  files in WEB manir. Plug and play.

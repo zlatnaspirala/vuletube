@@ -56,6 +56,8 @@ export interface myYouTube {
   optionsStyle: Partial<CSSStyleDeclaration>;
   styleTableObject: Partial<CSSStyleDeclaration>;
   ls: LocalStorageMemory;
+  executePrev(): void;
+  executeNext(): void
   execute(): void;
   data();
   isAuthorized: false;

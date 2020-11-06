@@ -106,10 +106,10 @@
                 searchText += element + ' '
               }
             });
-            // command
-            (root.$root.$children[0].$children[2] as myYouTube).$data.yts.mySearchQuery = searchText
+            // Create better solution here to avoid setup on changes...
+            (root.$root.$children[0].$children[3] as myYouTube).$data.yts.mySearchQuery = searchText
             console.info("searchText => ", searchText);
-            (root.$root.$children[0].$children[2] as myYouTube).execute()
+            (root.$root.$children[0].$children[3] as myYouTube).execute()
 
           }
 
@@ -147,7 +147,6 @@
 
       this.operations = {
         switchTheme: switchTheme.bind(this)
-        // // showAboutDialogClick()
       }
 
       asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/helper.js")
@@ -155,13 +154,13 @@
       asyncLoad("/submodules/nui-commander/nui-commander/source/scripts/canvasEngine.js")
       asyncLoad("/submodules/nui-commander/nui-commander/source/controller.js")
 
-      console.log("CHECK CIKLUS NUI CONSTRUCTOR ")
+      console.log("nuiCommander CONSTRUCTOR")
 
     }
 
     mounted(): void {
 
-      console.log("CHECK CIKLUS NUI mounted ")
+      console.log("nuiCommander mounted.")
 
       var root = this as nuiCommander
 
@@ -199,7 +198,7 @@
 
     created() {
 
-      console.log("CHECK CIKLUS NUI created ")
+      console.log("nuiCommander created.")
 
       this.$root.$on('privateCameraOff', (s: typeof Vue, args: any) => {
         try {
