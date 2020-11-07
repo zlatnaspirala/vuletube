@@ -80,7 +80,9 @@ var https = require('https').createServer(options, function(request, response) {
             reject(err)
           }
 
-        }).then((video) => {
+        })
+
+        myPromise.then((video) => {
 
           video.on('info', function(info) {
             console.log('Download started')
@@ -93,10 +95,15 @@ var https = require('https').createServer(options, function(request, response) {
             flag: "w+"
           }))
 
-        }).catch(function(err) {
-          reject().than(()=>{
-            console.log("Error in promise youtubedl => ", err)
+          video.on('error', function(info) {
+            console.log(' video.on error >>>>>>>>>>>>>>>>>> test')
           })
+
+        })
+
+        myPromise.catch(function(err) {
+          reject()
+          console.log("@@@Error in promise youtubedl => ", err)
         });
 
         response.writeHead(200, {'Content-Type': 'text/plain'})
