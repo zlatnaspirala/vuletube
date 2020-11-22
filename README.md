@@ -49,6 +49,8 @@ Dev wip removing guidata and implementing new menu filters drop....
 
 ## Credits
 
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/ytlogolight.png)
+
 ## About `Legacy Note`
 
  I use download procedure just like internal techical solution. I put logo "Developed with youtube" and make documentation about
