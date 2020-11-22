@@ -49,6 +49,16 @@ Dev wip removing guidata and implementing new menu filters drop....
 
 ## Credits
 
+## About `Legacy Note`
+
+ I use download procedure just like internal techical solution. I put logo "Developed with youtube" and make documentation about
+ Youtube api usage also i delete downloaded files after some time.
+ There is no any redistribution even playing in offline regime or any other usage or reusage.
+ Also this has been fixed (YT-DL refuses to download such files `RIAA`) 
+ I am not promoting any downloading , dis-respectful & excessive pirating.
+ I keep it as friendly usage.
+
+
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/ytlogo.png)
 
 

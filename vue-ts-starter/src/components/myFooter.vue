@@ -20,6 +20,16 @@
             <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
 
             <h3>Types of Data Collected</h3>
+
+            <p> About `Legacy Note` downloading youtube videos.<p>
+
+            <p>I use download procedure just like internal techical solution.</p>
+            <p>I delete downloaded files after some time.</p>
+            <p>There is no any redistribution even playing in offline regime or any other usage or reusage.</p>
+            <p>Also this has been fixed (YT-DL refuses to download such files `RIAA`) </p>
+            <p>I am not promoting any downloading , dis-respectful & excessive pirating.</p>
+            <p>I keep it as friendly usage.</p>
+
             <p>Personal Data</p>
             <p>While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:</p>
 
