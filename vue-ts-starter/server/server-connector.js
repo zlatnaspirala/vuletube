@@ -130,7 +130,7 @@ var https = require('https').createServer(options, function(request, response) {
               console.log('thumbnails downloaded. what is j ', j)       
               counter++;
 
-              if (counter == testIMG.length - 1) {
+              if (counter == testIMG.length - 5) {
                 response.writeHead(200, {'Content-Type': 'text/plain'})
                 response.end(`VuleTube service version 0.3.1 \n
                               https://maximumroulette.com:3000 `)

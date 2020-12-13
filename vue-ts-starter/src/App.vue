@@ -206,6 +206,7 @@
         try {
           console.info("Event gapiReady => ", args)
           this.$refs.loader.style.display = 'none'
+          this.$root.$emit('googleApiLoginEvent', { start: 'start googleApiLoginEvent' })
         } catch(err) {
           console.warn(err)
         }

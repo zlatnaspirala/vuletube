@@ -24,6 +24,13 @@ const state = {
   appYtResultItems: {},
   permission: {
     read: "https://www.googleapis.com/auth/youtube.readonly",
+  },
+  appStyle: {
+    themes: () => [
+      'Dark',  'Orange', 'Light', 'Blue', 'Red', 'Pink', 'Purple', 'Deeppurple',
+      'Indigo', 'Lightblue', 'Teal', 'Green', 'Lightgreen', 'Lime', 'Yellow',
+      'Cyan', 'Deeporange', 'Brown',
+    ]
   }
 }
 

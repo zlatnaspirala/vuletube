@@ -74,8 +74,8 @@
     <video ref="texvideo"
            src="default-assets/3dtshirts.mp4"
            v-bind:style="{ display: 'none',
-                          position: 'absolute',
-                          top: '-1000px' }"
+                           position: 'absolute',
+                           top: '-1000px' }"
            autoplay
            playsinline ></video>
 

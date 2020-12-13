@@ -4,7 +4,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <md-menu md-size="medium" md-align-trigger>
-      <md-button class="md-primary md-raised" md-menu-trigger>Start here</md-button>
+      <md-button class="md-primary md-raised" md-menu-trigger>VuleTube</md-button>
       <md-menu-content>
         <md-menu-item>
           <md-progress-spinner v-show='tyfetchVisibility'
@@ -14,7 +14,7 @@
           </md-progress-spinner>
           <md-button class="md-primary md-raised" v-show='loginBtnVisibility' @click="googleApiLogin">
             <md-icon class="fa fa-shield"></md-icon>
-            Login with Google
+            Prepare YouTube API
           </md-button>
         </md-menu-item>
         <md-menu-item>
@@ -193,7 +193,7 @@
         myData: "test",
         tyfetchVisibility: true,
         loginBtnVisibility: false,
-        switchThemeBtnLabel: 'myDark'
+        switchThemeBtnLabel: 'Dark'
       }
     }
 
@@ -209,10 +209,12 @@
 
     mounted (): void {
 
-      (this.$root as any).$material.theming.theme='myDark'
+      (this.$root as any).$material.theming.theme='Dark'
       this.$set(this, 'tyfetchVisibility', false)
       this.$set(this, 'loginBtnVisibility', true)
-      this.$set(this, 'switchThemeBtnLabel', 'myDark')
+      this.$set(this, 'switchThemeBtnLabel', 'Dark')
+
+      
 
     }
 
