@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>vuletube-youtube-alternative</title>
-	<meta name="description" content="Documentation for vuletube-youtube-alternative">
+	<title>vuletube-yt-alternative-viewer</title>
+	<meta name="description" content="Documentation for vuletube-yt-alternative-viewer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">vuletube-youtube-alternative</a>
+					<a href="index.html" class="title">vuletube-yt-alternative-viewer</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1>vuletube-youtube-alternative</h1>
+			<h1>vuletube-yt-alternative-viewer</h1>
 		</div>
 	</div>
 </header>
@@ -73,8 +73,8 @@
 				<a href="#first-feature-youtube-vs-threejs" id="first-feature-youtube-vs-threejs" style="color: inherit; text-decoration: none;">
 					<h5>First feature: YouTube vs Threejs</h5>
 				</a>
-				<a href="#version-005" id="version-005" style="color: inherit; text-decoration: none;">
-					<h5>version 0.0.5</h5>
+				<a href="#version-031" id="version-031" style="color: inherit; text-decoration: none;">
+					<h5>version 0.3.1</h5>
 				</a>
 				<a href="#public-access-for-vuletube-service" id="public-access-for-vuletube-service" style="color: inherit; text-decoration: none;">
 					<h5>Public access for VuleTube service:</h5>
@@ -83,12 +83,18 @@
 					<h5><a href="https://maximumroulette.com:3000">https://maximumroulette.com:3000</a></h5>
 				</a>
 				<p><img src="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png" alt="vuletube"></p>
-				<p>Screenshot1:
-					<img src="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.jpg" alt="screenshot">
-					Screenshot with openCVJS:
-				<img src="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png" alt="screenshot"></p>
-				<p>YouTube presentation:
-				<a href="https://www.youtube.com/watch?v=-lwkKzFLzk0">youtube link</a></p>
+				<a href="#last-main-page-screenshot" id="last-main-page-screenshot" style="color: inherit; text-decoration: none;">
+					<h4>Last main page screenshot:</h4>
+				</a>
+				<p><img src="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.3.1.png" alt="screenshot"></p>
+				<a href="#screenshot-opencvjs-vs-webcam" id="screenshot-opencvjs-vs-webcam" style="color: inherit; text-decoration: none;">
+					<h4>Screenshot openCVJS vs webcam:</h4>
+				</a>
+				<p><img src="https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png" alt="screenshot"></p>
+				<a href="#youtube-presentation" id="youtube-presentation" style="color: inherit; text-decoration: none;">
+					<h4>YouTube presentation:</h4>
+				</a>
+				<p><a href="https://www.youtube.com/watch?v=-lwkKzFLzk0">youtube link</a></p>
 				<p>Production use <code>https</code> node application for web server.</p>
 				<p> Clone whole project with submodules:</p>
 				<pre><code class="language-js">  git clone --recurse-submodules https:<span class="hljs-comment">//github.com/zlatnaspirala/vue-typescript-starter</span></code></pre>
@@ -111,9 +117,9 @@
 					<h3>Features Flow</h3>
 				</a>
 				<p>Note:</p>
-				<pre><code>  <span class="hljs-number">0.0</span>.x =&gt; any changes
-  <span class="hljs-number">0.</span>x<span class="hljs-number">.1</span> ... n =&gt; any changes + updated present logic <span class="hljs-keyword">or</span> new big feature.
-  x<span class="hljs-number">.1</span><span class="hljs-number">.1</span> ... n =&gt; release git/build point version.</code></pre>
+				<pre><code>  <span class="hljs-attribute">0</span>.<span class="hljs-number">0</span>.x =&gt; any changes
+  <span class="hljs-attribute">0</span>.x.<span class="hljs-number">1</span> ... n =&gt; any changes + updated present logic or new big feature.
+  <span class="hljs-attribute">x</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> ... n =&gt; release git/build point version.</code></pre>
 				<p> <b>- version 0.0.2 [MASTER] </b></p>
 				<ul>
 					<li><p>Getting response for youtube search.</p>
@@ -183,12 +189,42 @@
 						<code>myYouTube.d.ts</code> and <code>webgl-player.d.ts</code></p>
 					</li>
 				</ul>
-				<p><b> version 0.2.1 [NEXT][WIP] </b></p>
+				<p><b> version 0.2.1 [master] </b></p>
 				<ul>
 					<li>Make openCV videoProcessing multi source reusable but with one output
-					canvas effect.</li>
-					<li>Create first documentation for VULETUBE Application.</li>
-					<li>Prevent raycast click event behind 3d plane video FIX@ [DEV]</li>
+					canvas effect. [DONE]</li>
+					<li>Create first documentation for VULETUBE Application. [DONE]</li>
+				</ul>
+				<p><b> version 0.2.2 [DEV] </b></p>
+				<ul>
+					<li>New feature <code>mode</code>:
+						Classic view mode (Orbit controls)
+					Implementing First person controller for 3d part.(point lock)</li>
+				</ul>
+				<p><b> version 0.3.1 [MASTER] </b></p>
+				<ul>
+					<li>Added zoom on hover [DONE]</li>
+					<li>Added loader gapiReady app global event. [DONE]</li>
+					<li>Basic next/prev button. [DONE]
+					Add basic mode preview for classic orbit and first person look.</li>
+					<li>Removed google auth2</li>
+				</ul>
+				<p><b> version 0.4.1 [NEXT][WIP] </b></p>
+				<ul>
+					<li>Optimised version also stable.</li>
+					<li>Add origin youtube link opener.</li>
+					<li>Adding more video processing effect</li>
+					<li>Adding more themes</li>
+					<li>Add more buffered results search.
+					User can buffer not limit in theory</li>
+					<li>Prevent raycast click event on drag up FIX@ [DEV]</li>
+				</ul>
+				<a href="#bugs" id="bugs" style="color: inherit; text-decoration: none;">
+					<h3>Bugs</h3>
+				</a>
+				<ul>
+					<li>Not every youtube clip is available with current
+					server code status.</li>
 				</ul>
 				<a href="#production" id="production" style="color: inherit; text-decoration: none;">
 					<h3>Production</h3>
@@ -204,7 +240,8 @@
 						<code>git submodule update --init --recursive</code></p>
 						<p>From submodules projects root =&gt;
 							<code>git pull https://github.com/zlatnaspirala/nui-commander master</code>
-						<code>git pull https://github.com/zlatnaspirala/voice-commander master</code></p>
+							<code>git pull https://github.com/zlatnaspirala/voice-commander master</code>
+						<code>git pull https://github.com/zlatnaspirala/opencv-starter master</code></p>
 					</li>
 				</ul>
 				<a href="#project-structure" id="project-structure" style="color: inherit; text-decoration: none;">
@@ -298,15 +335,15 @@
 				<a href="#response-for-youtube-api-v3-call-search" id="response-for-youtube-api-v3-call-search" style="color: inherit; text-decoration: none;">
 					<h4>Response for youtube api v3 call <code>search</code>.</h4>
 				</a>
-				<pre><code class="language-js">  body: &quot;{↵  &quot;kind&quot;: &quot;youtube#searchListResponse&quot;,↵  &quot;etag&quot;&quot;
-  headers: {cache-control: &quot;private&quot;, content-encoding: &quot;gzip&quot;,
-  content-length: &quot;5512&quot;, content-type: &quot;application/json; charset=UTF-8&quot;, date: &quot;Sun, 05 Jul 2020 20:47:06 GMT&quot;, …}
-  result: {
-    kind: &quot;youtube#searchListResponse&quot;,
-    etag: &quot;3nOm8AR0NU4TDlCxh0UCxk1KB38&quot;,
-    nextPageToken: &quot;CBkQAA&quot;, regionCode: &quot;RS&quot;, pageInfo: {…}, …}
-  status: 200
-  statusText: null</code></pre>
+				<pre><code class="language-js">  body: <span class="hljs-string">&quot;{↵  &quot;</span>kind<span class="hljs-string">&quot;: &quot;</span>youtube#searchListResponse<span class="hljs-string">&quot;,↵  &quot;</span>etag<span class="hljs-string">&quot;&quot;</span>
+  <span class="hljs-attr">headers</span>: {cache-control: <span class="hljs-string">&quot;private&quot;</span>, content-encoding: <span class="hljs-string">&quot;gzip&quot;</span>,
+  content-length: <span class="hljs-string">&quot;5512&quot;</span>, content-type: <span class="hljs-string">&quot;application/json; charset=UTF-8&quot;</span>, <span class="hljs-attr">date</span>: <span class="hljs-string">&quot;Sun, 05 Jul 2020 20:47:06 GMT&quot;</span>, …}
+  <span class="hljs-attr">result</span>: {
+    <span class="hljs-attr">kind</span>: <span class="hljs-string">&quot;youtube#searchListResponse&quot;</span>,
+    <span class="hljs-attr">etag</span>: <span class="hljs-string">&quot;3nOm8AR0NU4TDlCxh0UCxk1KB38&quot;</span>,
+    <span class="hljs-attr">nextPageToken</span>: <span class="hljs-string">&quot;CBkQAA&quot;</span>, <span class="hljs-attr">regionCode</span>: <span class="hljs-string">&quot;RS&quot;</span>, <span class="hljs-attr">pageInfo</span>: {…}, …}
+  <span class="hljs-attr">status</span>: <span class="hljs-number">200</span>
+  <span class="hljs-attr">statusText</span>: <span class="hljs-literal">null</span></code></pre>
 				<a href="#result-property" id="result-property" style="color: inherit; text-decoration: none;">
 					<h4>Result property:</h4>
 				</a>
@@ -382,30 +419,30 @@
 					<h3>About routes</h3>
 				</a>
 				<p>From official:</p>
-				<pre><code>Simple<span class="hljs-built_in"> Routing </span><span class="hljs-keyword">From</span> Scratch
-<span class="hljs-keyword">If</span> you only need very<span class="hljs-built_in"> simple routing </span><span class="hljs-keyword">and</span> <span class="hljs-keyword">do</span> <span class="hljs-keyword">not</span> wish <span class="hljs-keyword">to</span> involve a full-featured router library,
-you can <span class="hljs-keyword">do</span> so by dynamically rendering a page-level component like this:
+				<pre><code>Simple Routing From Scratch
+If you only need very simple routing and <span class="hljs-keyword">do</span> not wish to involve a full-featured router library,
+you can <span class="hljs-keyword">do</span> so <span class="hljs-keyword">by</span> dynamically rendering a page-level component like <span class="hljs-keyword">this</span>:
 
-const NotFound = { template: <span class="hljs-string">&#x27;&lt;p&gt;Page not found&lt;/p&gt;&#x27;</span> }
-const Home = { template: <span class="hljs-string">&#x27;&lt;p&gt;home page&lt;/p&gt;&#x27;</span> }
-const About = { template: <span class="hljs-string">&#x27;&lt;p&gt;about page&lt;/p&gt;&#x27;</span> }
+<span class="hljs-keyword">const</span> NotFound = { template: <span class="hljs-string">&#x27;&lt;p&gt;Page not found&lt;/p&gt;&#x27;</span> }
+<span class="hljs-keyword">const</span> Home = { template: <span class="hljs-string">&#x27;&lt;p&gt;home page&lt;/p&gt;&#x27;</span> }
+<span class="hljs-keyword">const</span> About = { template: <span class="hljs-string">&#x27;&lt;p&gt;about page&lt;/p&gt;&#x27;</span> }
 
-const routes = {
+<span class="hljs-keyword">const</span> routes = {
   <span class="hljs-string">&#x27;/&#x27;</span>: Home,
   <span class="hljs-string">&#x27;/about&#x27;</span>: About
 }
 
 new Vue({
   el: <span class="hljs-string">&#x27;#app&#x27;</span>,
-  data: {
+  <span class="hljs-keyword">data</span>: {
     currentRoute: window.location.pathname
   },
   computed: {
     ViewComponent () {
-      return routes[this.currentRoute] || NotFound
+      <span class="hljs-keyword">return</span> routes[<span class="hljs-keyword">this</span>.currentRoute] || NotFound
     }
   },
-  render (h) { return h(this.ViewComponent) }
+  render (h) { <span class="hljs-keyword">return</span> h(<span class="hljs-keyword">this</span>.ViewComponent) }
 })</code></pre>
 				<a href="#spiral-position" id="spiral-position" style="color: inherit; text-decoration: none;">
 					<h3>Spiral position</h3>

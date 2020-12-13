@@ -406,7 +406,7 @@ Not in use at the moment.
 ### API Documentation
 
     Link ->
-  - https://maximumroulette.com/applications/vue-project/vue-typescript-starter/vue-ts-starter/docs/
+  - https://maximumroulette.com/apps/vuletube-docs/
 
 
 #### YT Download module ####
