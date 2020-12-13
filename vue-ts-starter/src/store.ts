@@ -16,13 +16,14 @@ Vue.use(Vuex)
  * Bad aspect: component becomes dependent on store.
  * I will handle this situation to be first ask for data but
  * option, if no store data componnet will use own default values.
+ * disabled:
+ * write: "https://www.googleapis.com/auth/youtube.force-ssl"
  */
 const state = {
   count: 0,
   appYtResultItems: {},
   permission: {
     read: "https://www.googleapis.com/auth/youtube.readonly",
-    write: "https://www.googleapis.com/auth/youtube.force-ssl"
   }
 }
 

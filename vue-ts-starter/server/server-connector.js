@@ -26,13 +26,12 @@ const port = 3000;
 var fs = require("fs")
 const youtubedl = require('youtube-dl')
 const static = require('node-static')
-var file = new (static.Server)(
-  '/var/www/html/applications/vue-project/vue-typescript-starter/vue-ts-starter/dist/')
+var file = new (static.Server)('/var/applications/vule-tube/dist/')
 
 var options = {
-  key: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette.com.key"),
-  cert: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette_com.crt"),
-  ca: fs.readFileSync("/etc/httpd/conf/ssl/maximumroulette_com.crt")
+  key: fs.readFileSync("/etc/letsencrypt/live/maximumroulette.com/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/maximumroulette.com/fullchain.pem"),
+  ca: fs.readFileSync("/etc/letsencrypt/live/maximumroulette.com/fullchain.pem")
 };
 
 var fs = require('fs'),

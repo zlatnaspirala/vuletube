@@ -579,22 +579,27 @@
     }
 
     private authenticate(): any {
-
+      return gapi.client.init(this.$root.$store.state.permission.read).then(() => {
+        this.$data.tyfetchVisibility = true
+        this.$data.isAuthorized = true
+        console.info("Sign-in successful.");
+      })
+      /* Disabled 
       var defaultPermissionLevel = this.$root.$store.state.permission.read
       if (this.$props.arg.options.permissionLevel == null) {
         console.log('catch update moment')
       }
       return gapi.auth2.getAuthInstance()
-         .signIn({scope: defaultPermissionLevel})
-          .then(() => {
-            this.$data.tyfetchVisibility = true
-            this.$data.isAuthorized = true
-            console.info("Sign-in successful.");
-          },
-          function(err) {
-            console.error("Error signing in => ", err);
-          });
-
+      .signIn({scope: defaultPermissionLevel})
+      .then(() => {
+        this.$data.tyfetchVisibility = true
+        this.$data.isAuthorized = true
+        console.info("Sign-in successful.");
+      },
+      function(err) {
+        console.error("Error signing in => ", err);
+      });
+      */
     }
 
     private loadClient = () => {
@@ -610,9 +615,15 @@
 
     private start(gapi: any): void {
 
+      gapi.load("client", () => {
+        this.$root.$emit('gapiReady', {})
+        console.info("Gapi is ready => " + gapi)
+      })
+
+       /* Disabled
       gapi.load("client:auth2", () => {
-        gapi.auth2.init({
-          client_id: "556834814931-c7rlekih0gfdcf1gg7taiul6cfp57a1q.apps.googleusercontent.com"
+        gapi.auth2.init({ 
+          client_id: "CLIENTID"
         }).then (() => {
           this.$root.$emit('gapiReady', {})
           console.info("Gapi is ready => " + gapi.auth2.init)
@@ -620,6 +631,7 @@
           console.warn("Error in start func.", err)
         })
       })
+      */
 
     }
 

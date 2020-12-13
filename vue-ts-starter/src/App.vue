@@ -232,6 +232,8 @@
     mounted (): void {
       this.setupInstance()
       this.switchPlace = this.ls.load("o_switch_place")
+
+      // this.$refs.loader.style.display = 'none'
     }
 
   }

@@ -138,8 +138,9 @@ Note:
    - Added loader gapiReady app global event. [DONE]
    - Basic next/prev button. [DONE]
      Add basic mode preview for classic orbit and first person look.
+   - Removed google auth2
 
-<b> version 0.3.2 [NEXT][WIP] </b>
+<b> version 0.4.1 [NEXT][WIP] </b>
 
    - Optimised version also stable.
    - Add origin youtube link opener.
