@@ -9,7 +9,7 @@
 ![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png)
 
 #### Last main page screenshot:
-![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.3.1.png)
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vuletube.gif)
 
 #### Screenshot openCVJS vs webcam:
 ![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.1.3.png)
