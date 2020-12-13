@@ -40,8 +40,8 @@ Dev wip removing guidata and implementing new menu filters drop....
     7$ min cost
 
 
-#### Screenshot 0.3.1 :
-![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/screenshot.0.3.1.png)
+#### Last main page screenshot:
+![screenshot](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vuletube.gif)
 
 
 ## Go to project folder
