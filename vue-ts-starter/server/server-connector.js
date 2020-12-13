@@ -39,8 +39,8 @@ var fs = require('fs'),
 
 var download = function(uri, filename, callback) {
   request.head(uri, function(err, res, body) {
-    console.log('content-type:', res.headers['content-type'])
-    console.log('content-length:', res.headers['content-length'])
+    // console.log('content-type:', res.headers['content-type'])
+    // console.log('content-length:', res.headers['content-length'])
     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback)
   });
 };
@@ -53,7 +53,7 @@ var https = require('https').createServer(options, function(request, response) {
 
         // file.serveFile('bad.html', 402, {}, request, response);
         const localVid = request.url.split("?vid=")
-        console.log("videoID => ", localVid[1])
+        // console.log("videoID => ", localVid[1])
         console.log("Vule bule request.url., ", request.url)
         const addressLink = 'http://www.youtube.com/watch?v=' + localVid[1]
         const checkvideo = '../dist/videos/vule' + localVid[1] + '.mp4'
@@ -64,7 +64,7 @@ var https = require('https').createServer(options, function(request, response) {
             console.log("skip...")
             response.writeHead(200, {'Content-Type': 'text/plain'});
             response.end('[video-exist]');
-             return;
+            return;
           }
         } catch(err) {
           console.error(err)
@@ -84,9 +84,9 @@ var https = require('https').createServer(options, function(request, response) {
         myPromise.then((video) => {
 
           video.on('info', function(info) {
-            console.log('Download started')
-            console.log('filename: ' + info._filename)
-            console.log('size: ' + info.size)
+            // console.log('Download started')
+            // console.log('filename: ' + info._filename)
+            // console.log('size: ' + info.size)
           })
 
           const videoName = '../dist/videos/vule' + localVid[1] + '.mp4';
@@ -95,7 +95,7 @@ var https = require('https').createServer(options, function(request, response) {
           }))
 
           video.on('error', function(info) {
-            console.log(' video.on error >>>>>>>>>>>>>>>>>> test')
+            console.log('video.on error : ', info)
           })
 
         })
@@ -112,8 +112,9 @@ var https = require('https').createServer(options, function(request, response) {
       } else  if (request.url.search(/.saveThumbnails/g) != -1) {
 
         let localImg = request.url.split("?imgs=");
-        let testIMG = localImg[1].split(",")
+        let testIMG = localImg[1].split(",");
 
+        var oneTimeLocalFlag = false, counter = 0;
         for (var j = 0; j < testIMG.length;j++) {
           /**
            * Prapare dynamic path for images
@@ -122,17 +123,19 @@ var https = require('https').createServer(options, function(request, response) {
            */
           var trumbPath = 'https://i.ytimg.com/vi/' + testIMG[j] + '/mqdefault.jpg'
           if (testIMG[j] != '') {
-            var oneTimeLocalFlag = true
+            
             var dest = '../dist/assets/thumbnails/' + 'vule' + testIMG[j] + '.jpg'
             // check exist ....
-
             download(trumbPath, dest, () =>  {
-              console.log('thumbnails downloaded.')
-              if (oneTimeLocalFlag == true) {
+              console.log('thumbnails downloaded. what is j ', j)       
+              counter++;
+
+              if (counter == testIMG.length - 1) {
                 response.writeHead(200, {'Content-Type': 'text/plain'})
                 response.end(`VuleTube service version 0.3.1 \n
                               https://maximumroulette.com:3000 `)
-               }
+              } 
+       
             });
         }
       }
