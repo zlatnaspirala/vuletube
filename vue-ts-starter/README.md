@@ -1,10 +1,10 @@
 
-# VULETUBE web application #
-### Project name: Vue project generator ###
-##### First feature: YouTube vs Threejs #####
-##### version 0.3.1 #####
-##### Public access for VuleTube service: #####
-##### https://maximumroulette.com:3000 #####
+# VULETUBE web application
+### Project name: Vue project generator
+#### First feature: YouTube vs Threejs
+#### version 0.5.0
+#### Public access for VuleTube service:
+#### https://maximumroulette.com:3000
 
 ![vuletube](https://github.com/zlatnaspirala/vue-typescript-starter/blob/master/vue-ts-starter/public/assets/vule-logo1.png)
 
@@ -47,6 +47,7 @@ Run:
   - Version: typescript 3.9.6
   - Visual Code Text Editor used.
   - NodeJS based backend part.
+  - youtube-dl used version 3.5.0
 
 ### Features Flow ###
 

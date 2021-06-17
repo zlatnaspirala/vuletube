@@ -1,6 +1,6 @@
 {
   "name": "vuletube-server",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "VuleTube webserver based on nodejs. It is a server part of VuleTube with port `3000`.",
   "main": "server-connector.js",
   "scripts": {
