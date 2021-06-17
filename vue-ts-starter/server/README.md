@@ -23,3 +23,5 @@ firewall-cmd --reload
 npm rebuild node-sass
 ```
 
+Help page for fail2ban trouble moments.
+https://www.fail2ban.org/wiki/index.php/Commands
