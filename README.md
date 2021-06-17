@@ -1,14 +1,10 @@
 
 # Project name: vue-ts-starter - `vuletube`
+### Creator: Nikola Lukic 2020 - Visual Code editor used
+### Version "Ecstacy of gold"
+### https://maximumroulette.com:3000
 
-#### Creator: Nikola Lukic 2020 - Visual Code editor used
-#### Version "Ecstacy of gold"
 
-#### maximumroulette.com:3000 is unstable at the moment.
-
-Switch to the master branch .
-Dev wip removing guidata and implementing new menu filters drop....
-0.3.1
 ## Clone project command:
 
 ```js
@@ -20,6 +16,8 @@ Dev wip removing guidata and implementing new menu filters drop....
  To create perfect modular fit for any type project.
   I will integrate next features:
 
+  - Add https://github.com/fent/node-ytdl-core like another options support
+     (on server side) for youtube-dl.
   - Google client login based on  ApiKey. [DONE]
   - Test yt video play with YT Player embeded iframe[DONE]
     also with customhtml5 video tag.[DONE]
