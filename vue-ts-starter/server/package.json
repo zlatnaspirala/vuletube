@@ -18,17 +18,17 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "gcp-metadata": "^4.3.0",
-    "google-auth-library": "^6.0.1",
+    "google-auth-library": "^6.1.6",
     "googleapis": "^52.1.0",
-    "image-downloader": "^4.0.1",
+    "image-downloader": "^4.0.2",
     "node-static": "^0.7.11",
     "path": "^0.12.7",
     "request": "^2.88.2",
     "spdy": "^4.0.2",
-    "youtube-dl": "^3.0.2"
+    "youtube-dl": "^3.5.0"
   },
   "devDependencies": {
-    "mocha": "^8.0.0",
+    "mocha": "^8.4.0",
     "supertest": "^4.0.2"
   },
   "repository": {
