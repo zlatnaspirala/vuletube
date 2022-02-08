@@ -32,7 +32,7 @@
            <md-button @click="showAboutDialogClick()" class="md-primary md-raised" md-menu-trigger>Donate, About and Credits</md-button>
         </md-menu-item>
         <md-menu-item>
-          <md-button @click="window.open('https://maximumroulette.com:2020', '_blank')"
+          <md-button @click="window.open('https://kure.maximumroulette.com', '_blank')"
                      class="md-primary md-raised" md-menu-trigger>Try video chat</md-button>
         </md-menu-item>
       </md-menu-content>
