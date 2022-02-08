@@ -84,8 +84,8 @@ var https = require('https').createServer(options, function(request, response) {
         myPromise.then((video) => {
 
           video.on('info', function(info) {
-            // console.log('Download started')
-            // console.log('filename: ' + info._filename)
+            console.log('Download started')
+            console.log('filename: ' + info._filename)
             // console.log('size: ' + info.size)
           })
 
