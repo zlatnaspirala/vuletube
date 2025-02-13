@@ -28,7 +28,7 @@
     "youtube-dl": "^3.5.0"
   },
   "devDependencies": {
-    "mocha": "^8.4.0",
+    "mocha": "^11.1.0",
     "supertest": "^4.0.2"
   },
   "repository": {
